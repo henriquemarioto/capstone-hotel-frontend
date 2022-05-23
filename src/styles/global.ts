@@ -51,6 +51,12 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+
+    :root{
+        --beige-0: #f3f3f3;
+        --beige-1: #f1dabf;
+        --vine: #470024;
+    }
 `
 
 export default GlobalStyle
