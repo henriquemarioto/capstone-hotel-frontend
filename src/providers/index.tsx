@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { LoginProvider } from "./Login";
 import { ServiceProvider } from "./Service";
+import { LoginProvider } from "./Login";
+import { EmployeesProvider } from "./Employee";
 
 interface AppProvider {
   children: ReactNode;
@@ -9,7 +10,9 @@ interface AppProvider {
 const Provider = ({ children }: AppProvider) => {
   return (
     <LoginProvider>
-      <ServiceProvider>{children}</ServiceProvider>
+      <ServiceProvider>
+        <EmployeesProvider>{children}</EmployeesProvider>
+      </ServiceProvider>
     </LoginProvider>
   );
 };
