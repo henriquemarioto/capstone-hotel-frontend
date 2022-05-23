@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useContext, useState } from "react"
+import {createContext, ReactNode, useContext, useState} from "react"
 import ApiHotel from "../../services/apiHotel"
-import { useHistory } from "react-router-dom"
+import {useHistory} from "react-router-dom"
 
 interface LoginProps {
   children: ReactNode
@@ -18,7 +18,7 @@ interface LoginContextData {
 
 const LoginContext = createContext<LoginContextData>({} as LoginContextData)
 
-export const LoginProvider = ({ children }: LoginProps) => {
+export const LoginProvider = ({children}: LoginProps) => {
   const [token, setToken] = useState("")
   const history = useHistory()
 
@@ -35,7 +35,7 @@ export const LoginProvider = ({ children }: LoginProps) => {
   }
 
   return (
-    <LoginContext.Provider value={{ login, token }}>
+    <LoginContext.Provider value={{login, token}}>
       {children}
     </LoginContext.Provider>
   )
