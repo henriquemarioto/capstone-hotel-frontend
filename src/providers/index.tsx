@@ -1,10 +1,10 @@
-import { ReactNode } from "react"
-import { ServiceProvider } from "./Service"
-import { LoginProvider } from "./Login"
-import { EmployeesProvider } from "./Employee"
+import { ReactNode } from "react";
+import { ServiceProvider } from "./Service";
+import { LoginProvider } from "./Login";
+import { EmployeesProvider } from "./Employee";
 
 interface AppProvider {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Provider = ({ children }: AppProvider) => {
@@ -14,7 +14,7 @@ const Provider = ({ children }: AppProvider) => {
         <EmployeesProvider>{children}</EmployeesProvider>
       </ServiceProvider>
     </LoginProvider>
-  )
-}
+  );
+};
 
-export default Provider
+export default Provider;
