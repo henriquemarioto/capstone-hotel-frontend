@@ -26,12 +26,13 @@ interface UpdatedProps {
 
 interface ServiceContextData {
   services: Service[];
-  service: Service[];
+  service?: Service;
+  filteredService?: Service[];
   getAllServices: () => Promise<void>;
   getOneService: (id: string) => Promise<void>;
   updatedService: (data: UpdatedProps, id: string) => Promise<void>;
   disableService: (id: string) => Promise<void>;
-  filterByStatus: (status: boolean) => Promise<void>
+  filterByStatus: (status: boolean) => Promise<void>;
 }
 
 const ServiceContext = createContext<ServiceContextData>(
@@ -40,7 +41,7 @@ const ServiceContext = createContext<ServiceContextData>(
 
 export const ServiceProvider = ({ children }: ServiceProps) => {
   const [services, setServices] = useState<Service[]>([]);
-  const [service, setService] = useState<Service[]>([]);
+  const [service, setService] = useState<Service>();
   const [filteredService, setFilteredService] = useState<Service[]>([]);
   const { token } = useLogin();
 
@@ -59,7 +60,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    setService([data]);
+    setService(data);
   };
 
   const updatedService = async (data: UpdatedProps, id: string) => {
@@ -97,6 +98,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         filterByStatus,
         services,
         service,
+        filteredService,
       }}
     >
       {children}
