@@ -1,79 +1,101 @@
-import {createContext, ReactNode, useEffect, useState} from "react"
-
+import {createContext, ReactNode, useContext, useState} from "react"
 import apiHotel from "../../services/apiHotel"
-//import {useLogin} from "../Login"
+import {useLogin} from "../Login"
 
-interface Bedroom {
+interface Clients {
   id: string
-  number: string
-  floor: string
-  capacity: number
-  availability: boolean
-  createdAt: Date
-  updatedAt: Date
-  status: boolean
-  clients: []
+  name: string;
+  birthDate: Date;
+  cpf: string;
+  cellphone: string;
+  bedroomId: number;
+  hiredServices: []
 }
 
-type BedroomInput = Pick<
-  Bedroom,
-  "number" | "floor" | "capacity" | "availability"
->
-
-interface UpdatedProps {
-  capacity?: number
-  availability?: boolean
+interface InputClients {
+  name?: string;
+  birthDate?: Date;
+  cpf?: string;
+  cellphone?: string;
+  bedroomId?: number;
 }
 
-interface BedroomProps {
+interface ClientsProps {
   children: ReactNode
 }
 
-interface BedroomContextData {
-  bedrooms: Bedroom[]
-  bedroom: Bedroom
-  getAllBedroom: () => Promise<void>
-  getAllServices: () => Promise<void>
-  getOneService: (id: string) => Promise<void>
-  updatedBedroom: (data: UpdatedProps, id: string) => Promise<void>
-  disableBedroom: (id: string) => Promise<void>
-  filterByStatus: (status: boolean) => Promise<void>
+interface ClientsContextData {
+  clients: Clients[]
+  client: Clients
+  createClient: (clientsInput: InputClients) => Promise<void>
+  getAllClients: () => Promise<void>
+  getOneClient: (id: string) => Promise<void>
+  updatedClient: (id: string, clientsInput: InputClients) => Promise<void>
+  disableClient: (id: string) => Promise<void>
+  JoinBedroom: (id: string, bedroom: number) => Promise<void>
 }
 
-const BedroomContext = createContext<BedroomContextData>(
-  {} as BedroomContextData
+const ClientsContext = createContext<ClientsContextData>(
+  {} as ClientsContextData
 )
 
-export const BedroomProvider = ({children}: BedroomProps) => {
-  const [bedrooms, setBedrooms] = useState<Bedroom[]>([])
-  const [bedroom, setBedroom] = useState<Bedroom>()
+export const ClientsProvider = ({children}: ClientsProps) => {
+  const [clients, setClients] = useState<Clients[]>([])
+  const [client, setClient] = useState<Clients>()
   const {token} = useLogin()
 
-  const createBedroom = async (bedroomInput: BedroomInput) => {
-    const {data} = await apiHotel.post("/bedrooms", bedroomInput, {
+  const createClient = async (clientsInput: InputClients) => {
+    const {data} = await apiHotel.post("/clients", clientsInput, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-
-    setBedrooms([...bedrooms, data])
+    setClients([...clients, data])
   }
 
-  const getAllBedrooms = async () => {
-    const {data} = await apiHotel.get("bedrooms", {
+  const getAllClients = async () => {
+    const {data} = await apiHotel.get("/clients", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-    setBedrooms(data)
+    setClients(data)
   }
 
-  const getOneBedroom = async (id: string) => {
-    const {data} = await apiHotel.get(`bedrooms/${id}`, {
+  const getOneClient = async (id: string) => {
+    const {data} = await apiHotel.get(`clients/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-    setBedroom(data)
+    setClient(data)
+  }
+
+  const UpdateClient = async (id: string, clientsInput: InputClients) => {
+    const {data} = await apiHotel.patch(`clients/${id}`, clientsInput, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const newClients = clients.filter(client => client.id !== id)
+    newClients.push(data)
+    setClients(newClients)
+  }
+
+  const disableClient = async (id: string) => {
+    const {data} = await apiHotel.delete(`clients/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  }
+
+  const JoinBedroom = async (id: string, bedroom: number) => {
+    const {data} = await apiHotel.patch(`clients/joinbedroom/${id}`, bedroom, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
   }
 }
+

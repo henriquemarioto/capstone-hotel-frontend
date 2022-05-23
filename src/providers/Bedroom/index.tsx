@@ -77,3 +77,4 @@ export const BedroomProvider = ({children}: BedroomProps) => {
     setBedroom(data)
   }
 }
+
