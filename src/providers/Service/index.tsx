@@ -50,19 +50,18 @@ const ServiceProvider = ({ children }: ServiceProps) => {
   const [service, setService] = useState<Service[]>([]);
 
   const getAllServices = async () => {
-    const { data } = await apiHotel.get("services", {
+    const {data}  = await apiHotel.get("services", {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTMzMjE0NjgsImV4cCI6MTY1MzU4MDY2OCwic3ViIjoiODZjMGUzY2UtYmViNS00MTNkLThmY2EtNzQwOTA0YzA5MzdjIn0.9Q3HHFjXPcFzDNhmP8AzSmqlg_JaBRlNGpmXLwfMcfQ`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTMzMjU3MDYsImV4cCI6MTY1MzU4NDkwNiwic3ViIjoiNTdlMWVmNzEtYTZiYS00NTZjLWIwNDEtZGZhN2RhMjE5ZGFhIn0.okf-tMLp9nKZMvaaaSeIyn8ZMHKDAei4yEzVXqxI0hI`,
       },
     });
-    console.log(data)
     setServices(data);
   };
 
   const getOneService = async (id: string) => {
     const { data } = await apiHotel.get(`services/${id}`, {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTMzMjE0NjgsImV4cCI6MTY1MzU4MDY2OCwic3ViIjoiODZjMGUzY2UtYmViNS00MTNkLThmY2EtNzQwOTA0YzA5MzdjIn0.9Q3HHFjXPcFzDNhmP8AzSmqlg_JaBRlNGpmXLwfMcfQ`,
+        Authorization: `Bearer `,
       },
     });
     setService(data);
@@ -72,7 +71,7 @@ const ServiceProvider = ({ children }: ServiceProps) => {
     await apiHotel
       .patch(`services/${id}`, data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTMzMjE0NjgsImV4cCI6MTY1MzU4MDY2OCwic3ViIjoiODZjMGUzY2UtYmViNS00MTNkLThmY2EtNzQwOTA0YzA5MzdjIn0.9Q3HHFjXPcFzDNhmP8AzSmqlg_JaBRlNGpmXLwfMcfQ`,
+          Authorization: `Bearer `,
         },
       })
       .then((_) => getAllServices());
@@ -82,7 +81,7 @@ const ServiceProvider = ({ children }: ServiceProps) => {
     await apiHotel
       .delete(`services/${id}`, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTMzMjE0NjgsImV4cCI6MTY1MzU4MDY2OCwic3ViIjoiODZjMGUzY2UtYmViNS00MTNkLThmY2EtNzQwOTA0YzA5MzdjIn0.9Q3HHFjXPcFzDNhmP8AzSmqlg_JaBRlNGpmXLwfMcfQ`,
+          Authorization: `Bearer `,
         },
       })
       .then((_) => toast.success("Service disable"));

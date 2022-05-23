@@ -6,14 +6,6 @@ import { useEffect } from "react";
 
 function App() {
 
-  const {services, service, getAllServices, getOneService} = useService()
-
-  useEffect(() => {
-    getAllServices()
-  },[])
-  
-  console.log(services)
-
   return (
     <>
       <Toaster />
