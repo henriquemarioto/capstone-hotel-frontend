@@ -7,44 +7,44 @@ interface EmployeeProps {
 }
 
 interface Employee {
-  id: String
-  name: String
-  cpf: String
-  password: String
-  admin: Boolean
-  status: Boolean
+  id: string
+  name: string
+  cpf: string
+  password: string
+  admin: boolean
+  status: boolean
   created_at: Date
   updated_at: Date
 }
 
 interface CreateEmployee {
-  name: String
-  cpf: String
-  password: String
-  admin?: Boolean
-  status?: Boolean
+  name: string
+  cpf: string
+  password: string
+  admin?: boolean
+  status?: boolean
 }
 
 interface UpdateEmployee {
-  name?: String
-  cpf?: String
-  password?: String
-  admin?: Boolean
-  status?: Boolean
+  name?: string
+  cpf?: string
+  password?: string
+  admin?: boolean
+  status?: boolean
 }
 
 interface EmployeeContextData {
   employee?: Employee
   employees: Employee[]
-  getAllEmployees: (token: String) => Promise<void>
-  getOneEmployee: (id: String, token: String) => Promise<void>
+  getAllEmployees: (token: string) => Promise<void>
+  getOneEmployee: (id: string, token: string) => Promise<void>
   createEmployee: (data: CreateEmployee) => Promise<void>
   updateEmployee: (
-    id: String,
-    token: String,
+    id: string,
+    token: string,
     data: UpdateEmployee
   ) => Promise<void>
-  deleteEmployee: (id: String, token: String) => Promise<void>
+  deleteEmployee: (id: string, token: string) => Promise<void>
 }
 
 const EmployeeContext = createContext<EmployeeContextData>(
@@ -55,7 +55,7 @@ export const EmployeesProvider = ({ children }: EmployeeProps) => {
   const [employee, setEmployee] = useState<Employee>()
   const [employees, setEmployees] = useState<Employee[]>([])
 
-  const getAllEmployees = async (token: String) => {
+  const getAllEmployees = async (token: string) => {
     await ApiHotel.get("employees", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ export const EmployeesProvider = ({ children }: EmployeeProps) => {
       .catch((error) => console.log(error))
   }
 
-  const getOneEmployee = async (id: String, token: String) => {
+  const getOneEmployee = async (id: string, token: string) => {
     await ApiHotel.get(`employees/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -82,8 +82,8 @@ export const EmployeesProvider = ({ children }: EmployeeProps) => {
   }
 
   const updateEmployee = async (
-    id: String,
-    token: String,
+    id: string,
+    token: string,
     data: UpdateEmployee
   ) => {
     await ApiHotel.patch(`employees/${id}`, data, {
@@ -95,7 +95,7 @@ export const EmployeesProvider = ({ children }: EmployeeProps) => {
       .catch((error) => console.log(error))
   }
 
-  const deleteEmployee = async (id: String, token: String) => {
+  const deleteEmployee = async (id: string, token: string) => {
     await ApiHotel.delete(`employees/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
