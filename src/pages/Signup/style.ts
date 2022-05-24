@@ -1,8 +1,9 @@
 import styled, { createGlobalStyle } from "styled-components";
+import background from "../../img/woord.jpg"
 const GlobalStyle = createGlobalStyle`
 
 body {
-    background-image: url("https://static.vecteezy.com/ti/fotos-gratis/p2/1948503-tampo-da-mesa-de-madeira-para-exibicao-com-fundo-desfocado-do-restaurante-gr%C3%A1tis-foto.jpg");
+    background-image: url(${background});
     background-size: cover;
     display: flex;
     justify-content: center;

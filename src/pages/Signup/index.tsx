@@ -1,6 +1,7 @@
 import { useState } from "react";
 import GlobalStyle from "./style";
 import { Card, Icon, Inputs } from './style'
+import ocult from "../../img/ocult.png"
 
 const Signup = () =>{
     const [password, setPassword] = useState("password")
@@ -17,7 +18,7 @@ const Signup = () =>{
                <label>Password</label>
                <div className="password">
                <input type={password}/>
-               <Icon  onClick={()=> password==="password" ? setPassword("text") : setPassword("password")} src="http://i.stack.imgur.com/H9Sb2.png" alt="password"/>
+               <Icon  onClick={()=> password==="password" ? setPassword("text") : setPassword("password")} src={ocult} alt="password"/>
                </div>
                <button>Register</button>
            </Inputs>
