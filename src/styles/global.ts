@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         line-height: 1;
         background-color: #f3f3f3
+        font-family: 'Montserrat', sans-serif;
     }
     ol, ul {
         list-style: none;
