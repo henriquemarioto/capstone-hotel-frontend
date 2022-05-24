@@ -23,12 +23,7 @@ export const HeaderDiv = styled.header`
     display: none;
   }
 
-  .menu-bar {
-    display: inline;
-    cursor: pointer;
-  }
-
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 600px) {
     .menu-bar {
       display: none;
     }
@@ -41,7 +36,7 @@ export const HeaderDiv = styled.header`
         border: none;
         background-color: transparent;
         font-family: 'Montserrat', sans-serif;
-        font-size: 16px;
+        font-size: 12px;
         margin: 0 10px;
         padding: 5px 5px;
         border-bottom: 1px solid black;
@@ -53,4 +48,11 @@ export const HeaderDiv = styled.header`
       }
     }
   }
+
+  @media screen and (min-width: 750px) {
+     .col-right li {
+          font-size: 16px;
+      }
+  }
+  
 `

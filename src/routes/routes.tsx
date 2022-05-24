@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
-import Header from "../components";
+import Header from "../components/Header";
 
 const Routes = () => {
   return (
