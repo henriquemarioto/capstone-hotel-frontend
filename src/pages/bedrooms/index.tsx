@@ -1,6 +1,9 @@
 import BedroomsCard from "../../components/BedroomsCard"
 import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles"
 
+import { FaSearch, FaArrowLeft } from "react-icons/fa"
+import { useHistory } from "react-router-dom"
+
 interface Bedroom {
   availability: boolean
   capacity: number
@@ -18,7 +21,7 @@ const BedroomsPage = () => {
     {
       availability: true,
       capacity: 3,
-      clientsList: [{}, {}],
+      clientsList: [{}, {}, {}],
       floor: "2",
       number: "200",
     },
@@ -26,28 +29,32 @@ const BedroomsPage = () => {
       availability: false,
       capacity: 4,
       clientsList: [{}, {}],
-      floor: "1",
-      number: "100",
+      floor: "3",
+      number: "300",
     },
     {
-      availability: false,
-      capacity: 4,
-      clientsList: [{}, {}],
+      availability: true,
+      capacity: 5,
+      clientsList: [],
       floor: "1",
-      number: "100",
+      number: "500",
     },
   ]
   return (
     <MainDiv>
       <TitleSection>
-        <button>Voltar</button>
+        <button>
+          <FaArrowLeft />
+        </button>
         <h1>Bedrooms</h1>
       </TitleSection>
       <SearchSection>
         <p>Choose the bedroom</p>
         <form>
           <input type="text" placeholder="Number, floor, availability" />
-          <button type="submit">Go!</button>
+          <button type="submit">
+            <FaSearch />
+          </button>
         </form>
       </SearchSection>
       <BedroomsDiv>
