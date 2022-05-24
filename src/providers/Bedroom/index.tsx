@@ -20,7 +20,7 @@ type BedroomInput = Pick<
   "number" | "floor" | "capacity" | "availability"
 >
 
-interface UpdatedProps {
+interface UpdateProps {
   capacity?: number
   availability?: boolean
 }
@@ -35,7 +35,7 @@ interface BedroomContextData {
   getAllBedroom: () => Promise<void>
   getAllServices: () => Promise<void>
   getOneService: (id: string) => Promise<void>
-  updatedBedroom: (data: UpdatedProps, id: string) => Promise<void>
+  updateBedroom: (data: UpdateProps, id: string) => Promise<void>
   disableBedroom: (id: string) => Promise<void>
   filterByStatus: (status: boolean) => Promise<void>
 }
@@ -75,5 +75,23 @@ export const BedroomProvider = ({children}: BedroomProps) => {
       },
     })
     setBedroom(data)
+  }
+
+  const updateBedroom = async (updateProps: UpdateProps, id: string) => {
+    const {data} = await apiHotel.patch(`bedrooms/${id}`, updateProps, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    setBedroom(data)
+  }
+
+  const deleteBedroom = async (id: string) => {
+    const data = await apiHotel.delete(`bedroom/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
   }
 }
