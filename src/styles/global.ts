@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     */
     *{
         box-sizing: border-box;
+
     }
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -27,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 100%;
         font: inherit;
         vertical-align: baseline;
+        font-family: "Montserrat", sans-serif;
     }
     /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, 
@@ -35,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         line-height: 1;
+        background-color: #f3f3f3;
         font-family: 'Montserrat', sans-serif;
     }
     ol, ul {

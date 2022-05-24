@@ -3,13 +3,14 @@ import GlobalStyle from "./style";
 import { Card, Icon, Inputs } from './style'
 
 const Login = () =>{
+    
     const [password, setPassword] = useState("password")
 
     return(
         <>
         <GlobalStyle/>
         <Card>
-           <h1>Login</h1>
+           <h1>Logins</h1>
            <Inputs>
                <label>CPF</label>
                <input type="text" />
