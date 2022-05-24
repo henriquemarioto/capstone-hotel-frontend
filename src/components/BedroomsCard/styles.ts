@@ -10,6 +10,7 @@ interface Props {
 export const Container = styled.div`
   width: 150px;
   height: 150px;
+  margin: 5px;
   display: flex;
   justify-content: space-between;
   padding: 10px;
