@@ -3,7 +3,6 @@ import Routes from "./routes/routes"
 import { Toaster } from "react-hot-toast"
 import { useService } from "./providers/Service"
 import { useEffect } from "react"
-import BedroomsPage from "./pages/bedrooms"
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <Toaster />
       <GlobalStyle />
       <Routes />
-      <BedroomsPage />
     </>
   )
 }
