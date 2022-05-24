@@ -18,11 +18,13 @@ const Routes = () => {
       <Route exact path="/signup">
         <Signup/>
       </Route>
-      <Route exact path="/"></Route>
       <Route path='/clients'>
         <Clients />
         </Route>
       <Route path='/hiredservices'>
+        <HiredService />
+        </Route>
+        <Route path='/contratcs'>
         <HiredService />
         </Route>
     </Switch>
