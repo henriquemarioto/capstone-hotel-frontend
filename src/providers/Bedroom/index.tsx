@@ -1,4 +1,5 @@
-import {createContext, ReactNode, useEffect, useState} from "react"
+import {createContext, ReactNode, useState} from "react"
+import toast from "react-hot-toast"
 
 import apiHotel from "../../services/apiHotel"
 import {useLogin} from "../Login"
@@ -31,13 +32,12 @@ interface BedroomProps {
 
 interface BedroomContextData {
   bedrooms: Bedroom[]
-  bedroom: Bedroom
-  getAllBedroom: () => Promise<void>
-  getAllServices: () => Promise<void>
-  getOneService: (id: string) => Promise<void>
+  bedroom?: Bedroom
+  getAllBedrooms: () => Promise<void>
+  getOneBedroom: (id: string) => Promise<void>
   updateBedroom: (data: UpdateProps, id: string) => Promise<void>
   disableBedroom: (id: string) => Promise<void>
-  filterByStatus: (status: boolean) => Promise<void>
+  createBedroom: (bedroomInpu: BedroomInput) => Promise<void>
 }
 
 const BedroomContext = createContext<BedroomContextData>(
@@ -57,6 +57,7 @@ export const BedroomProvider = ({children}: BedroomProps) => {
     })
 
     setBedrooms([...bedrooms, data])
+    toast("Bedroom created with success!")
   }
 
   const getAllBedrooms = async () => {
@@ -78,21 +79,38 @@ export const BedroomProvider = ({children}: BedroomProps) => {
   }
 
   const updateBedroom = async (updateProps: UpdateProps, id: string) => {
-    const {data} = await apiHotel.patch(`bedrooms/${id}`, updateProps, {
+    const data = await apiHotel.patch(`bedrooms/${id}`, updateProps, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-
-    setBedroom(data)
+    getAllBedrooms()
+    toast("Bedroom updated with success!")
   }
 
-  const deleteBedroom = async (id: string) => {
+  const disableBedroom = async (id: string) => {
     const data = await apiHotel.delete(`bedroom/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
+    getAllBedrooms()
+    toast("Bedroom disabled with success")
   }
-}
 
+  return (
+    <BedroomContext.Provider
+      value={{
+        bedrooms,
+        bedroom,
+        createBedroom,
+        getAllBedrooms,
+        getOneBedroom,
+        updateBedroom,
+        disableBedroom,
+      }}
+    >
+      {children}
+    </BedroomContext.Provider>
+  )
+}
