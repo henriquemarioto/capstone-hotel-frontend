@@ -40,6 +40,9 @@ const GlobalStyle = createGlobalStyle`
         background-color: #f3f3f3;
         font-family: 'Montserrat', sans-serif;
         position: relative;
+        height: 100vh;
+
+        display: flex;
     }
     button{
         cursor: pointer;
@@ -59,6 +62,9 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+    #root{
+        width: 100%;
+    }
 
     :root{
         --white-0: #ffffff;
@@ -67,6 +73,8 @@ const GlobalStyle = createGlobalStyle`
         --beige-1: #f1dabf;
         --beige-dark: #92817A;
         --vine: #470024;
+
+        --margin: 0 20px;
     }
 `
 

@@ -42,6 +42,7 @@ const Routes = () => {
       </Route>
 
       <Route path="/Dashboard">
+        <Header />
         <Dashboard />
       </Route>
     </Switch>
