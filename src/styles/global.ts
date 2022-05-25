@@ -40,6 +40,9 @@ const GlobalStyle = createGlobalStyle`
         background-color: #f3f3f3;
         font-family: 'Montserrat', sans-serif;
         position: relative;
+        height: 100vh;
+
+        display: flex;
     }
     button{
         cursor: pointer;

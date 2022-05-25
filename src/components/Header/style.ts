@@ -4,7 +4,7 @@ export const HeaderDiv = styled.header`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 60px;
+  height: 10vh;
   background-color: var(--beige-1);
 
   .container {
