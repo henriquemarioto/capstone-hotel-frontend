@@ -1,19 +1,24 @@
-import BedroomsCard from "../../components/BedroomsCard"
-import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles"
+import BedroomsCard from "../../components/BedroomsCard";
+import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles";
 
-import { FaSearch, FaArrowLeft } from "react-icons/fa"
-import { useHistory } from "react-router-dom"
+import { FaSearch, FaArrowLeft } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+import PopupRegisterClient from "../../components/PopupRegisterClient";
+import { useState } from "react";
+import PopupRegisterService from "../../components/PopupRegisterService";
+import PopupRegisterBedroom from "../../components/PopupRegisterBedroom";
+import PopupRegisterContract from "../../components/PopupRegisterContract";
 
 interface Bedroom {
-  availability: boolean
-  capacity: number
-  clientsList: object[]
-  floor: string
-  number: string
+  availability: boolean;
+  capacity: number;
+  clientsList: object[];
+  floor: string;
+  number: string;
 }
 
 interface Bedrooms {
-  bedrooms: Bedroom[]
+  bedrooms: Bedroom[];
 }
 
 const BedroomsPage = () => {
@@ -39,9 +44,19 @@ const BedroomsPage = () => {
       floor: "1",
       number: "500",
     },
-  ]
+  ];
+
+  // const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  // const handlePopup = () => {
+  //   setShowPopup(!showPopup);
+  // };
+
   return (
     <MainDiv>
+      {/* <button onClick={handlePopup}></button>
+      {showPopup && <PopupRegisterContract handlePopup={handlePopup} />} */}
+
       <TitleSection>
         <button>
           <FaArrowLeft />
@@ -68,11 +83,11 @@ const BedroomsPage = () => {
               number={bedroom.number}
               key={index}
             />
-          )
+          );
         })}
       </BedroomsDiv>
     </MainDiv>
-  )
-}
+  );
+};
 
-export default BedroomsPage
+export default BedroomsPage;

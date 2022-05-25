@@ -68,7 +68,7 @@ export const ServiceProvider = ({children}: ServiceProps) => {
   const getAllServices = async () => {
     const {data} = await apiHotel.get("services", {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTM0ODg4MTYsImV4cCI6MTY1Mzc0ODAxNiwic3ViIjoiZmFhZWE2NzktOThhOC00NWNhLWIwYjYtMWNjZTUyNWFhN2YwIn0.Y5YnEp5jz_0o1e4x1WmYv4tLd5-9etxQDyULC3LaLL8`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
