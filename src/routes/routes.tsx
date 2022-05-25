@@ -21,7 +21,7 @@ const Routes = () => {
       <Route exact path="/signup">
         <Signup />
       </Route>
-      
+
       <Route path="/clients">
         <Header />
         <Clients />
@@ -35,9 +35,10 @@ const Routes = () => {
       <Route path="/hiredservices">
         <Header />
         <HiredService />
-        
-      <Route path='/Dashboard'>
-          <Dashboard/>
+      </Route>
+
+      <Route path="/Dashboard">
+        <Dashboard />
       </Route>
     </Switch>
   );
