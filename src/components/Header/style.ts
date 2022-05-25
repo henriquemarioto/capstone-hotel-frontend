@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 export const HeaderDiv = styled.header`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100vw;
+  padding: var(--margin);
+
+  width: 100%;
   height: 10vh;
   background-color: var(--beige-1);
 
@@ -11,12 +12,21 @@ export const HeaderDiv = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 92%;
+    width: 100%;
   }
 
   .col-left {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    
+    img{
+      width: 36px;
+      height: 36px;
+    }
   }
 
   .col-right {
