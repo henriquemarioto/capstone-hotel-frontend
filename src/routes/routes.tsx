@@ -22,7 +22,6 @@ const Routes = () => {
         <Signup />
       </Route>
 
-      <Route exact path="/"></Route>
       <Route path="/clients">
         <Header />
         <Clients />
