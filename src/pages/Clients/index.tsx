@@ -1,6 +1,7 @@
-import { FaSearch, FaArrowLeft } from "react-icons/fa";
-import ClientCard from "../../components/clientCard";
-import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style";
+import { useState } from "react"
+import { FaSearch, FaArrowLeft } from "react-icons/fa"
+import ClientCard from "../../components/clientCard"
+import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
 
 const arrayTeste = [
   {
@@ -73,9 +74,28 @@ const arrayTeste = [
     birthDate: "13/06/2001",
     bedroom: "1",
   },
-];
+]
 
 const Clients = () => {
+  const [clientsList, setClientsList] = useState(arrayTeste)
+  const [search, setSearch] = useState("")
+
+  const filter = (search: string) => {
+    const clients = [...arrayTeste]
+    const filteredClients = clients.filter((client) => {
+      return (
+        String(client.name).toLocaleLowerCase() === search ||
+        String(client.cpf) === search ||
+        String(client.bedroom) === search
+      )
+    })
+
+    if (filteredClients.length > 0) {
+      return setClientsList(filteredClients)
+    } else {
+      return setClientsList(arrayTeste)
+    }
+  }
   return (
     <Container>
       <DivInitial>
@@ -88,21 +108,24 @@ const Clients = () => {
       <DivSearch>
         <InputDiv>
           <label>Search</label>
-          <input type="text" />
+          <input
+            type="text"
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </InputDiv>
-        <button>
+        <button onClick={() => filter(search)}>
           <FaSearch />
         </button>
       </DivSearch>
       <main>
         <Ul>
-          {arrayTeste.map((teste) => (
+          {clientsList.map((teste) => (
             <ClientCard client={teste} />
           ))}
         </Ul>
       </main>
     </Container>
-  );
-};
+  )
+}
 
-export default Clients;
+export default Clients
