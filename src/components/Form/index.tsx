@@ -1,14 +1,14 @@
-import { ReactNode } from "react";
+import { FormHTMLAttributes, ReactNode } from "react";
 import { Container, Title } from "./styles";
 
-interface Props {
+interface Props extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
   title: string
 }
 
-const Form = ({ title, children }: Props) => {
+const Form = ({ title, children, ...rest }: Props) => {
   return (
-    <Container>
+    <Container {...rest}>
       <Title>{title}</Title>
       {children}
     </Container>
