@@ -17,17 +17,6 @@ const Routes = () => {
         <Login />
       </Route>
 
-<<<<<<< HEAD
-=======
-      <Route exact path="/services">
-        <Services />
-      </Route>
-
-      <Route exact path="/signup">
-        <Signup />
-      </Route>
-
->>>>>>> 2e6dbef8bed529b65ec2c167e6cace658f72b27d
       <Route path="/clients">
         <Header />
         <Clients />
