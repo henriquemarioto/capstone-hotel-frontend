@@ -30,13 +30,13 @@ export const Menu = styled.section`
   align-items: center;
 `
 export const Container = styled.section`
-  margin-top: 200px;
+  margin-top: 100px;
   transition: 0.4s;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 280px;
-  height: 165px;
+  width: 320px;
+  height: 200px;
   background-color: var(--beige-1);
   border-radius: 5px;
   div{
@@ -66,6 +66,49 @@ export const Container = styled.section`
    span{
      padding: 15px;
    }
+  }
+`
+  export const Admin = styled.section`
+  margin-top: 100px;
+  transition: 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 320px;
+  height: 400px;
+  background-color: var(--beige-1);
+  border-radius: 5px;
+  div{
+      display: flex;
+      align-items: center;
+  }
+  p{
+    margin: 0 10px;
+    font-weight: 500;
+  }
+  span{
+      transition: 0.4s;
+      padding: 10px;
+      background-color: var(--white-0);
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 20px;
+  }
+  span:hover{
+    transition: 0.4s;
+    background-color: var(--beige-dark);
+  }
+  @media (min-width: 560px) {
+   width: 350px;
+   height: 400px;
+   font-size: 20px;
+   span{
+     padding: 15px;
+   }
+  }
+
+  @media (min-width: 930px) {
+    margin-top: 0;
   }
 
 `
