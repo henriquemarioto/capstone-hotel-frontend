@@ -33,12 +33,13 @@ export const DivSession = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
-  button {
+  p {
     margin-right: 15px;
     margin-left: 15px;
-    cursor: pointer;
     border: none;
     background-color: transparent;
   }
 `
+

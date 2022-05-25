@@ -1,4 +1,4 @@
-import {Main,Container, DivSession} from "./style";
+import { Main, Container, DivSession } from "./style";
 import { useState } from "react";
 import {
   FaBed,
@@ -7,12 +7,13 @@ import {
   FaUserFriends,
   FaUserTie,
 } from "react-icons/fa";
-import image from '../../img/background.png'
+import image from "../../img/background.png";
 import Margin from "../../components/Margin";
 import PopupRegisterClient from "../../components/PopupRegisterClient";
 import PopupRegisterContract from "../../components/PopupRegisterContract";
 import PopupRegisterBedroom from "../../components/PopupRegisterBedroom";
 import PopupRegisterService from "../../components/PopupRegisterService";
+import PopupRegisterEmployee from "../../components/PopupRegisterEmployee";
 const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(true);
   const [showModalClients, setShowModalClients] = useState<boolean>(false);
@@ -41,38 +42,38 @@ const Dashboard = () => {
     <Margin>
       <Main>
         <img src={image} alt="" />
-      <Container>
-        <DivSession>
-          <button onClick={handleClients}>
-            <FaUserTie />
-          </button>
-          <span>New Client</span>
-        </DivSession>
-        <DivSession>
-          <button onClick={handleContract}>
-            <FaClipboard />
-          </button>
-          <span>New Contract</span>
-        </DivSession>
-        <DivSession>
-          <button onClick={handleBedroom}>
-            <FaBed />
-          </button>
-          <span>New Bedroom</span>
-        </DivSession>
-        <DivSession>
-          <button onClick={handleService}>
-            <FaReceipt />
-          </button>
-          <span>New Service</span>
-        </DivSession>
-        <DivSession>
-          <button onClick={handleEmployee}>
-            <FaUserFriends />
-          </button>
-          <span>New Employee</span>
-        </DivSession>
-      </Container>
+        <Container>
+          <DivSession onClick={handleClients}>
+            <p>
+              <FaUserTie />
+            </p>
+            <span>New Client</span>
+          </DivSession>
+          <DivSession onClick={handleContract}>
+            <p>
+              <FaClipboard />
+            </p>
+            <span>New Contract</span>
+          </DivSession>
+          <DivSession onClick={handleBedroom}>
+            <p>
+              <FaBed />
+            </p>
+            <span>New Bedroom</span>
+          </DivSession>
+          <DivSession onClick={handleService}>
+            <p>
+              <FaReceipt />
+            </p>
+            <span>New Service</span>
+          </DivSession>
+          <DivSession onClick={handleEmployee}>
+            <p>
+              <FaUserFriends />
+            </p>
+            <span>New Employee</span>
+          </DivSession>
+        </Container>
       </Main>
       {showModalClients && <PopupRegisterClient handlePopup={handleClients} />}
       {showModalContract && (
@@ -80,7 +81,7 @@ const Dashboard = () => {
       )}
       {showModalBedroom && <PopupRegisterBedroom handlePopup={handleBedroom} />}
       {showModalService && <PopupRegisterService handlePopup={handleService} />}
-      {/* {showModalEmployee && <h1>teste</h1>} */}
+      {showModalEmployee && <PopupRegisterEmployee handlePopup={handleEmployee}/>}
     </Margin>
   );
 };
