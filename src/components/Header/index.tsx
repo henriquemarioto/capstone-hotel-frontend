@@ -16,6 +16,7 @@ import logo from "../../img/logo.svg";
 const drawerWidth = 240;
 
 const Header = (props: Props) => {
+
   const history = useHistory();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -44,6 +45,7 @@ const Header = (props: Props) => {
         >
           Bedrooms
         </ListItemButton>
+
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginBottom: "5px", marginTop: "5px", color: "white" }}
@@ -65,6 +67,7 @@ const Header = (props: Props) => {
         >
           Employees
         </ListItemButton>
+
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginTop: "5px", color: "white" }}
@@ -94,7 +97,7 @@ const Header = (props: Props) => {
             <li onClick={() => history.push("/")}>Clients</li>
             <li onClick={() => history.push("/")}>Bedrooms</li>
             <li onClick={() => history.push("/")}>Contracts</li>
-            <li onClick={() => history.push("/")}>Services</li>
+            <li onClick={() => history.push("/services")}>Services</li>
             <li onClick={() => history.push("/")}>Employees</li>
           </ul>
 
