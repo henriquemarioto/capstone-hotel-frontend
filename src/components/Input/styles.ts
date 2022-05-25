@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputDiv = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,13 +11,33 @@ export const InputDiv = styled.div`
       font-size: 12px;
   }
 
-  input {
-    margin-top: 5px;
-    height: 30px;
-    width: 100%;
-    border: 1px solid var(--beige-1);
-    border-radius: 8px;
+`;
 
-    padding: 0 5px;
-  }
+export const InputContainer = styled.div`
+  margin-top: 5px;
+  height: 30px;
+  width: 100%;
+  border: 1px solid var(--beige-1);
+  border-radius: 8px;
+
+  display: flex;
+`;
+
+export const DefaultInput = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: 0 5px;
+  border-radius: 8px;
+
+  margin: 0;
+  border: none;
+`;
+
+export const Button = styled.button`
+  background-color: transparent;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
