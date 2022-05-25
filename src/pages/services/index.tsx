@@ -10,8 +10,16 @@ import {
 } from "./styles";
 
 import {FiSearch} from "react-icons/fi";
+import {useService} from "../../providers/Service";
+import {useEffect} from "react";
 
 export const Services = () => {
+  const {services, getAllServices} = useService();
+
+  useEffect(() => {
+    getAllServices();
+  }, []);
+
   return (
     <>
       <Header />
@@ -27,56 +35,16 @@ export const Services = () => {
         </HeadingContainer>
 
         <CardsContainer>
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
-          <ServiceCard
-            name="Café da manhã"
-            description="Café da manhã gourmet com diversas opções."
-            price={20}
-          />
+          {services.map((service) => {
+            return (
+              <ServiceCard
+                name={service.name}
+                description={service.description}
+                price={service.price}
+                key={service.id}
+              />
+            );
+          })}
         </CardsContainer>
       </Container>
     </>
