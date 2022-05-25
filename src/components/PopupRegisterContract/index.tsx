@@ -1,7 +1,7 @@
 import Button from "../Button";
-import Input from "../Input";
+import {Input} from "../Input";
 import PopupRegisterModel from "../PopupRegisterModel";
-import Select from "../Select";
+import {Select} from "../Select";
 import { ContainerDate, ContainerDateInput, End, Label, Start } from "./styles";
 
 interface Props {

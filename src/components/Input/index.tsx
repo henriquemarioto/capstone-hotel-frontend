@@ -1,17 +1,17 @@
-import { HTMLAttributes, InputHTMLAttributes } from "react";
+import { ForwardRefRenderFunction, InputHTMLAttributes, forwardRef } from "react";
 import { InputDiv } from "./styles";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title: string;
 }
 
-const Input = ({ title, ...rest }: Props) => {
+const InputDefault: ForwardRefRenderFunction<HTMLInputElement, Props> = ({ title, ...rest },ref) => {
   return (
     <InputDiv>
       <label>{title}</label>
-      <input {...rest} />
+      <input {...rest} ref={ref}/>
     </InputDiv>
   );
 };
 
-export default Input;
+export const Input = forwardRef(InputDefault)

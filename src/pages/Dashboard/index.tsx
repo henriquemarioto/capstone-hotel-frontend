@@ -74,13 +74,13 @@ const Dashboard = () => {
         </DivSession>
       </Container>
       </Main>
-      {showModalClients && <PopupRegisterClient handlePopup={handleClients} />}
+      {/* {showModalClients && <PopupRegisterClient handlePopup={handleClients} />}
       {showModalContract && (
         <PopupRegisterContract handlePopup={handleContract} />
-      )}
+      )} */}
       {showModalBedroom && <PopupRegisterBedroom handlePopup={handleBedroom} />}
-      {showModalService && <PopupRegisterService handlePopup={handleService} />}
-      {showModalEmployee && <h1>teste</h1>}
+      {/* {showModalService && <PopupRegisterService handlePopup={handleService} />}
+      {showModalEmployee && <h1>teste</h1>} */}
     </Margin>
   );
 };

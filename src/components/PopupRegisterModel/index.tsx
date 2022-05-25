@@ -6,13 +6,15 @@ interface Props {
   children?: ReactNode;
   title: string;
   handlePopup: () => void;
+  handleClick: any
+  handleSubmit: any
 }
 
-const PopupRegisterModel = ({ children, title, handlePopup }: Props) => {
+const PopupRegisterModel = ({ children, title, handlePopup, handleClick, handleSubmit }: Props) => {
   return (
     <Container>
       <Background>
-        <Form>
+        <Form onSubmit={handleSubmit(handleClick)}>
           <CloseButton type="button" onClick={handlePopup}>
             <FaTimes />
           </CloseButton>
