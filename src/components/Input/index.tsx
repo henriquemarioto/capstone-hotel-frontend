@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+import {Container} from "./styles"
+interface InputProps {
+  label: string
+}
+const Input = ({label}: InputProps) => {
+  return (
+    <Container>
+      <label>{label}</label>
+      <input type="text" placeholder={label} />
+    </Container>
+  )
+}
+
+export default Input
+=======
 import { HTMLAttributes, InputHTMLAttributes } from "react";
 import { InputDiv } from "./styles";
 
@@ -15,3 +31,4 @@ const Input = ({ title, ...rest }: Props) => {
 };
 
 export default Input;
+>>>>>>> 5e0c1513a6122ac580f6faa8147f84a3b2b789c2
