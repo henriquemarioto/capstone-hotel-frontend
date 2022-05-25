@@ -1,11 +1,6 @@
-
-import { HTMLAttributes, InputHTMLAttributes, useState } from "react";
+import { HTMLAttributes, ForwardRefRenderFunction, InputHTMLAttributes, forwardRef, useState } from "react";
+import { Button, Container, DefaultInput, Errors, InputContainer, InputDiv } from "./styles";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Container, DefaultInput, Errors, InputContainer } from "./styles";
-
-interface InputProps {
-  label: string
-}
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title: string;
@@ -14,7 +9,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   errors?: any;
 }
 
-const Input = ({ title, type, register, registerName, errors,  ...rest }: Props) => {
+const InputDefault: ForwardRefRenderFunction<HTMLInputElement, Props> = ({ title, ...rest },ref) => {
   const [inputType, setInputType] = useState(type);
 
   const handlePassword = () => {
@@ -25,15 +20,13 @@ const Input = ({ title, type, register, registerName, errors,  ...rest }: Props)
     }
   };
 
+
   return (
     <Container>
-      <label>{title}</label>
-
       <InputContainer errors={errors[registerName || ""]?.message || ""}>
         <DefaultInput
           type={inputType}
-          {...(registerName && register(registerName))}
-          {...rest}
+          {...rest} ref={ref}
         />
 
         {type === "password" && (
@@ -47,4 +40,4 @@ const Input = ({ title, type, register, registerName, errors,  ...rest }: Props)
   );
 };
 
-export default Input;
+export const Input = forwardRef(InputDefault)
