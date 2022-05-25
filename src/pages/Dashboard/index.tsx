@@ -74,7 +74,7 @@ const Dashboard = () => {
         </DivSession>
       </Container>
       </Main>
-      {/* {showModalClients && <PopupRegisterClient handlePopup={handleClients} />} */}
+      {showModalClients && <PopupRegisterClient handlePopup={handleClients} />}
       {showModalContract && (
         <PopupRegisterContract handlePopup={handleContract} />
       )}
