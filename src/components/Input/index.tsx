@@ -1,6 +1,11 @@
+
 import { HTMLAttributes, InputHTMLAttributes, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Container, DefaultInput, Errors, InputContainer } from "./styles";
+
+interface InputProps {
+  label: string
+}
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title: string;

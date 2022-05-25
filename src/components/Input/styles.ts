@@ -17,6 +17,7 @@ export const Container = styled.div`
 
 `;
 
+
 export const InputContainer = styled.div<Props>`
   margin-top: 5px;
   height: 30px;
@@ -35,6 +36,11 @@ export const DefaultInput = styled.input`
 
   margin: 0;
   border: none;
+
+  ::placeholder {
+      color: #c0c0c0;
+      font-size: 12px;
+    }
 `;
 
 export const Button = styled.button`

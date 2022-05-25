@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import {ReactNode} from "react"
+import {StyledButton} from "./styles"
+
+interface ButtonProps {
+  children: ReactNode
+}
+
+const Button = ({children, ...rest}: ButtonProps) => {
+  return <StyledButton {...rest}>{children}</StyledButton>
+}
+
+export default Button
+=======
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { Container } from "./styles"
 
@@ -10,3 +24,4 @@ const Button = ({ children, type, ...rest }: Props) => {
 };
 
 export default Button
+>>>>>>> 5e0c1513a6122ac580f6faa8147f84a3b2b789c2
