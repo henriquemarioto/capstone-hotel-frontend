@@ -13,7 +13,7 @@ interface Props {
 interface BedroomData {
   number: string
   floor: string
-  capacity: string
+  capacity: string | number
 }
 
 const PopupRegisterBedroom = ({ handlePopup }: Props) => {
@@ -29,6 +29,7 @@ const PopupRegisterBedroom = ({ handlePopup }: Props) => {
   }) 
 
   const handleClick = (data: BedroomData):any =>  {
+    data.capacity = Number(data.capacity)
     console.log(data)
   }
 
