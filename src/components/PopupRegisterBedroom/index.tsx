@@ -11,35 +11,42 @@ interface Props {
 }
 
 interface BedroomData {
-  number: string
-  floor: string
-  capacity: string | number
+  number: string;
+  floor: string;
+  capacity: string | number;
 }
 
 const PopupRegisterBedroom = ({ handlePopup }: Props) => {
-
   const bedroomSchema = yup.object().shape({
-    number: yup.string().required('Campo Obrigatorio'),
-    floor: yup.string().required('Campo Obrigatorio'),
-    capacity: yup.string().required('Campo Obrigatorio')
-  })
+    number: yup.string().required("Campo Obrigatorio"),
+    floor: yup.string().required("Campo Obrigatorio"),
+    capacity: yup.string().required("Campo Obrigatorio"),
+  });
 
-  const {register, handleSubmit, formState: {errors}} = useForm<BedroomData>({
-    resolver: yupResolver(bedroomSchema)
-  }) 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<BedroomData>({
+    resolver: yupResolver(bedroomSchema),
+  });
 
-  const handleClick = (data: BedroomData):any =>  {
-    data.capacity = Number(data.capacity)
-    console.log(data)
-  }
-
+  const handleClick = (data: BedroomData): any => {
+    data.capacity = Number(data.capacity);
+    console.log(data);
+  };
 
   return (
-    <PopupRegisterModel handlePopup={handlePopup} handleSubmit={handleSubmit} handleClick={handleClick} title="Register a bedroom">
-      <Input title="Number" {...register('number')}/>
-      <Input title="Floor" {...register('floor')}/>
+    <PopupRegisterModel
+      handlePopup={handlePopup}
+      handleSubmit={handleSubmit}
+      handleClick={handleClick}
+      title="Register a bedroom"
+    >
+      <Input title="Number" {...register("number")} />
+      <Input title="Floor" {...register("floor")} />
 
-      <Select title="Capacity"  {...register("capacity")}>
+      <Select title="Capacity" {...register("capacity")}>
         {[1, 2, 3, 4, 5].map((item) => (
           <option value={item}>{item}</option>
         ))}
