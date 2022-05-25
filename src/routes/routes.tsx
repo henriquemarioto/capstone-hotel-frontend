@@ -5,6 +5,7 @@ import Clients from "../pages/Clients";
 import HiredService from "../pages/HiredServices";
 
 import Header from "../components/Header";
+import BedroomsPage from "../pages/bedrooms";
 
 const Routes = () => {
   return (
@@ -12,19 +13,30 @@ const Routes = () => {
       <Route exact path="/">
         <Header />
       </Route>
+
       <Route exact path="/login">
-        <Login/>
+        <Login />
       </Route>
+
       <Route exact path="/signup">
-        <Signup/>
+        <Signup />
       </Route>
+
       <Route exact path="/"></Route>
-      <Route path='/clients'>
+      <Route path="/clients">
+        <Header />
         <Clients />
-        </Route>
-      <Route path='/hiredservices'>
+      </Route>
+
+      <Route exact path="/bedrooms">
+        <Header />
+        <BedroomsPage />
+      </Route>
+
+      <Route path="/hiredservices">
+        <Header />
         <HiredService />
-        </Route>
+      </Route>
     </Switch>
   );
 };
