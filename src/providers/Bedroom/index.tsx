@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useState} from "react"
+import {createContext, ReactNode, useContext, useState} from "react"
 import toast from "react-hot-toast"
 
 import apiHotel from "../../services/apiHotel"
@@ -114,3 +114,5 @@ export const BedroomProvider = ({children}: BedroomProps) => {
     </BedroomContext.Provider>
   )
 }
+
+export const useBedroom = () => useContext(BedroomContext)

@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         line-height: 1;
+        background-color: #f3f3f3;
         font-family: 'Montserrat', sans-serif;
     }
     ol, ul {
@@ -56,8 +57,11 @@ const GlobalStyle = createGlobalStyle`
     }
 
     :root{
+        --white-0: #ffffff;
+        --white-200: #fffbff
         --beige-0: #f3f3f3;
         --beige-1: #f1dabf;
+        --beige-dark: #92817A;
         --vine: #470024;
     }
 `

@@ -1,43 +1,28 @@
 import { FaPen, FaTrashAlt } from "react-icons/fa";
-import { Section, Ul, Container, Buttons } from "./style";
+import { Li, Buttons, DivClient } from "./style";
 
-interface ClientProps {
-    name: string
-    cpf: string
-    birthDate: string
-    cellphone: string
-    bedroom: string
-}
-
-const ClientCard = ({name, cpf, birthDate, cellphone, bedroom}: ClientProps) => {
+const ClientCard = ({ client }: any) => {
   return (
-    <Container>
-      <Section>
-        <div>
-          <Ul>
-          <h2>{name}</h2>
-            <li>
-              <p>
-                <span>CPF: </span>{cpf}
-              </p>
-            </li>
-            <li>
-              <p>
-                <span>Birth date: </span>{birthDate}
-              </p>
-            </li>
-            <li>
-              <p>
-                <span>Cellphone: </span>{cellphone}
-              </p>
-            </li>
-            <li>
-              <p>
-                <span>Bedroom: </span> {bedroom}
-              </p>
-            </li>
-          </Ul>
-        </div>
+    <>
+      <Li>
+        <DivClient>
+        <h2>{client.name}</h2>
+        <p>
+          <span>CPF: </span>
+          {client.cpf}
+        </p>
+        <p>
+          <span>Birth date: </span>
+          {client.birthDate}
+        </p>
+        <p>
+          <span>Cellphone: </span>
+          {client.cellphone}
+        </p>
+        <p>
+          <span>Bedroom: </span> {client.bedroom}
+        </p>
+        </DivClient>
         <Buttons>
           <button>
             <FaPen />
@@ -46,8 +31,8 @@ const ClientCard = ({name, cpf, birthDate, cellphone, bedroom}: ClientProps) => 
             <FaTrashAlt />
           </button>
         </Buttons>
-      </Section>
-    </Container>
+      </Li>
+    </>
   );
 };
 
