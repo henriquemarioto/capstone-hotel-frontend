@@ -1,113 +1,44 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  height: 100%;
-
+export const Main = styled.main`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-`;
+  padding: 15px;
 
-export const Image = styled.img`
-  display: none;
-`;
+  img {
+    display: none;
 
-export const Menu = styled.section`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-export const ContainerContent = styled.section`
-  transition: 0.4s;
-  display: flex;
-  flex-direction: column;
-
-  width: 280px;
-  background-color: var(--beige-1);
-  border-radius: 5px;
-  padding: 5px;
-
-  div {
-    display: flex;
-    align-items: center;
-  }
-
-`;
-
-export const ContainerItem = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 10px;
-  background-color: var(--beige-1);
-
-  border: 0;
-  margin: 0;
-
-  cursor: pointer;
-
-  :hover{
-    > div{
-      background-color: var(--beige-0);
+    @media screen and (min-width: 1024px){
+      display: block
     }
   }
-`;
+`
 
-export const ContainerPlus = styled.div`
-  width: 35px;
-  height: 35px;
-  background-color: var(--white-0);
-  border-radius: 5px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: 0.2s;
-`;
-
-export const Admin = styled.section`
-  margin-top: 100px;
-  transition: 0.4s;
+export const Container = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  width: 320px;
-  height: 400px;
+  align-items: flex-start;
+  width: 100%;
+  height: 300px;
+  max-width: 250px;
   background-color: var(--beige-1);
-  border-radius: 5px;
-  div {
-    display: flex;
-    align-items: center;
-  }
-  span {
-    margin: 0 10px;
-    font-weight: 500;
-  }
-  span {
-    transition: 0.4s;
-    padding: 10px;
-    background-color: var(--white-0);
-    border-radius: 5px;
+  justify-content: space-evenly;
+  border-radius: 8px;
+  margin: 15px auto;
+  `
+
+export const DivSession = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  button {
+    margin-right: 15px;
+    margin-left: 15px;
     cursor: pointer;
-    margin-left: 20px;
+    border: none;
+    background-color: transparent;
   }
-  span:hover {
-    transition: 0.4s;
-    background-color: var(--beige-dark);
-  }
-  @media (min-width: 560px) {
-    width: 350px;
-    height: 400px;
-    font-size: 20px;
-    span {
-      padding: 15px;
-    }
-  }
-
-  @media (min-width: 930px) {
-    margin-top: 0;
-  }
-`;
+`
