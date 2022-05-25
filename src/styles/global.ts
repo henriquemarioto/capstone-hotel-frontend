@@ -62,6 +62,9 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+    #root{
+        width: 100%;
+    }
 
     :root{
         --white-0: #ffffff;
@@ -70,6 +73,8 @@ const GlobalStyle = createGlobalStyle`
         --beige-1: #f1dabf;
         --beige-dark: #92817A;
         --vine: #470024;
+
+        --margin: 0 20px;
     }
 `
 

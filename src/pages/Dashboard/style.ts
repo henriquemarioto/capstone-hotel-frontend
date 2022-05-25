@@ -5,6 +5,7 @@ export const Container = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 export const Image = styled.img`
@@ -32,13 +33,6 @@ export const ContainerContent = styled.section`
     align-items: center;
   }
 
-  @media (min-width: 560px) {
-    width: 350px;
-    font-size: 20px;
-    span {
-      padding: 15px;
-    }
-  }
 `;
 
 export const ContainerItem = styled.button`
