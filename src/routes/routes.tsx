@@ -3,7 +3,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Clients from "../pages/Clients";
 import HiredService from "../pages/HiredServices";
-
+import Dashboard from "../pages/Dashboard";
 import Header from "../components/Header";
 import BedroomsPage from "../pages/bedrooms";
 
@@ -21,7 +21,7 @@ const Routes = () => {
       <Route exact path="/signup">
         <Signup />
       </Route>
-
+      
       <Route path="/clients">
         <Header />
         <Clients />
@@ -35,6 +35,9 @@ const Routes = () => {
       <Route path="/hiredservices">
         <Header />
         <HiredService />
+        
+      <Route path='/Dashboard'>
+          <Dashboard/>
       </Route>
     </Switch>
   );
