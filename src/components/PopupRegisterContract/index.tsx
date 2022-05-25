@@ -1,30 +1,68 @@
 import Button from "../Button";
-import {Input} from "../Input";
+import { Input } from "../Input";
 import PopupRegisterModel from "../PopupRegisterModel";
-import {Select} from "../Select";
+import { Select } from "../Select";
 import { ContainerDate, ContainerDateInput, End, Label, Start } from "./styles";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 interface Props {
   handlePopup: () => void;
 }
 
-const PopupRegisterContract = ({ handlePopup }: Props) => {
-  return (
-    <PopupRegisterModel handlePopup={handlePopup} title="Register a contract">
-      <Input title="Name" disabled />
-      <Input title="CPF" />
+interface ContractData {
+  cpf: string;
+  serviceId: string | number;
+  start_date: string;
+  end_date: string;
+}
 
-      <Select title="Capacity"></Select>
+const PopupRegisterContract = ({ handlePopup }: Props) => {
+  const contractSchema = yup.object().shape({
+    cpf: yup.string().required("Campo Obrigatorio").max(11),
+    serviceId: yup.string().required("Campo Obrigatorio"),
+    start_date: yup.string().required("Campo Obrigatorio"),
+    end_date: yup.string().required("Campo Obrigatorio"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(contractSchema),
+  });
+
+  const handleClick = (data: ContractData) => {
+    console.log(data);
+  };
+
+  return (
+    <PopupRegisterModel
+      handlePopup={handlePopup}
+      handleSubmit={handleSubmit}
+      handleClick={handleClick}
+      title="Register a contract"
+    >
+      <Input title="Name" disabled />
+      <Input title="CPF" {...register("cpf")} />
+
+      <Select title="Service">
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((service) => (
+          <option value={service}>{service}</option>
+        ))}
+      </Select>
 
       <ContainerDate>
         <ContainerDateInput>
           <Label>Start</Label>
-          <Start type="date"/>
+          <Start type="date" {...register("start_date")} />
         </ContainerDateInput>
 
         <ContainerDateInput>
           <Label>End</Label>
-          <End type="date"/>
+          <End type="date" {...register("end_date")} />
         </ContainerDateInput>
       </ContainerDate>
 
