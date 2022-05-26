@@ -1,19 +1,19 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { forwardRef, ForwardRefRenderFunction, HTMLAttributes, ReactNode } from "react";
 import { Container } from "./styles";
 
 interface Props extends HTMLAttributes<HTMLSelectElement> {
-    title: string
-    children?: ReactNode
+  title: string;
+  children?: ReactNode;
 }
 
-const Select = ({ title, children, ...rest }: Props) => {
+const SelectCapacity: ForwardRefRenderFunction<HTMLSelectElement, Props> = ({ title, children, ...rest }, ref) => {
   return (
     <Container>
       <label>{title}</label>
 
-      <select>{children}</select>
+      <select {...rest} ref={ref}>{children}</select>
     </Container>
   );
 };
 
-export default Select;
+export const Select = forwardRef(SelectCapacity)

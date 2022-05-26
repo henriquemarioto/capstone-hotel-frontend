@@ -104,16 +104,7 @@ const BedroomsPage = () => {
       </SearchSection>
       <BedroomsDiv>
         {bedrooms.map((bedroom, index) => {
-          return (
-            <BedroomsCard
-              availability={bedroom.availability}
-              capacity={bedroom.capacity}
-              clientsList={bedroom.clientsList}
-              floor={bedroom.floor}
-              number={bedroom.number}
-              key={index}
-            />
-          )
+          return <BedroomsCard key={index} bedroom={bedroom} />
         })}
       </BedroomsDiv>
     </MainDiv>

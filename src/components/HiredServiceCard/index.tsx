@@ -1,4 +1,4 @@
-import { Li, DivContract } from "./style";
+import { Li, DivContract, Status} from "./style";
 
 const HiredServiceCard = ({ hiredService }: any) => {
   return (
@@ -11,23 +11,23 @@ const HiredServiceCard = ({ hiredService }: any) => {
           </h2>
           <p>
             <span>Client: </span>
-            {hiredService.client}
+            {hiredService.client.name}
           </p>
           <p>
             <span>Bedroom: </span>
-            {hiredService.bedroom}
+            {hiredService.bedroom_number}
           </p>
           <p>
             <span>Start Date: </span>
-            {hiredService.start_date}
+            {new Date(hiredService.start_date).toLocaleDateString('pt-bt')}
           </p>
           <p>
-            <span>End Date: </span> {hiredService.end_date}
+            <span>End Date: </span> {new Date(hiredService.end).toLocaleDateString('pt-bt')}
           </p>
-          <p>
+          <div>
             <span>Status: </span>
-            {hiredService.paid ? "Paid" : "Pending"} 
-          </p>
+            <Status paid={hiredService.paid}> {hiredService.paid.toString()} </Status> 
+          </div>
         </DivContract>
       </Li>
     </>
