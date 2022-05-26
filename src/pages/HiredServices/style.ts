@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 export const Ul = styled.ul`
-  width: 95%;
-  max-width: 1200px;
-  height: 440px;
-  overflow-y: scroll;
+  width: 100%;
+  /* height: 440px;
+  overflow-y: scroll; */
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -12,8 +11,8 @@ export const Ul = styled.ul`
   align-items: center;
   gap: 5px;
 
-  @media screen and (min-width: 1024px){
+  /* @media screen and (min-width: 1024px){
     overflow-y: hidden;
     height: 100%;
-  }
+  } */
 `;

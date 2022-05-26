@@ -22,7 +22,7 @@ const HiredServiceCard = ({ hiredService }: any) => {
             {new Date(hiredService.start_date).toLocaleDateString('pt-bt')}
           </p>
           <p>
-            <span>End Date: </span> {new Date(hiredService.end).toLocaleDateString('pt-bt')}
+            <span>End Date: </span> {new Date(hiredService.end_date).toLocaleDateString('pt-bt')}
           </p>
           <div>
             <span>Status: </span>
