@@ -1,31 +1,31 @@
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import { HeaderDiv } from "./style";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import LogoutIcon from "@mui/icons-material/Logout";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
-import logo from "../../img/logo.svg";
-import { useLogin } from "../../providers/Login";
+import Box from "@mui/material/Box"
+import Divider from "@mui/material/Divider"
+import Drawer from "@mui/material/Drawer"
+import { HeaderDiv } from "./style"
+import IconButton from "@mui/material/IconButton"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemButton from "@mui/material/ListItemButton"
+import LogoutIcon from "@mui/icons-material/Logout"
+import MenuIcon from "@mui/icons-material/Menu"
+import Toolbar from "@mui/material/Toolbar"
+import { useHistory } from "react-router-dom"
+import { useState } from "react"
+import logo from "../../img/logo.svg"
+import { useLogin } from "../../providers/Login"
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const Header = (props: Props) => {
+  const { user } = useLogin()
 
-  const {user} = useLogin()
-  const history = useHistory();
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const history = useHistory()
+  const { window } = props
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    setMobileOpen(!mobileOpen)
+  }
 
   const drawer = (
     <div style={{ backgroundColor: "#470024", height: "100vh" }}>
@@ -81,10 +81,10 @@ const Header = (props: Props) => {
       </List>
       <Divider sx={{ backgroundColor: "white" }} />
     </div>
-  );
+  )
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    window !== undefined ? () => window().document.body : undefined
 
   return (
     <HeaderDiv>
@@ -141,7 +141,7 @@ const Header = (props: Props) => {
         </nav>
       </div>
     </HeaderDiv>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
