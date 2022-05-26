@@ -1,81 +1,20 @@
+import { useEffect } from "react";
 import { FaSearch, FaArrowLeft } from "react-icons/fa";
 import ClientCard from "../../components/clientCard";
+import { useClients } from "../../providers/clients";
+import { useLogin } from "../../providers/Login";
 import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style";
 
-const arrayTeste = [
-  {
-    name: "Cliente 1",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 2",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 3",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 4",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 5",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 6",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 7",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 8",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 9",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-  {
-    name: "Cliente 10",
-    cpf: "555.444.333-22",
-    cellphone: "988887777",
-    birthDate: "13/06/2001",
-    bedroom: "1",
-  },
-];
 
 const Clients = () => {
+
+  const {getAllClients, clients} = useClients()
+  const {token} = useLogin()
+
+  useEffect(() => {
+    getAllClients(token)
+  },[])
+
   return (
     <Container>
       <DivInitial>
@@ -96,7 +35,7 @@ const Clients = () => {
       </DivSearch>
       <main>
         <Ul>
-          {arrayTeste.map((teste) => (
+          {clients.map((teste) => (
             <ClientCard client={teste} />
           ))}
         </Ul>

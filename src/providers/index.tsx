@@ -4,6 +4,7 @@ import { LoginProvider } from "./Login";
 import { EmployeesProvider } from "./Employee";
 import { ClientsProvider } from "./clients";
 import { BedroomProvider } from "./Bedroom";
+import { HiredServiceProvider } from "./HiredService";
 
 interface AppProvider {
   children: ReactNode;
@@ -15,7 +16,9 @@ const Provider = ({ children }: AppProvider) => {
       <ServiceProvider>
         <ClientsProvider>
           <BedroomProvider>
-            <EmployeesProvider>{children}</EmployeesProvider>
+            <HiredServiceProvider>
+              <EmployeesProvider>{children}</EmployeesProvider>
+            </HiredServiceProvider>
           </BedroomProvider>
         </ClientsProvider>
       </ServiceProvider>

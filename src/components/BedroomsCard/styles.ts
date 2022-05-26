@@ -54,3 +54,18 @@ export const Circle = styled.div<Props>`
     }
   }}
 `
+
+export const Buttons = styled.div`
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 15px;
+
+    button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+`
