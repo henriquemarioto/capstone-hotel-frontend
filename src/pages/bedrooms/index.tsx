@@ -4,11 +4,13 @@ import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles"
 import { FaSearch, FaArrowLeft } from "react-icons/fa"
 import { useHistory } from "react-router-dom"
 import PopupRegisterClient from "../../components/PopupRegisterClient"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PopupRegisterService from "../../components/PopupRegisterService"
 import PopupRegisterBedroom from "../../components/PopupRegisterBedroom"
 import PopupRegisterContract from "../../components/PopupRegisterContract"
 import Button from "../../components/Button"
+import { useBedroom } from "../../providers/Bedroom"
+import { useLogin } from "../../providers/Login"
 
 interface Bedroom {
   availability: boolean
@@ -18,65 +20,26 @@ interface Bedroom {
   number: string
 }
 
-interface Bedrooms {
-  bedrooms: Bedroom[]
-}
-
 const BedroomsPage = () => {
-  const bedroomsList = [
-    {
-      availability: true,
-      capacity: 3,
-      clientsList: [{}, {}, {}],
-      floor: "2",
-      number: "200",
-    },
-    {
-      availability: false,
-      capacity: 4,
-      clientsList: [{}, {}],
-      floor: "3",
-      number: "300",
-    },
-    {
-      availability: true,
-      capacity: 5,
-      clientsList: [],
-      floor: "1",
-      number: "500",
-    },
-  ]
+  const { getAllBedrooms, bedrooms, filteredBedrooms, filter } = useBedroom()
+  const { token } = useLogin()
   const [search, setSearch] = useState("")
-  const [bedrooms, setBedrooms] = useState(bedroomsList)
+
   const history = useHistory()
 
   const goBack = () => {
     return history.push("/")
   }
 
-  const filter = (event: any, search: string) => {
-    event.preventDefault()
-    const bedrooms = [...bedroomsList]
-    const filteredBedrooms = bedrooms.filter((bedroom) => {
-      return (
-        String(bedroom.capacity) === search ||
-        String(bedroom.floor) === search ||
-        String(bedroom.number) === search
-      )
-    })
+  const [showPopup, setShowPopup] = useState<boolean>(false)
 
-    if (filteredBedrooms.length > 0) {
-      return setBedrooms(filteredBedrooms)
-    } else {
-      return setBedrooms(bedroomsList)
-    }
+  const handlePopup = () => {
+    setShowPopup(!showPopup)
   }
 
-  // const [showPopup, setShowPopup] = useState<boolean>(false);
-
-  // const handlePopup = () => {
-  //   setShowPopup(!showPopup);
-  // };
+  useEffect(() => {
+    getAllBedrooms(token)
+  }, [])
 
   return (
     <MainDiv>
@@ -84,18 +47,23 @@ const BedroomsPage = () => {
       {showPopup && <PopupRegisterContract handlePopup={handlePopup} />} */}
 
       <TitleSection>
-        <Button onClick={goBack}>
+        <button onClick={goBack}>
           <FaArrowLeft />
-        </Button>
+        </button>
         <h1>Bedrooms</h1>
       </TitleSection>
       <SearchSection>
         <p>Choose the bedroom</p>
-        <form onSubmit={(event) => filter(event, search)}>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault()
+            filter(search)
+          }}
+        >
           <input
-            onChange={(event) => setSearch(event.target.value)}
             type="text"
             placeholder="Number, floor, availability"
+            onChange={(event) => setSearch(event.target.value)}
           />
           <Button type="submit">
             <FaSearch />
@@ -103,9 +71,13 @@ const BedroomsPage = () => {
         </form>
       </SearchSection>
       <BedroomsDiv>
-        {bedrooms.map((bedroom, index) => {
-          return <BedroomsCard key={index} bedroom={bedroom} />
-        })}
+        {filteredBedrooms.length > 0
+          ? filteredBedrooms.map((bedroom) => {
+              return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
+            })
+          : bedrooms.map((bedroom) => {
+              return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
+            })}
       </BedroomsDiv>
     </MainDiv>
   )
