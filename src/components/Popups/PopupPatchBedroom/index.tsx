@@ -5,44 +5,48 @@ import { Select } from "../../Select";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useClients } from "../../../providers/clients";
+import { useBedroom } from "../../../providers/Bedroom";
 import { useLogin } from "../../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
+  id: string;
 }
 
-interface ClientData {
-  name: string;
-  birthDate: string;
-  cpf: string;
-  cellphone?: string;
-  bedroomId: string | number;
+interface BedroomData {
+  number?: string;
+  floor?: string;
+  capacity?: string | number;
+  status?: boolean
 }
 
-const PopupRegisterClient = ({ handlePopup }: Props) => {
-  const { createClient } = useClients();
-  const {token} = useLogin()
+const PopupUpdateBedroom = ({ handlePopup, bedroom }: any) => {
+  const { updateBedroom } = useBedroom();
 
-  const clientSchema = yup.object().shape({
-    name: yup.string().required("Campo obrigatorio"),
-    birthDate: yup.string().required("Campo Obrigatorio"),
-    cpf: yup.string().required("Campo obrigatorio").max(11),
-    cellphone: yup.string().max(11),
-    bedroomId: yup.string(),
+  const bedroomSchema = yup.object().shape({
+    floor: yup.string(),
+    capacity: yup.number(),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ClientData>({
-    resolver: yupResolver(clientSchema),
+  } = useForm<BedroomData>({
+    resolver: yupResolver(bedroomSchema),
   });
 
-  const handleClick = async (data: ClientData) => {
-    data.bedroomId = Number(data.bedroomId);
-    await createClient(data, token)
+  const formatData = (data: BedroomData) => {
+    !data.floor && (data.floor = bedroom.floor);
+    data.capacity = Number(data.capacity);
+  }
+
+  const handleClick = async (data: BedroomData) => {
+    formatData(data)
+
+    console.log(data);
+    await updateBedroom(data, bedroom.id);
+    handlePopup();
   };
 
   return (
@@ -50,20 +54,24 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
       handlePopup={handlePopup}
       handleSubmit={handleSubmit}
       handleClick={handleClick}
-      title="Register a client"
+      title="Register a bedroom"
     >
-      <Input title="Name" {...register("name")} />
-      <Input title="Birth date" type="date" {...register("birthDate")} />
-      <Input title="CPF" {...register("cpf")} />
-      <Input title="Cellphone" {...register("cellphone")} />
-      <Select title="Bedroom" {...register("bedroomId")}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((bedroom, i) => (
-          <option value={bedroom} key={i}>{bedroom}</option>
+      <Input title="Number" value={bedroom.number} disabled />
+      <Input type="number" title="Floor" {...register("floor")} defaultValue={bedroom.floor}/>
+
+      <Select title="Capacity" {...register("capacity")}>
+        {[1, 2, 3, 4, 5].map((item, i) => (
+          <option value={item} key={i}>
+            {item}
+          </option>
         ))}
       </Select>
-      <Button type="submit">Register</Button>
+
+      {!bedroom.status && <Input title="Status" checkbox />}
+
+      <Button type="submit">Update</Button>
     </PopupRegisterModel>
   );
 };
 
-export default PopupRegisterClient;
+export default PopupUpdateBedroom;

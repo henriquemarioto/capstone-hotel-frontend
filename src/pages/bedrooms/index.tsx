@@ -1,11 +1,12 @@
 import BedroomsCard from "../../components/BedroomsCard";
 import { BedroomsDiv } from "./styles";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useBedroom } from "../../providers/Bedroom";
 import { useLogin } from "../../providers/Login";
 import Margin from "../../components/Margin";
 import SearchModel from "../../components/SearchModel";
+import PopupUpdateBedroom from "../../components/Popups/PopupPatchBedroom";
 
 interface Bedroom {
   availability: boolean;
@@ -16,13 +17,16 @@ interface Bedroom {
 }
 
 const BedroomsPage = () => {
-  const { getAllBedrooms, bedrooms, filteredBedrooms, filter } = useBedroom()
-  const { token } = useLogin()
+  const { getAllBedrooms, bedrooms, filterByStatus,filteredBedrooms, filter } = useBedroom()
+  const [status, setStatus] = useState<boolean>(false);
 
-  const history = useHistory()
+  const alterStatus = async () => {
+    await filterByStatus(status);
+    setStatus(!status);
+  };
 
   useEffect(() => {
-    getAllBedrooms(token);
+    getAllBedrooms();
   }, []);
 
   return (
@@ -31,11 +35,14 @@ const BedroomsPage = () => {
         title="Bedroom"
         placeholder="Number, floor, capacity"
         searchFunction={filter}
+        alterStatusFunction={alterStatus}
       >
         <BedroomsDiv>
           {filteredBedrooms.length > 0
             ? filteredBedrooms.map((bedroom) => {
-                return <BedroomsCard key={bedroom.id} bedroom={bedroom} />;
+                return (
+                  <BedroomsCard key={bedroom.id} bedroom={bedroom} onClick />
+                );
               })
             : bedrooms.map((bedroom) => {
                 return <BedroomsCard key={bedroom.id} bedroom={bedroom} />;
