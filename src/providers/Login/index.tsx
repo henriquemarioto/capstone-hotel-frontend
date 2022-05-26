@@ -24,32 +24,40 @@ interface EmployeeLogin {
 
 interface LoginContextData {
   login: (employee: EmployeeLogin) => void;
-  token: string;
-  user: Employee;
+  logout: () => void
+  token: string | null;
+  user: Employee | object;
 }
 
 const LoginContext = createContext<LoginContextData>({} as LoginContextData);
 
 export const LoginProvider = ({ children }: LoginProps) => {
-  const [token, setToken] = useState<string>(() => {
+  const [token, setToken] = useState<string | null>(() => {
     const data = localStorage.getItem("@HM:token");
 
     if (data) {
       return JSON.parse(data);
     }
 
-    return {} as string;
+    return null;
   });
 
-  const [user, setUser] = useState<Employee>(() => {
+  const [user, setUser] = useState<Employee | object>(() => {
     const data = localStorage.getItem("@HM:user");
 
     if (data) {
       return JSON.parse(data);
     }
 
-    return {} as Employee;
+    return {};
   });
+
+  const logout = () => {
+    localStorage.clear()
+    setToken(null)
+    setUser({})
+    history.push("/login")
+  }
 
   const history = useHistory();
 
@@ -76,7 +84,7 @@ export const LoginProvider = ({ children }: LoginProps) => {
 
   return (
     <LoginContext.Provider
-      value={{ login, token, user }}
+      value={{ login, logout, token, user }}
     >
       {children}
     </LoginContext.Provider>
