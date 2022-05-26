@@ -49,23 +49,22 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
   const [client, setClient] = useState<Clients>();
 
   const createClient = async (clientsInput: InputClients, token: string) => {
-    const { data }: any = await apiHotel
-      .post("/clients", clientsInput, {
+    await apiHotel
+      .post("clients", clientsInput, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((_) => {
-        setClients([...clients, data]);
         toast.success("Client created");
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(err.response.data.message || err);
       });
   };
 
   const getAllClients = async (token: string) => {
-    const { data } = await apiHotel.get("/clients", {
+    const { data } = await apiHotel.get("clients", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -98,7 +97,7 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
         getAllClients(token);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(err.response?.data.message || err);
       });
   };
 

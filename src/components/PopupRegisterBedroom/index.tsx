@@ -53,8 +53,8 @@ const PopupRegisterBedroom = ({ handlePopup }: Props) => {
       <Input title="Floor" {...register("floor")} />
 
       <Select title="Capacity" {...register("capacity")}>
-        {[1, 2, 3, 4, 5].map((item) => (
-          <option value={item}>{item}</option>
+        {[1, 2, 3, 4, 5].map((item, i) => (
+          <option value={item} key={i}>{item}</option>
         ))}
       </Select>
 
