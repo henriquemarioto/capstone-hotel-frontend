@@ -2,7 +2,7 @@ import styled from 'styled-components'
 export const HeaderDiv = styled.header`
   display: flex;
   align-items: center;
-  padding: var(--margin);
+  padding: 0 var(--margin);
 
   width: 100%;
   height: 10vh;

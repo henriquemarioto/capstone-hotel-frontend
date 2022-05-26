@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
-import { FaArrowLeft, FaSearch } from "react-icons/fa"
+import { useEffect } from "react"
 import HiredServiceCard from "../../components/HiredServiceCard"
+import Margin from "../../components/Margin"
+import SearchModel from "../../components/SearchModel"
 import { useHiredService } from "../../providers/HiredService"
 import { useLogin } from "../../providers/Login"
-import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
+import { Ul } from "./style"
 
 const HiredService = () => {
 
@@ -34,34 +35,19 @@ const HiredService = () => {
   },[])
 
   return (
-    <Container>
-      <DivInitial>
-        <button>
-          <FaArrowLeft />
-        </button>
-        <h1>Contracts</h1>
-        <span></span>
-      </DivInitial>
-      <DivSearch>
-        <InputDiv>
-          <label>Find a contract</label>
-          <input
-            type="text"
-          />
-        </InputDiv>
-        <button >
-          <FaSearch />
-        </button>
-      </DivSearch>
-      <main>
+    <Margin>
+      <SearchModel title="Contracts" placeholder="Client name, service name, bedroom number...">
         <Ul>
           {hiredServices.map((hiredService) => (
-            <HiredServiceCard key={hiredService.id} hiredService={hiredService} />
+            <HiredServiceCard
+              key={hiredService.id}
+              hiredService={hiredService}
+            />
           ))}
         </Ul>
-      </main>
-    </Container>
-  )
+      </SearchModel>
+    </Margin>
+  );
 }
 
 export default HiredService

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import { FaSearch, FaArrowLeft } from "react-icons/fa"
 import ClientCard from "../../components/clientCard"
+import Margin from "../../components/Margin"
+import SearchModel from "../../components/SearchModel"
 import { useClients } from "../../providers/clients"
 import { useLogin } from "../../providers/Login"
-import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
+import { Ul } from "./style"
 
 
 const Clients = () => {
@@ -35,34 +37,16 @@ const Clients = () => {
   },[])
 
   return (
-    <Container>
-      <DivInitial>
-        <button>
-          <FaArrowLeft />
-        </button>
-        <h1>Clients</h1>
-        <span></span>
-      </DivInitial>
-      <DivSearch>
-        <InputDiv>
-          <label>Search</label>
-          <input
-            type="text"
-          />
-        </InputDiv>
-        <button>
-          <FaSearch />
-        </button>
-      </DivSearch>
-      <main>
-        <Ul>
-          {clients.map((client) => (
-            <ClientCard key={client.id} client={client} />
-          ))}
-        </Ul>
-      </main>
-    </Container>
-  )
+    <Margin>
+      <SearchModel title="Client" placeholder="Name, CPF, cellphone...">
+          <Ul>
+            {clients.map((client) => (
+              <ClientCard key={client.id} client={client} />
+            ))}
+          </Ul>
+      </SearchModel>
+    </Margin>
+  );
 }
 
 export default Clients

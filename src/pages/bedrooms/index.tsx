@@ -1,29 +1,26 @@
-import BedroomsCard from "../../components/BedroomsCard"
-import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles"
-
-import { FaSearch, FaArrowLeft } from "react-icons/fa"
-import { useHistory } from "react-router-dom"
-import PopupRegisterClient from "../../components/PopupRegisterClient"
-import { useEffect, useState } from "react"
-import PopupRegisterService from "../../components/PopupRegisterService"
-import PopupRegisterBedroom from "../../components/PopupRegisterBedroom"
-import PopupRegisterContract from "../../components/PopupRegisterContract"
-import Button from "../../components/Button"
-import { useBedroom } from "../../providers/Bedroom"
-import { useLogin } from "../../providers/Login"
+import BedroomsCard from "../../components/BedroomsCard";
+import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles";
+import { FaSearch, FaArrowLeft } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import Button from "../../components/Button";
+import { useBedroom } from "../../providers/Bedroom";
+import { useLogin } from "../../providers/Login";
+import Margin from "../../components/Margin";
+import { Input } from "../../components/Input";
+import SearchModel from "../../components/SearchModel";
 
 interface Bedroom {
-  availability: boolean
-  capacity: number
-  clientsList: object[]
-  floor: string
-  number: string
+  availability: boolean;
+  capacity: number;
+  clientsList: object[];
+  floor: string;
+  number: string;
 }
 
-
 const BedroomsPage = () => {
-  const {getAllBedrooms, bedrooms} = useBedroom()
-  const {token} = useLogin()
+  const { getAllBedrooms, bedrooms } = useBedroom();
+  const { token } = useLogin();
 
   // const [search, setSearch] = useState("")
   // const [bedrooms, setBedrooms] = useState(bedroomsList)
@@ -58,39 +55,20 @@ const BedroomsPage = () => {
   // };
 
   useEffect(() => {
-    getAllBedrooms(token)
-  },[])
+    getAllBedrooms(token);
+  }, []);
 
   return (
-    <MainDiv>
-      {/* <button onClick={handlePopup}></button>
-      {showPopup && <PopupRegisterContract handlePopup={handlePopup} />} */}
+    <Margin>
+      <SearchModel title="Bedroom" placeholder="Number, floor, capacity">
+        <BedroomsDiv>
+          {bedrooms.map((bedroom) => {
+            return <BedroomsCard key={bedroom.id} bedroom={bedroom} />;
+          })}
+        </BedroomsDiv>
+      </SearchModel>
+    </Margin>
+  );
+};
 
-      <TitleSection>
-        <button >
-          <FaArrowLeft />
-        </button>
-        <h1>Bedrooms</h1>
-      </TitleSection>
-      <SearchSection>
-        <p>Choose the bedroom</p>
-        <form >
-          <input
-            type="text"
-            placeholder="Number, floor, availability"
-          />
-          <Button type="submit">
-            <FaSearch />
-          </Button>
-        </form>
-      </SearchSection>
-      <BedroomsDiv>
-        {bedrooms.map((bedroom) => {
-          return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
-        })}
-      </BedroomsDiv>
-    </MainDiv>
-  )
-}
-
-export default BedroomsPage
+export default BedroomsPage;

@@ -12,6 +12,8 @@ import { FiSearch } from "react-icons/fi";
 import { useService } from "../../providers/Service";
 import { useEffect, useState } from "react";
 import { useLogin } from "../../providers/Login";
+import Margin from "../../components/Margin";
+import SearchModel from "../../components/SearchModel";
 
 export const Services = () => {
   const { services, getAllServices } = useService();
@@ -38,27 +40,14 @@ export const Services = () => {
   }, []);
 
   return (
-    <Container>
-      <HeadingContainer>
-        <h1>Services</h1>
-        <InputContainer>
-          {/* <Input label={"Choose a service"} /> */}
-          <Input
-            title="Search"
-            type="text"
-            onChange={(event) => setSearch(event.target.value)}
-          />
-          <Button>
-            <FiSearch />
-          </Button>
-        </InputContainer>
-      </HeadingContainer>
-
-      <CardsContainer>
+    <Margin>
+      <SearchModel title="Contracts" placeholder="Client name, service name, bedroom number...">
+        <CardsContainer>
         {services.map((service) => (
           <ServiceCard key={service.id} service={service} />
         ))}
       </CardsContainer>
-    </Container>
+      </SearchModel>
+    </Margin>
   );
 };
