@@ -25,37 +25,37 @@ interface EmployeeLogin {
 interface LoginContextData {
   login: (employee: EmployeeLogin) => void;
   logout: () => void
-  token: string | null;
-  user: Employee | object;
+  token: string;
+  user: Employee;
 }
 
 const LoginContext = createContext<LoginContextData>({} as LoginContextData);
 
 export const LoginProvider = ({ children }: LoginProps) => {
-  const [token, setToken] = useState<string | null>(() => {
+  const [token, setToken] = useState<string>(() => {
     const data = localStorage.getItem("@HM:token");
 
     if (data) {
       return JSON.parse(data);
     }
 
-    return null;
+    return "";
   });
 
-  const [user, setUser] = useState<Employee | object>(() => {
+  const [user, setUser] = useState<Employee>(() => {
     const data = localStorage.getItem("@HM:user");
 
     if (data) {
       return JSON.parse(data);
     }
 
-    return {};
+    return {} as Employee;
   });
 
   const logout = () => {
     localStorage.clear()
-    setToken(null)
-    setUser({})
+    setToken("")
+    setUser({} as Employee);
     history.push("/login")
   }
 

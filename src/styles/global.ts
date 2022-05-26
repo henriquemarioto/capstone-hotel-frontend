@@ -74,8 +74,16 @@ const GlobalStyle = createGlobalStyle`
         --beige-dark: #92817A;
         --vine: #470024;
 
-        --margin: 0 20px;
-    }
-`
+        --margin: 20px;
 
-export default GlobalStyle
+        @media (min-width: 600px) {
+            --margin: 40px;
+        }
+
+        @media (min-width: 800px) {
+            --margin: 80px;
+        }
+    }
+`;
+
+export default GlobalStyle;
