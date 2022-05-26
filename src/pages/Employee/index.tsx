@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { FaSearch, FaArrowLeft } from "react-icons/fa"
 import ClientCard from "../../components/clientCard"
+import EmployeeCard from "../../components/EmployeeCard"
 import { useClients } from "../../providers/clients"
+import { useEmployee } from "../../providers/Employee"
 import { useLogin } from "../../providers/Login"
 import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
 
 
-const Clients = () => {
-  const {getAllClients, clients} = useClients()
+const Employee = () => {
+  const {employees, getAllEmployees} = useEmployee()
   const {token} = useLogin()
   
   // const [clientsList, setClientsList] = useState(arrayTeste)
@@ -31,7 +33,7 @@ const Clients = () => {
   // }
 
   useEffect(() => {
-    getAllClients(token)
+    getAllEmployees(token)
   },[])
 
   return (
@@ -40,7 +42,7 @@ const Clients = () => {
         <button>
           <FaArrowLeft />
         </button>
-        <h1>Clients</h1>
+        <h1>Employee</h1>
         <span></span>
       </DivInitial>
       <DivSearch>
@@ -56,8 +58,8 @@ const Clients = () => {
       </DivSearch>
       <main>
         <Ul>
-          {clients.map((client) => (
-            <ClientCard key={client.id} client={client} />
+          {employees.map((employee) => (
+            <EmployeeCard key={employee.id} employee={employee} />
           ))}
         </Ul>
       </main>
@@ -65,4 +67,4 @@ const Clients = () => {
   )
 }
 
-export default Clients
+export default Employee

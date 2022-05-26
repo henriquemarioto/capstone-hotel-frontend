@@ -37,10 +37,10 @@ interface HiredService {
 }
 
 interface CreateHiredService {
-  serviceId: number;
-  clientId: string;
-  start_date: Date;
-  end_date: Date;
+  serviceId: string | number;
+  cpf: string;
+  start_date: string;
+  end_date: string;
 }
 
 interface HiredServiceContextData {

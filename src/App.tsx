@@ -1,9 +1,6 @@
 import GlobalStyle from "./styles/global";
-import Routes from "./routes/routes";
+import Routes from "./routes";
 import { Toaster } from "react-hot-toast";
-import { useService } from "./providers/Service";
-import { useEffect } from "react";
-import { Container } from "./style";
 
 function App() {
   return (
