@@ -6,6 +6,7 @@ import HiredService from "../pages/HiredServices";
 import Dashboard from "../pages/Dashboard";
 import Header from "../components/Header";
 import BedroomsPage from "../pages/bedrooms";
+import Landing from "../pages/Landing";
 import {Services} from "../pages/services";
 import Employee from "../pages/Employee";
 import Route from "./route";
@@ -15,7 +16,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Header />
+        <Landing/>
       </Route>
 
       <Route exact path="/login">

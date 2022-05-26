@@ -10,26 +10,6 @@ const Employee = () => {
   const { employees, getAllEmployees } = useEmployee();
   const { token } = useLogin();
 
-  // const [clientsList, setClientsList] = useState(arrayTeste)
-  // const [search, setSearch] = useState("")
-
-  // const filter = (search: string) => {
-  //   const clients = [...arrayTeste]
-  //   const filteredClients = clients.filter((client) => {
-  //     return (
-  //       String(client.name).toLocaleLowerCase() === search ||
-  //       String(client.cpf) === search ||
-  //       String(client.bedroom) === search
-  //     )
-  //   })
-
-  //   if (filteredClients.length > 0) {
-  //     return setClientsList(filteredClients)
-  //   } else {
-  //     return setClientsList(arrayTeste)
-  //   }
-  // }
-
   useEffect(() => {
     getAllEmployees(token);
   }, []);

@@ -7,43 +7,31 @@ import { useLogin } from "../../providers/Login"
 import { Ul } from "./style"
 
 const HiredService = () => {
-
-  const {getAllHiredServices, hiredServices} = useHiredService()
-  const {token} = useLogin()
-  // const [search, setSearch] = useState("")
-  // const [contractsList, setContractsList] = useState(arrayTeste)
-
-  // const filter = (search: string) => {
-  //   const contracts = [...contractsList]
-  //   const filteredContracts = contracts.filter((contract) => {
-  //     return (
-  //       String(contract.bedroom).toLocaleLowerCase() === search ||
-  //       String(contract.id).toLocaleLowerCase() === search ||
-  //       String(contract.paid).toLocaleLowerCase() === search
-  //     )
-  //   })
-
-  //   if (filteredContracts.length > 0) {
-  //     return setContractsList(filteredContracts)
-  //   } else {
-  //     return setContractsList(arrayTeste)
-  //   }
-  // }
+  const { getAllHiredServices, hiredServices, filter, filteredHired } =
+    useHiredService()
+  const { token } = useLogin()
 
   useEffect(() => {
     getAllHiredServices(token)
-  },[])
+  }, [])
 
   return (
     <Margin>
-      <SearchModel title="Contracts" placeholder="Client name, service name, bedroom number...">
+      <SearchModel title="Contracts" placeholder="Client name, service name, bedroom number..." searchFunction={filter}>
         <Ul>
-          {hiredServices.map((hiredService) => (
-            <HiredServiceCard
-              key={hiredService.id}
-              hiredService={hiredService}
-            />
-          ))}
+          {filteredHired.length > 0
+            ? filteredHired.map((hiredService) => (
+                <HiredServiceCard
+                  key={hiredService.id}
+                  hiredService={hiredService}
+                />
+              ))
+            : hiredServices.map((hiredService) => (
+                <HiredServiceCard
+                  key={hiredService.id}
+                  hiredService={hiredService}
+                />
+              ))}
         </Ul>
       </SearchModel>
     </Margin>

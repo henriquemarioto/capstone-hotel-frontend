@@ -1,68 +1,69 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import toast from "react-hot-toast";
-import apiHotel from "../../services/apiHotel";
-import { useLogin } from "../Login";
+import { createContext, ReactNode, useContext, useState } from "react"
+import toast from "react-hot-toast"
+import apiHotel from "../../services/apiHotel"
+import { useLogin } from "../Login"
 
 interface HiredServiceProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 interface Client {
-  id: string;
-  name: string;
-  cpf: string;
-  status: boolean;
+  id: string
+  name: string
+  cpf: string
+  status: boolean
 }
 
 interface Service {
-  id: number;
-  name: string;
-  price: string;
-  description: string;
-  status: boolean;
+  id: number
+  name: string
+  price: string
+  description: string
+  status: boolean
 }
 
 interface HiredService {
-  id: number;
-  paid: boolean;
-  start_date: Date;
-  end_date: Date;
-  bedroom_number: string;
-  total_price: number;
-  created_at: Date;
-  updated_at: Date;
-  status: boolean;
-  client: Client;
-  service: Service;
+  id: number
+  paid: boolean
+  start_date: Date
+  end_date: Date
+  bedroom_number: string
+  total_price: number
+  created_at: Date
+  updated_at: Date
+  status: boolean
+  client: Client
+  service: Service
 }
 
 interface CreateHiredService {
-  serviceId: string | number;
-  cpf: string;
-  start_date: string;
-  end_date: string;
+  serviceId: string | number
+  cpf: string
+  start_date: string
+  end_date: string
 }
 
 interface HiredServiceContextData {
-  hiredServices: HiredService[];
-  hiredService?: HiredService;
-  filteredHired?: HiredService[];
-  createHiredService: (data: CreateHiredService, token: string) => void;
-  getAllHiredServices: (token: string) => Promise<void>;
-  getOneHiredService: (id: string, token: string) => Promise<void>;
-  updatedHiredService: (id: string, token: string) => Promise<void>;
-  disableHiredService: (id: string, token: string) => Promise<void>;
-  filterByStatus: (status: boolean, token: string) => Promise<void>;
+  hiredServices: HiredService[]
+  hiredService?: HiredService
+  createHiredService: (data: CreateHiredService, token: string) => void
+  getAllHiredServices: (token: string) => Promise<void>
+  getOneHiredService: (id: string, token: string) => Promise<void>
+  updatedHiredService: (id: string, token: string) => Promise<void>
+  disableHiredService: (id: string, token: string) => Promise<void>
+  //filterByStatus: (status: boolean, token: string) => Promise<void>
+  filter: (search: string) => void
+  filteredHired: HiredService[]
 }
 
 const HiredServiceContext = createContext<HiredServiceContextData>(
   {} as HiredServiceContextData
-);
+)
 
 export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
-  const [hiredServices, setHiredServices] = useState<HiredService[]>([]);
-  const [hiredService, setHiredService] = useState<HiredService>();
-  const [filteredHired, setFilteredHired] = useState<HiredService[]>();
+  const [hiredServices, setHiredServices] = useState<HiredService[]>([])
+  const [hiredService, setHiredService] = useState<HiredService>()
+  const [filteredHired, setFilteredHired] = useState<HiredService[]>([])
 
   const createHiredService = (data: CreateHiredService, token: string) => {
     apiHotel
@@ -72,25 +73,24 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
         },
       })
       .then(() => {
-        toast.success("Contract created");
+        toast.success("Contract created")
       })
-      .catch((err) => toast.error(err.response.data.message));
-  };
+      .catch((err) => toast.error(err.response.data.message))
+  }
 
   const getAllHiredServices = async (token: string) => {
     const { data } = await apiHotel.get("hiredservices", {
       headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log(data)
-    setHiredServices(data);
-  };
+    })
+    setHiredServices(data)
+  }
 
   const getOneHiredService = async (id: string, token: string) => {
     const { data } = await apiHotel.get(`hiredservices/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
-    });
-    setHiredService(data);
-  };
+    })
+    setHiredService(data)
+  }
 
   const updatedHiredService = async (id: string, token: string) => {
     await apiHotel
@@ -98,13 +98,13 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        toast.success(res.data.message);
-        getAllHiredServices(token);
+        toast.success(res.data.message)
+        getAllHiredServices(token)
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+        toast.error(err.response.data.message)
+      })
+  }
 
   const disableHiredService = async (id: string, token: string) => {
     await apiHotel
@@ -112,40 +112,55 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        toast.success(res.data.message);
-        getAllHiredServices(token);
+        toast.success(res.data.message)
+        getAllHiredServices(token)
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+        toast.error(err.response.data.message)
+      })
+  }
 
-  const filterByStatus = async (status: boolean, token: string) => {
-    const { data } = await apiHotel.get(`hiredservices?status=${status}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setFilteredHired(data);
-  };
+  // const filterByStatus = async (status: boolean, token: string) => {
+  //   const { data } = await apiHotel.get(`hiredservices?status=${status}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //   setFilteredHired(data)
+  // }
+
+  const filter = (search: string) => {
+    const filteredContracts = hiredServices.filter((contract) => {
+      return (
+        contract.client.name
+          .toLocaleLowerCase()
+          .includes(search.toLocaleLowerCase()) ||
+        String(contract.id).toLocaleLowerCase() === search ||
+        String(contract.paid).toLocaleLowerCase() === search
+      )
+    })
+
+    setFilteredHired(filteredContracts)
+  }
 
   return (
     <HiredServiceContext.Provider
       value={{
         hiredServices,
         hiredService,
-        filteredHired,
         createHiredService,
         getAllHiredServices,
         getOneHiredService,
         updatedHiredService,
         disableHiredService,
-        filterByStatus,
+        // filterByStatus,
+        filter,
+        filteredHired,
       }}
     >
       {children}
     </HiredServiceContext.Provider>
-  );
-};
+  )
+}
 
-export const useHiredService = () => useContext(HiredServiceContext);
+export const useHiredService = () => useContext(HiredServiceContext)

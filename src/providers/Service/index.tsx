@@ -1,58 +1,59 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import apiHotel from "../../services/apiHotel";
-import { toast } from "react-hot-toast";
-import { useLogin } from "../Login";
+import { createContext, ReactNode, useContext, useState } from "react"
+import apiHotel from "../../services/apiHotel"
+import { toast } from "react-hot-toast"
+import { useLogin } from "../Login"
 
 interface ServiceProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 interface CreateService {
-  name: string;
-  price:string | number;
-  description: string;
+  name: string
+  price: string | number
+  description: string
 }
 
 interface Service {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  status: boolean;
-  created_at: Date;
-  updated_at: Date;
+  id: string
+  name: string
+  price: number
+  description: string
+  status: boolean
+  created_at: Date
+  updated_at: Date
 }
 
 interface UpdatedProps {
-  name?: string;
-  price?: number;
-  description?: string;
+  name?: string
+  price?: number
+  description?: string
 }
 
 interface ServiceContextData {
-  services: Service[];
-  service?: Service;
-  filteredService?: Service[];
-  createService: (data: CreateService, token: string) => Promise<void>;
-  getAllServices: (token: string) => Promise<void>;
-  getOneService: (id: string, token: string) => Promise<void>;
+  services: Service[]
+  service?: Service
+  filteredService: Service[]
+  createService: (data: CreateService, token: string) => Promise<void>
+  getAllServices: (token: string) => Promise<void>
+  getOneService: (id: string, token: string) => Promise<void>
   updatedService: (
     data: UpdatedProps,
     id: string,
     token: string
-  ) => Promise<void>;
-  disableService: (id: string, token: string) => Promise<void>;
-  filterByStatus: (status: boolean, token: string) => Promise<void>;
+  ) => Promise<void>
+  disableService: (id: string, token: string) => Promise<void>
+  //filterByStatus: (status: boolean, token: string) => Promise<void>
+  filter: (search: string) => void
 }
 
 const ServiceContext = createContext<ServiceContextData>(
   {} as ServiceContextData
-);
+)
 
 export const ServiceProvider = ({ children }: ServiceProps) => {
-  const [services, setServices] = useState<Service[]>([]);
-  const [service, setService] = useState<Service>();
-  const [filteredService, setFilteredService] = useState<Service[]>([]);
+  const [services, setServices] = useState<Service[]>([])
+  const [service, setService] = useState<Service>()
+  const [filteredService, setFilteredService] = useState<Service[]>([])
 
   const createService = async (data: CreateService, token: string) => {
     await apiHotel
@@ -60,31 +61,31 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((_) => {
-        toast.success("Service Created");
+        toast.success("Service Created")
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+        toast.error(err.response.data.message)
+      })
+  }
 
   const getAllServices = async (token: string) => {
     const { data } = await apiHotel.get("services", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
 
-    setServices(data);
-  };
+    setServices(data)
+  }
 
   const getOneService = async (id: string, token: string) => {
     const { data } = await apiHotel.get(`services/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
-    setService(data);
-  };
+    })
+    setService(data)
+  }
 
   const updatedService = async (
     data: UpdatedProps,
@@ -98,13 +99,13 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         },
       })
       .then((res) => {
-        toast.success(res.data.message);
-        getAllServices(token);
+        toast.success(res.data.message)
+        getAllServices(token)
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+        toast.error(err.response.data.message)
+      })
+  }
 
   const disableService = async (id: string, token: string) => {
     await apiHotel
@@ -114,22 +115,34 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         },
       })
       .then((res) => {
-        toast.success(res.data.message);
-        getAllServices(token);
+        toast.success(res.data.message)
+        getAllServices(token)
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+        toast.error(err.response.data.message)
+      })
+  }
 
-  const filterByStatus = async (status: boolean, token: string) => {
-    const { data } = await apiHotel.get(`services?status=${status}`, {
-      headers: {
-        Authorizarion: `Bearer ${token}`,
-      },
-    });
-    setFilteredService(data);
-  };
+  // const filterByStatus = async (status: boolean, token: string) => {
+  //   const { data } = await apiHotel.get(`services?status=${status}`, {
+  //     headers: {
+  //       Authorizarion: `Bearer ${token}`,
+  //     },
+  //   })
+  //   setFilteredService(data)
+  // }
+
+  const filter = (search: string) => {
+    const filteredServices = services.filter(
+      (service) =>
+        service.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+        service.description
+          .toLocaleLowerCase()
+          .includes(search.toLocaleLowerCase())
+    )
+
+    setFilteredService(filteredServices)
+  }
 
   return (
     <ServiceContext.Provider
@@ -139,15 +152,16 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         getOneService,
         updatedService,
         disableService,
-        filterByStatus,
+        // filterByStatus,
         services,
         service,
         filteredService,
+        filter,
       }}
     >
       {children}
     </ServiceContext.Provider>
-  );
-};
+  )
+}
 
-export const useService = () => useContext(ServiceContext);
+export const useService = () => useContext(ServiceContext)

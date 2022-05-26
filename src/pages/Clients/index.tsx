@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { FaSearch, FaArrowLeft } from "react-icons/fa"
+import { useHistory } from "react-router-dom"
+
 import ClientCard from "../../components/clientCard"
 import Margin from "../../components/Margin"
 import SearchModel from "../../components/SearchModel"
@@ -7,46 +8,34 @@ import { useClients } from "../../providers/clients"
 import { useLogin } from "../../providers/Login"
 import { Ul } from "./style"
 
-
 const Clients = () => {
-  const {getAllClients, clients} = useClients()
-  const {token} = useLogin()
-  
-  // const [clientsList, setClientsList] = useState(arrayTeste)
-  // const [search, setSearch] = useState("")
-
-  // const filter = (search: string) => {
-  //   const clients = [...arrayTeste]
-  //   const filteredClients = clients.filter((client) => {
-  //     return (
-  //       String(client.name).toLocaleLowerCase() === search ||
-  //       String(client.cpf) === search ||
-  //       String(client.bedroom) === search
-  //     )
-  //   })
-
-  //   if (filteredClients.length > 0) {
-  //     return setClientsList(filteredClients)
-  //   } else {
-  //     return setClientsList(arrayTeste)
-  //   }
-  // }
+  const { getAllClients, clients, filter, filteredClients } = useClients()
+  const { token } = useLogin()
 
   useEffect(() => {
     getAllClients(token)
-  },[])
+  }, [])
 
   return (
     <Margin>
-      <SearchModel title="Client" placeholder="Name, CPF, cellphone...">
-          <Ul>
-            {clients.map((client) => (
-              <ClientCard key={client.id} client={client} />
-            ))}
-          </Ul>
+      <SearchModel
+        title="Client"
+        placeholder="Name, CPF, cellphone..."
+        searchFunction={filter}
+      >
+        <Ul>
+          {filteredClients.length > 0
+            ? filteredClients.map((client: any) => (
+                <ClientCard key={client.id} client={client} />
+              ))
+            : clients.map((client) => (
+                <ClientCard key={client.id} client={client} />
+              ))}
+        </Ul>
       </SearchModel>
     </Margin>
   );
+
 }
 
 export default Clients
