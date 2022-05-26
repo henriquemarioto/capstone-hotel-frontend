@@ -56,7 +56,7 @@ const HiredService = () => {
       <main>
         <Ul>
           {hiredServices.map((hiredService) => (
-            <HiredServiceCard hiredService={hiredService} />
+            <HiredServiceCard key={hiredService.id} hiredService={hiredService} />
           ))}
         </Ul>
       </main>

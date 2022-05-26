@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import Header from "../components/Header";
 import BedroomsPage from "../pages/bedrooms";
 import {Services} from "../pages/services";
+import Employee from "../pages/Employee";
 
 const Routes = () => {
   return (
@@ -30,6 +31,15 @@ const Routes = () => {
       <Route path="/hiredservices">
         <Header />
         <HiredService />
+      </Route>
+      <Route path="/employee">
+        <Header />
+        <Employee />
+      </Route>
+
+      <Route path="/services">
+        <Header />
+        <Services />
       </Route>
 
       <Route path="/Dashboard">
