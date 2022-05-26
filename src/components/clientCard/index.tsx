@@ -22,9 +22,6 @@ const ClientCard = ({ client }: any) => {
             <span>Cellphone: </span>
             {client.cellphone}
           </p>
-          <p>
-            <span>Bedroom: </span> {client.bedroom}
-          </p>
         </DivClient>
         {user.admin && (
           <Buttons>

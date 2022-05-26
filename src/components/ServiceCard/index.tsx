@@ -1,22 +1,17 @@
 import {Container} from "./styles";
 
-interface ServiceCardProps {
-  name: string;
-  description: string;
-  price: number;
-}
 
-const ServiceCard = ({name, description, price}: ServiceCardProps) => {
+const ServiceCard = ({service}: any) => {
   return (
     <Container>
-      <h1>{name}</h1>
+      <h1>{service.name}</h1>
       <span>
         {new Intl.NumberFormat("pt-BR", {
           style: "currency",
           currency: "BRL",
-        }).format(price)}
+        }).format(service.price)}
       </span>
-      <p>{description}</p>
+      <p>{service.description}</p>
     </Container>
   );
 };
