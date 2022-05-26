@@ -17,8 +17,7 @@ import { useLogin } from "../../providers/Login";
 const drawerWidth = 240;
 
 const Header = (props: Props) => {
-
-  const {user} = useLogin()
+  const { user, logout } = useLogin();
 
   const history = useHistory();
   const { window } = props;
@@ -26,6 +25,10 @@ const Header = (props: Props) => {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const goToPage = (path: string) => {
+    history.push(path);
   };
 
   const drawer = (
@@ -37,14 +40,14 @@ const Header = (props: Props) => {
       <List>
         <ListItemButton
           sx={{ marginBottom: "5px", color: "white" }}
-          onClick={() => history.push("/")}
+          onClick={() => goToPage("/clients")}
         >
           Clients
         </ListItemButton>
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginBottom: "5px", marginTop: "5px", color: "white" }}
-          onClick={() => history.push("/")}
+          onClick={() => goToPage("/bedrooms")}
         >
           Bedrooms
         </ListItemButton>
@@ -52,21 +55,21 @@ const Header = (props: Props) => {
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginBottom: "5px", marginTop: "5px", color: "white" }}
-          onClick={() => history.push("/")}
+          onClick={() => goToPage("/hiredservices")}
         >
           Contracts
         </ListItemButton>
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginBottom: "5px", marginTop: "5px", color: "white" }}
-          onClick={() => history.push("/")}
+          onClick={() => goToPage("/services")}
         >
           Services
         </ListItemButton>
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginTop: "5px", color: "white" }}
-          onClick={() => history.push("/")}
+          onClick={() => goToPage("/employees")}
         >
           Employees
         </ListItemButton>
@@ -74,7 +77,7 @@ const Header = (props: Props) => {
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
           sx={{ marginTop: "5px", color: "white" }}
-          onClick={() => history.push("/")}
+          onClick={logout}
         >
           Log out
           <LogoutIcon sx={{ marginLeft: "5px" }} />
@@ -97,11 +100,11 @@ const Header = (props: Props) => {
         </div>
         <nav>
           <ul className="col-right">
-            <li onClick={() => history.push("/")}>Clients</li>
-            <li onClick={() => history.push("/")}>Bedrooms</li>
-            <li onClick={() => history.push("/")}>Contracts</li>
+            <li onClick={() => history.push("/clients")}>Clients</li>
+            <li onClick={() => history.push("/bedrooms")}>Bedrooms</li>
+            <li onClick={() => history.push("/hiredservices")}>Contracts</li>
             <li onClick={() => history.push("/services")}>Services</li>
-            <li onClick={() => history.push("/")}>Employees</li>
+            <li onClick={() => history.push("/employees")}>Employees</li>
           </ul>
 
           <IconButton
