@@ -5,6 +5,8 @@ import { ContainerTextArea } from "./styles";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useService } from "../../providers/Service";
+import { useLogin } from "../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
@@ -13,10 +15,14 @@ interface Props {
 interface ServiceData {
   name: string;
   price: string | number;
-  descripiton: string;
+  description: string;
 }
 
 const PopupRegisterService = ({ handlePopup }: Props) => {
+
+  const {createService} = useService()
+  const {token} = useLogin()
+
   const serviceSchema = yup.object().shape({
     name: yup.string().required("Campo Obrigatorio"),
     price: yup.string().required("Campo Obrigatorio"),
@@ -31,9 +37,9 @@ const PopupRegisterService = ({ handlePopup }: Props) => {
     resolver: yupResolver(serviceSchema),
   });
 
-  const handleClick = (data: ServiceData) => {
+  const handleClick = async (data: ServiceData) => {
     data.price = Number(data.price);
-    console.log(data);
+    await createService(data, token)
   };
 
   return (

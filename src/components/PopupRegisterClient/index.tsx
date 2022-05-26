@@ -5,6 +5,8 @@ import { Select } from "../Select";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useClients } from "../../providers/clients";
+import { useLogin } from "../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
@@ -15,16 +17,19 @@ interface ClientData {
   birthDate: string;
   cpf: string;
   cellphone?: string;
-  bedroom: string | number;
+  bedroomId: string | number;
 }
 
 const PopupRegisterClient = ({ handlePopup }: Props) => {
+  const { createClient } = useClients();
+  const {token} = useLogin()
+
   const clientSchema = yup.object().shape({
     name: yup.string().required("Campo obrigatorio"),
     birthDate: yup.string().required("Campo Obrigatorio"),
     cpf: yup.string().required("Campo obrigatorio").max(11),
     cellphone: yup.string().max(11),
-    bedroom: yup.string(),
+    bedroomId: yup.string(),
   });
 
   const {
@@ -35,9 +40,9 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
     resolver: yupResolver(clientSchema),
   });
 
-  const handleClick = (data: ClientData) => {
-    data.bedroom = Number(data.bedroom);
-    console.log(data);
+  const handleClick = async (data: ClientData) => {
+    data.bedroomId = Number(data.bedroomId);
+    await createClient(data, token)
   };
 
   return (
@@ -51,7 +56,7 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
       <Input title="Birth date" type="date" {...register("birthDate")} />
       <Input title="CPF" {...register("cpf")} />
       <Input title="Cellphone" {...register("cellphone")} />
-      <Select title="Bedroom" {...register("bedroom")}>
+      <Select title="Bedroom" {...register("bedroomId")}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((bedroom) => (
           <option value={bedroom}>{bedroom}</option>
         ))}

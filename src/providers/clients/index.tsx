@@ -1,101 +1,154 @@
-import {createContext, ReactNode, useContext, useState} from "react"
-import apiHotel from "../../services/apiHotel"
-import {useLogin} from "../Login"
+import { createContext, ReactNode, useContext, useState } from "react";
+import toast from "react-hot-toast";
+import apiHotel from "../../services/apiHotel";
+import { useLogin } from "../Login";
 
 interface Clients {
-  id: string
+  id: string;
   name: string;
-  birthDate: Date;
+  birthDate: string;
   cpf: string;
   cellphone: string;
   bedroomId: number;
-  hiredServices: []
+  hiredServices: [];
 }
 
 interface InputClients {
   name?: string;
-  birthDate?: Date;
+  birthDate?: string;
   cpf?: string;
   cellphone?: string;
-  bedroomId?: number;
+  bedroomId?: string | number;
 }
 
 interface ClientsProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface ClientsContextData {
-  clients: Clients[]
-  client: Clients
-  createClient: (clientsInput: InputClients) => Promise<void>
-  getAllClients: () => Promise<void>
-  getOneClient: (id: string) => Promise<void>
-  updatedClient: (id: string, clientsInput: InputClients) => Promise<void>
-  disableClient: (id: string) => Promise<void>
-  JoinBedroom: (id: string, bedroom: number) => Promise<void>
+  clients: Clients[];
+  client?: Clients;
+  createClient: (clientsInput: InputClients, token: string) => Promise<void>;
+  getAllClients: (token: string) => Promise<void>;
+  getOneClient: (id: string, token: string) => Promise<void>;
+  updatedClient: (
+    id: string,
+    clientsInput: InputClients,
+    token: string
+  ) => Promise<void>;
+  disableClient: (id: string, token: string) => Promise<void>;
+  JoinBedroom: (id: string, bedroom: number, token: string) => Promise<void>;
 }
 
 const ClientsContext = createContext<ClientsContextData>(
   {} as ClientsContextData
-)
+);
 
-export const ClientsProvider = ({children}: ClientsProps) => {
-  const [clients, setClients] = useState<Clients[]>([])
-  const [client, setClient] = useState<Clients>()
-  const {token} = useLogin()
+export const ClientsProvider = ({ children }: ClientsProps) => {
+  const [clients, setClients] = useState<Clients[]>([]);
+  const [client, setClient] = useState<Clients>();
 
-  const createClient = async (clientsInput: InputClients) => {
-    const {data} = await apiHotel.post("/clients", clientsInput, {
+  const createClient = async (clientsInput: InputClients, token: string) => {
+    const { data }: any = await apiHotel
+      .post("/clients", clientsInput, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((_) => {
+        setClients([...clients, data]);
+        toast.success("Client created");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const getAllClients = async (token: string) => {
+    const { data } = await apiHotel.get("/clients", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    setClients([...clients, data])
-  }
+    });
+    setClients(data);
+  };
 
-  const getAllClients = async () => {
-    const {data} = await apiHotel.get("/clients", {
+  const getOneClient = async (id: string, token: string) => {
+    const { data } = await apiHotel.get(`clients/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    setClients(data)
-  }
+    });
+    setClient(data);
+  };
 
-  const getOneClient = async (id: string) => {
-    const {data} = await apiHotel.get(`clients/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    setClient(data)
-  }
+  const updatedClient = async (
+    id: string,
+    clientsInput: InputClients,
+    token: string
+  ) => {
+    await apiHotel
+      .patch(`clients/${id}`, clientsInput, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllClients(token);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
-  const UpdateClient = async (id: string, clientsInput: InputClients) => {
-    const {data} = await apiHotel.patch(`clients/${id}`, clientsInput, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    const newClients = clients.filter(client => client.id !== id)
-    newClients.push(data)
-    setClients(newClients)
-  }
+  const disableClient = async (id: string, token: string) => {
+    await apiHotel
+      .delete(`clients/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllClients(token);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
-  const disableClient = async (id: string) => {
-    const {data} = await apiHotel.delete(`clients/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  }
+  const JoinBedroom = async (id: string, bedroom: number, token: string) => {
+    await apiHotel
+      .patch(`clients/joinbedroom/${id}`, bedroom, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
-  const JoinBedroom = async (id: string, bedroom: number) => {
-    const {data} = await apiHotel.patch(`clients/joinbedroom/${id}`, bedroom, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  }
-}
+  return (
+    <ClientsContext.Provider
+      value={{
+        clients,
+        client,
+        JoinBedroom,
+        createClient,
+        disableClient,
+        getAllClients,
+        getOneClient,
+        updatedClient,
+      }}
+    >
+      {children}
+    </ClientsContext.Provider>
+  );
+};
 
+export const useClients = () => useContext(ClientsContext);

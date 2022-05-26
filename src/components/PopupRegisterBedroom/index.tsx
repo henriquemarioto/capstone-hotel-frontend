@@ -5,6 +5,8 @@ import { Select } from "../Select";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useBedroom } from "../../providers/Bedroom";
+import { useLogin } from "../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
@@ -17,6 +19,10 @@ interface BedroomData {
 }
 
 const PopupRegisterBedroom = ({ handlePopup }: Props) => {
+  const { createBedroom } = useBedroom();
+  const { token } = useLogin();
+
+
   const bedroomSchema = yup.object().shape({
     number: yup.string().required("Campo Obrigatorio"),
     floor: yup.string().required("Campo Obrigatorio"),
@@ -31,9 +37,9 @@ const PopupRegisterBedroom = ({ handlePopup }: Props) => {
     resolver: yupResolver(bedroomSchema),
   });
 
-  const handleClick = (data: BedroomData): any => {
+  const handleClick = async (data: BedroomData) => {
     data.capacity = Number(data.capacity);
-    console.log(data);
+    await createBedroom(data, token)
   };
 
   return (
