@@ -10,7 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../img/logo.svg";
 import { useLogin } from "../../providers/Login";
 
@@ -19,6 +19,7 @@ const drawerWidth = 240;
 const Header = (props: Props) => {
 
   const {user} = useLogin()
+
   const history = useHistory();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
