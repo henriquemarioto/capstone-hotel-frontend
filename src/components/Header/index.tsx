@@ -12,11 +12,13 @@ import Toolbar from "@mui/material/Toolbar";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../img/logo.svg";
+import { useLogin } from "../../providers/Login";
 
 const drawerWidth = 240;
 
 const Header = (props: Props) => {
 
+  const {user} = useLogin()
   const history = useHistory();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -90,7 +92,7 @@ const Header = (props: Props) => {
         <div className="col-left">
           <img src={logo} />
           <span>|</span>
-          <h2>User name</h2>
+          <h2>{user.name}</h2>
         </div>
         <nav>
           <ul className="col-right">

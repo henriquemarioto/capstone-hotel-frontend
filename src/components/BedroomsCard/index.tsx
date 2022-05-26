@@ -1,48 +1,40 @@
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  LiHTMLAttributes,
-  useState,
-} from "react"
+import { FaPen, FaTrashAlt } from "react-icons/fa";
+import { useLogin } from "../../providers/Login";
+import { Buttons, Circle, Container, StyledUl } from "./styles";
 
-import { Circle, Container, StyledUl } from "./styles"
+const BedroomsCard = ({ bedroom }: any) => {
+  
+  const {user} = useLogin()
 
-interface Bedroom {
-  number: string
-  floor: string
-  capacity: number
-  availability: boolean
-  clientsList: object[]
-}
-
-//Retirar os dados mockados no card para receber os variados
-
-const BedroomsCard = ({
-  number = "300",
-  floor = "3",
-  capacity = 5,
-  availability = true,
-  clientsList = [{}, {}],
-}: Bedroom) => {
-  const clients: number = clientsList.length
+  const clients: number = bedroom.clients.length;
 
   return (
     <Container>
       <StyledUl>
         <li>
-          Number: <span>{number}</span>
+          Number: <span>{bedroom.number}</span>
         </li>
         <li>
-          Floor: <span>{floor}</span>
+          Floor: <span>{bedroom.floor}</span>
         </li>
         <li>
-          Capacity: <span>{capacity}</span>
+          Capacity: <span>{bedroom.capacity}</span>
         </li>
-        {availability ? <li>Available</li> : <li>Not Available</li>}
+        {bedroom.availability ? <li>Available</li> : <li>Not Available</li>}
       </StyledUl>
-      <Circle clients={clients} capacity={capacity}></Circle>
+      <Circle clients={clients} capacity={bedroom.capacity}></Circle>
+      {user.admin && (
+          <Buttons>
+            <button>
+              <FaPen />
+            </button>
+            <button>
+              <FaTrashAlt />
+            </button>
+          </Buttons>
+        )}
     </Container>
-  )
-}
+  );
+};
 
-export default BedroomsCard
+export default BedroomsCard;

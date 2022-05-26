@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { InputIcon } from "../InputIcon";
 import { useState } from "react";
+import { useEmployee } from "../../providers/Employee";
+import { useLogin } from "../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
@@ -21,6 +23,9 @@ interface EmployeeData {
 
 const PopupRegisterEmployee = ({ handlePopup }: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const {createEmployee} = useEmployee()
+  const {token} = useLogin()
 
   const employeeSchema = yup.object().shape({
     name: yup.string().required("Campo obrigatorio"),
@@ -37,8 +42,8 @@ const PopupRegisterEmployee = ({ handlePopup }: Props) => {
     resolver: yupResolver(employeeSchema),
   });
 
-  const handleClick = (data: EmployeeData) => {
-    console.log(data);
+  const handleClick = async (data: EmployeeData) => {
+   await createEmployee(data, token)
   };
 
   return (

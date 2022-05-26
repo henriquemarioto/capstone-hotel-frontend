@@ -1,102 +1,124 @@
-import {createContext, ReactNode, useContext, useState} from "react"
-import toast from "react-hot-toast"
+import { createContext, ReactNode, useContext, useState } from "react";
+import toast from "react-hot-toast";
 
-import apiHotel from "../../services/apiHotel"
-import {useLogin} from "../Login"
+import apiHotel from "../../services/apiHotel";
 
 interface Bedroom {
-  id: string
-  number: string
-  floor: string
-  capacity: number
-  availability: boolean
-  createdAt: Date
-  updatedAt: Date
-  status: boolean
-  clients: []
+  id: string;
+  number: string;
+  floor: string;
+  capacity: string | number;
+  availability?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  status?: boolean;
+  clients?: [];
 }
 
 type BedroomInput = Pick<
   Bedroom,
   "number" | "floor" | "capacity" | "availability"
->
+>;
 
 interface UpdateProps {
-  capacity?: number
-  availability?: boolean
+  capacity?: number;
+  availability?: boolean;
 }
 
 interface BedroomProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface BedroomContextData {
-  bedrooms: Bedroom[]
-  bedroom?: Bedroom
-  getAllBedrooms: () => Promise<void>
-  getOneBedroom: (id: string) => Promise<void>
-  updateBedroom: (data: UpdateProps, id: string) => Promise<void>
-  disableBedroom: (id: string) => Promise<void>
-  createBedroom: (bedroomInpu: BedroomInput) => Promise<void>
+  bedrooms: Bedroom[];
+  bedroom?: Bedroom;
+  getAllBedrooms: (token: string) => Promise<void>;
+  getOneBedroom: (id: string, token: string) => Promise<void>;
+  updateBedroom: (
+    data: UpdateProps,
+    id: string,
+    token: string
+  ) => Promise<void>;
+  disableBedroom: (id: string, token: string) => Promise<void>;
+  createBedroom: (bedroomInpu: BedroomInput, token: string) => Promise<void>;
 }
 
 const BedroomContext = createContext<BedroomContextData>(
   {} as BedroomContextData
-)
+);
 
-export const BedroomProvider = ({children}: BedroomProps) => {
-  const [bedrooms, setBedrooms] = useState<Bedroom[]>([])
-  const [bedroom, setBedroom] = useState<Bedroom>()
-  const {token} = useLogin()
+export const BedroomProvider = ({ children }: BedroomProps) => {
+  const [bedrooms, setBedrooms] = useState<Bedroom[]>([]);
+  const [bedroom, setBedroom] = useState<Bedroom>();
 
-  const createBedroom = async (bedroomInput: BedroomInput) => {
-    const {data} = await apiHotel.post("/bedrooms", bedroomInput, {
+  const createBedroom = async (bedroomInput: BedroomInput, token: string) => {
+    await apiHotel
+      .post("/bedrooms", bedroomInput, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        toast.success("Bedroom created");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const getAllBedrooms = async (token: string) => {
+    const { data } = await apiHotel.get("bedrooms", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
+    setBedrooms(data);
+  };
 
-    setBedrooms([...bedrooms, data])
-    toast("Bedroom created with success!")
-  }
-
-  const getAllBedrooms = async () => {
-    const {data} = await apiHotel.get("bedrooms", {
+  const getOneBedroom = async (id: string, token: string) => {
+    const { data } = await apiHotel.get(`bedrooms/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    setBedrooms(data)
-  }
+    });
+    setBedroom(data);
+  };
 
-  const getOneBedroom = async (id: string) => {
-    const {data} = await apiHotel.get(`bedrooms/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    setBedroom(data)
-  }
+  const updateBedroom = async (
+    updateProps: UpdateProps,
+    id: string,
+    token: string
+  ) => {
+    await apiHotel
+      .patch(`bedrooms/${id}`, updateProps, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllBedrooms(token);
+      })
+      .catch((err) => {
+        toast.error(err.response.body.message);
+      });
+  };
 
-  const updateBedroom = async (updateProps: UpdateProps, id: string) => {
-    const data = await apiHotel.patch(`bedrooms/${id}`, updateProps, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    getAllBedrooms()
-    toast("Bedroom updated with success!")
-  }
-
-  const disableBedroom = async (id: string) => {
-    const data = await apiHotel.delete(`bedroom/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    getAllBedrooms()
-    toast("Bedroom disabled with success")
-  }
+  const disableBedroom = async (id: string, token: string) => {
+    await apiHotel
+      .delete(`bedroom/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllBedrooms(token);
+      })
+      .catch((err) => {
+        toast.error(err.response.body.message);
+      });
+  };
 
   return (
     <BedroomContext.Provider
@@ -112,7 +134,7 @@ export const BedroomProvider = ({children}: BedroomProps) => {
     >
       {children}
     </BedroomContext.Provider>
-  )
-}
+  );
+};
 
-export const useBedroom = () => useContext(BedroomContext)
+export const useBedroom = () => useContext(BedroomContext);

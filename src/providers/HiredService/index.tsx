@@ -47,12 +47,12 @@ interface HiredServiceContextData {
   hiredServices: HiredService[];
   hiredService?: HiredService;
   filteredHired?: HiredService[];
-  createHiredService: (data: CreateHiredService) => void;
-  getAllHiredServices: () => Promise<void>;
-  getOneHiredService: (id: string) => Promise<void>;
-  updatedHiredService: (id: string) => Promise<void>;
-  disableHiredService: (id: string) => Promise<void>;
-  filterByStatus: (status: boolean) => Promise<void>;
+  createHiredService: (data: CreateHiredService, token: string) => void;
+  getAllHiredServices: (token: string) => Promise<void>;
+  getOneHiredService: (id: string, token: string) => Promise<void>;
+  updatedHiredService: (id: string, token: string) => Promise<void>;
+  disableHiredService: (id: string, token: string) => Promise<void>;
+  filterByStatus: (status: boolean, token: string) => Promise<void>;
 }
 
 const HiredServiceContext = createContext<HiredServiceContextData>(
@@ -60,63 +60,72 @@ const HiredServiceContext = createContext<HiredServiceContextData>(
 );
 
 export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
-  const { token } = useLogin();
   const [hiredServices, setHiredServices] = useState<HiredService[]>([]);
   const [hiredService, setHiredService] = useState<HiredService>();
   const [filteredHired, setFilteredHired] = useState<HiredService[]>();
 
-  const createHiredService = (data: CreateHiredService) => {
-    try {
-      apiHotel.post("hiredservices", data, {
+  const createHiredService = (data: CreateHiredService, token: string) => {
+    apiHotel
+      .post("hiredservices", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .then(() => {
+        toast.success("Contract created");
+      })
+      .catch((err) => toast.error(err.response.data.message));
   };
 
-  const getAllHiredServices = async () => {
+  const getAllHiredServices = async (token: string) => {
     const { data } = await apiHotel.get("hiredservices", {
-      headers: { Authorizarion: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
+    console.log(data)
     setHiredServices(data);
   };
 
-  const getOneHiredService = async (id: string) => {
+  const getOneHiredService = async (id: string, token: string) => {
     const { data } = await apiHotel.get(`hiredservices/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setHiredService(data);
   };
 
-  const updatedHiredService = async (id: string) => {
+  const updatedHiredService = async (id: string, token: string) => {
     await apiHotel
-      .patch(`hiredservices/pay/${id}`)
-      .then((_) => {
-        toast.success("Hired Service paid");
-        getAllHiredServices();
+      .patch(`hiredservices/pay/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllHiredServices(token);
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err.response.data.message);
       });
   };
 
-  const disableHiredService = async (id: string) => {
+  const disableHiredService = async (id: string, token: string) => {
     await apiHotel
-      .delete(`hiredservices/${id}`)
-      .then((_) => {
-        toast.success("Hired Service disable");
-        getAllHiredServices();
+      .delete(`hiredservices/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllHiredServices(token);
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err.response.data.message);
       });
   };
 
-  const filterByStatus = async (status: boolean) => {
-    const { data } = await apiHotel.get(`hiredservices?status=${status}`);
+  const filterByStatus = async (status: boolean, token: string) => {
+    const { data } = await apiHotel.get(`hiredservices?status=${status}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setFilteredHired(data);
   };
 

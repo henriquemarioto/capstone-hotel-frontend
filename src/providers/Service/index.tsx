@@ -1,7 +1,7 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import apiHotel from "../../services/apiHotel";
-import {toast} from "react-hot-toast";
-import {useLogin} from "../Login";
+import { toast } from "react-hot-toast";
+import { useLogin } from "../Login";
 
 interface ServiceProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface ServiceProps {
 
 interface CreateService {
   name: string;
-  price: number;
+  price:string | number;
   description: string;
 }
 
@@ -33,40 +33,42 @@ interface ServiceContextData {
   services: Service[];
   service?: Service;
   filteredService?: Service[];
-  createService: (data: CreateService) => Promise<void>;
-  getAllServices: () => Promise<void>;
-  getOneService: (id: string) => Promise<void>;
-  updatedService: (data: UpdatedProps, id: string) => Promise<void>;
-  disableService: (id: string) => Promise<void>;
-  filterByStatus: (status: boolean) => Promise<void>;
+  createService: (data: CreateService, token: string) => Promise<void>;
+  getAllServices: (token: string) => Promise<void>;
+  getOneService: (id: string, token: string) => Promise<void>;
+  updatedService: (
+    data: UpdatedProps,
+    id: string,
+    token: string
+  ) => Promise<void>;
+  disableService: (id: string, token: string) => Promise<void>;
+  filterByStatus: (status: boolean, token: string) => Promise<void>;
 }
 
 const ServiceContext = createContext<ServiceContextData>(
   {} as ServiceContextData
 );
 
-export const ServiceProvider = ({children}: ServiceProps) => {
+export const ServiceProvider = ({ children }: ServiceProps) => {
   const [services, setServices] = useState<Service[]>([]);
   const [service, setService] = useState<Service>();
   const [filteredService, setFilteredService] = useState<Service[]>([]);
-  const {token} = useLogin();
 
-  const createService = async (data: CreateService) => {
+  const createService = async (data: CreateService, token: string) => {
     await apiHotel
       .post("services", data, {
-        headers: {Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((_) => {
         toast.success("Service Created");
-        getAllServices();
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err.response.data.message);
       });
   };
 
-  const getAllServices = async () => {
-    const {data} = await apiHotel.get("services", {
+  const getAllServices = async (token: string) => {
+    const { data } = await apiHotel.get("services", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -75,8 +77,8 @@ export const ServiceProvider = ({children}: ServiceProps) => {
     setServices(data);
   };
 
-  const getOneService = async (id: string) => {
-    const {data} = await apiHotel.get(`services/${id}`, {
+  const getOneService = async (id: string, token: string) => {
+    const { data } = await apiHotel.get(`services/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -84,28 +86,48 @@ export const ServiceProvider = ({children}: ServiceProps) => {
     setService(data);
   };
 
-  const updatedService = async (data: UpdatedProps, id: string) => {
+  const updatedService = async (
+    data: UpdatedProps,
+    id: string,
+    token: string
+  ) => {
     await apiHotel
       .patch(`services/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((_) => getAllServices());
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllServices(token);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
-  const disableService = async (id: string) => {
+  const disableService = async (id: string, token: string) => {
     await apiHotel
       .delete(`services/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((_) => toast.success("Service disable"));
+      .then((res) => {
+        toast.success(res.data.message);
+        getAllServices(token);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
-  const filterByStatus = async (status: boolean) => {
-    const {data} = await apiHotel.get(`services?status=${status}`);
+  const filterByStatus = async (status: boolean, token: string) => {
+    const { data } = await apiHotel.get(`services?status=${status}`, {
+      headers: {
+        Authorizarion: `Bearer ${token}`,
+      },
+    });
     setFilteredService(data);
   };
 

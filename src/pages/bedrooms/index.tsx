@@ -3,11 +3,9 @@ import { BedroomsDiv, MainDiv, SearchSection, TitleSection } from "./styles";
 
 import { FaSearch, FaArrowLeft } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
-import PopupRegisterClient from "../../components/PopupRegisterClient";
-import { useState } from "react";
-import PopupRegisterService from "../../components/PopupRegisterService";
-import PopupRegisterBedroom from "../../components/PopupRegisterBedroom";
-import PopupRegisterContract from "../../components/PopupRegisterContract";
+import { useEffect, useState } from "react";
+import { useBedroom } from "../../providers/Bedroom";
+import { useLogin } from "../../providers/Login";
 
 interface Bedroom {
   availability: boolean;
@@ -22,29 +20,12 @@ interface Bedrooms {
 }
 
 const BedroomsPage = () => {
-  const bedrooms = [
-    {
-      availability: true,
-      capacity: 3,
-      clientsList: [{}, {}, {}],
-      floor: "2",
-      number: "200",
-    },
-    {
-      availability: false,
-      capacity: 4,
-      clientsList: [{}, {}],
-      floor: "3",
-      number: "300",
-    },
-    {
-      availability: true,
-      capacity: 5,
-      clientsList: [],
-      floor: "1",
-      number: "500",
-    },
-  ];
+    const {bedrooms, getAllBedrooms} = useBedroom()
+    const {token} = useLogin()
+
+    useEffect(() => {
+      getAllBedrooms(token)
+    },[])
 
   // const [showPopup, setShowPopup] = useState<boolean>(false);
 
@@ -76,12 +57,8 @@ const BedroomsPage = () => {
         {bedrooms.map((bedroom, index) => {
           return (
             <BedroomsCard
-              availability={bedroom.availability}
-              capacity={bedroom.capacity}
-              clientsList={bedroom.clientsList}
-              floor={bedroom.floor}
-              number={bedroom.number}
               key={index}
+              bedroom={bedroom}
             />
           );
         })}
