@@ -51,7 +51,7 @@ interface HiredServiceContextData {
   getOneHiredService: (id: string, token: string) => Promise<void>
   updatedHiredService: (id: string, token: string) => Promise<void>
   disableHiredService: (id: string, token: string) => Promise<void>
-  filterByStatus: (status: boolean, token: string) => Promise<void>
+  //filterByStatus: (status: boolean, token: string) => Promise<void>
   filter: (search: string) => void
   filteredHired: HiredService[]
 }

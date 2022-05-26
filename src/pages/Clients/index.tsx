@@ -1,49 +1,28 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
-import { FaSearch, FaArrowLeft } from "react-icons/fa"
 
 import ClientCard from "../../components/clientCard"
+import Margin from "../../components/Margin"
+import SearchModel from "../../components/SearchModel"
 import { useClients } from "../../providers/clients"
 import { useLogin } from "../../providers/Login"
-import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
+import { Ul } from "./style"
 
 const Clients = () => {
   const { getAllClients, clients, filter, filteredClients } = useClients()
   const { token } = useLogin()
-  const history = useHistory()
-
-  const [search, setSearch] = useState("")
-
-  const goBack = () => {
-    return history.push("/")
-  }
 
   useEffect(() => {
     getAllClients(token)
   }, [])
 
   return (
-    <Container>
-      <DivInitial>
-        <button onClick={goBack}>
-          <FaArrowLeft />
-        </button>
-        <h1>Clients</h1>
-        <span></span>
-      </DivInitial>
-      <DivSearch>
-        <InputDiv>
-          <label>Search</label>
-          <input
-            type="text"
-            onChange={(event) => setSearch(event.target.value)}
-          />
-        </InputDiv>
-        <button onClick={() => filter(search)}>
-          <FaSearch />
-        </button>
-      </DivSearch>
-      <main>
+    <Margin>
+      <SearchModel
+        title="Client"
+        placeholder="Name, CPF, cellphone..."
+        searchFunction={filter}
+      >
         <Ul>
           {filteredClients.length > 0
             ? filteredClients.map((client: any) => (
@@ -53,9 +32,10 @@ const Clients = () => {
                 <ClientCard key={client.id} client={client} />
               ))}
         </Ul>
-      </main>
-    </Container>
-  )
+      </SearchModel>
+    </Margin>
+  );
+
 }
 
 export default Clients

@@ -1,10 +1,10 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const MainDiv = styled.div`
   button:hover {
     cursor: pointer;
   }
-`
+`;
 
 export const TitleSection = styled.section`
   display: flex;
@@ -31,7 +31,7 @@ export const TitleSection = styled.section`
     top: 0;
     padding: 0;
   }
-`
+`;
 
 export const SearchSection = styled.section`
   height: 60px;
@@ -58,11 +58,11 @@ export const SearchSection = styled.section`
     height: 39px;
   }
 `;
-export const BedroomsDiv = styled.div`
+export const CardsDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin: auto;
   gap: 20px;
-`
+`;

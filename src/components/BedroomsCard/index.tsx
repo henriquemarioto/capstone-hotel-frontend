@@ -22,17 +22,19 @@ const BedroomsCard = ({ bedroom }: any) => {
         </li>
         {bedroom.availability ? <li>Available</li> : <li>Not Available</li>}
       </StyledUl>
-      <Circle clients={clients} capacity={bedroom.capacity}></Circle>
-      {user.admin && (
-          <Buttons>
+      <Buttons>
+        <Circle clients={clients} capacity={bedroom.capacity}></Circle>
+        {user.admin && (
+          <>
             <button>
               <FaPen />
             </button>
             <button>
               <FaTrashAlt />
             </button>
-          </Buttons>
+          </>
         )}
+      </Buttons>
     </Container>
   );
 };

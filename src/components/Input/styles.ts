@@ -12,10 +12,10 @@ export const InputDiv = styled.div`
   }
 
   input {
-    height: 30px;
-    border: 1px solid var(--beige-1);
+    border: 2px solid var(--beige-1);
+    width: 100%;
     border-radius: 8px;
-    padding: 5px;
+    padding: 10px 5px;
     margin-top: 5px;
 
     :focus {

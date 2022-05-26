@@ -42,7 +42,7 @@ interface ServiceContextData {
     token: string
   ) => Promise<void>
   disableService: (id: string, token: string) => Promise<void>
-  filterByStatus: (status: boolean, token: string) => Promise<void>
+  //filterByStatus: (status: boolean, token: string) => Promise<void>
   filter: (search: string) => void
 }
 
