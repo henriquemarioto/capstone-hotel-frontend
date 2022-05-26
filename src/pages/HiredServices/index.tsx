@@ -6,32 +6,14 @@ import { useLogin } from "../../providers/Login"
 import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
 
 const HiredService = () => {
-
-  const {getAllHiredServices, hiredServices} = useHiredService()
-  const {token} = useLogin()
-  // const [search, setSearch] = useState("")
-  // const [contractsList, setContractsList] = useState(arrayTeste)
-
-  // const filter = (search: string) => {
-  //   const contracts = [...contractsList]
-  //   const filteredContracts = contracts.filter((contract) => {
-  //     return (
-  //       String(contract.bedroom).toLocaleLowerCase() === search ||
-  //       String(contract.id).toLocaleLowerCase() === search ||
-  //       String(contract.paid).toLocaleLowerCase() === search
-  //     )
-  //   })
-
-  //   if (filteredContracts.length > 0) {
-  //     return setContractsList(filteredContracts)
-  //   } else {
-  //     return setContractsList(arrayTeste)
-  //   }
-  // }
+  const { getAllHiredServices, hiredServices, filter, filteredHired } =
+    useHiredService()
+  const { token } = useLogin()
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     getAllHiredServices(token)
-  },[])
+  }, [])
 
   return (
     <Container>
@@ -47,17 +29,28 @@ const HiredService = () => {
           <label>Find a contract</label>
           <input
             type="text"
+            onChange={(event) => setSearch(event.target.value)}
           />
         </InputDiv>
-        <button >
+        <button onClick={() => filter(search)}>
           <FaSearch />
         </button>
       </DivSearch>
       <main>
         <Ul>
-          {hiredServices.map((hiredService) => (
-            <HiredServiceCard key={hiredService.id} hiredService={hiredService} />
-          ))}
+          {filteredHired.length > 0
+            ? filteredHired.map((hiredService) => (
+                <HiredServiceCard
+                  key={hiredService.id}
+                  hiredService={hiredService}
+                />
+              ))
+            : hiredServices.map((hiredService) => (
+                <HiredServiceCard
+                  key={hiredService.id}
+                  hiredService={hiredService}
+                />
+              ))}
         </Ul>
       </main>
     </Container>

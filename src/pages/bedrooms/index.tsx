@@ -20,46 +20,26 @@ interface Bedroom {
   number: string
 }
 
-
 const BedroomsPage = () => {
-  const {getAllBedrooms, bedrooms} = useBedroom()
-  const {token} = useLogin()
+  const { getAllBedrooms, bedrooms, filteredBedrooms, filter } = useBedroom()
+  const { token } = useLogin()
+  const [search, setSearch] = useState("")
 
-  // const [search, setSearch] = useState("")
-  // const [bedrooms, setBedrooms] = useState(bedroomsList)
-  // const history = useHistory()
+  const history = useHistory()
 
-  // const goBack = () => {
-  //   return history.push("/")
-  // }
+  const goBack = () => {
+    return history.push("/")
+  }
 
-  // const filter = (event: any, search: string) => {
-  //   event.preventDefault()
-  //   const bedrooms = [...bedroomsList]
-  //   const filteredBedrooms = bedrooms.filter((bedroom) => {
-  //     return (
-  //       String(bedroom.capacity) === search ||
-  //       String(bedroom.floor) === search ||
-  //       String(bedroom.number) === search
-  //     )
-  //   })
+  const [showPopup, setShowPopup] = useState<boolean>(false)
 
-  //   if (filteredBedrooms.length > 0) {
-  //     return setBedrooms(filteredBedrooms)
-  //   } else {
-  //     return setBedrooms(bedroomsList)
-  //   }
-  // }
-
-  // const [showPopup, setShowPopup] = useState<boolean>(false);
-
-  // const handlePopup = () => {
-  //   setShowPopup(!showPopup);
-  // };
+  const handlePopup = () => {
+    setShowPopup(!showPopup)
+  }
 
   useEffect(() => {
     getAllBedrooms(token)
-  },[])
+  }, [])
 
   return (
     <MainDiv>
@@ -67,17 +47,23 @@ const BedroomsPage = () => {
       {showPopup && <PopupRegisterContract handlePopup={handlePopup} />} */}
 
       <TitleSection>
-        <button >
+        <button onClick={goBack}>
           <FaArrowLeft />
         </button>
         <h1>Bedrooms</h1>
       </TitleSection>
       <SearchSection>
         <p>Choose the bedroom</p>
-        <form >
+        <form
+          onSubmit={(event) => {
+            event.preventDefault()
+            filter(search)
+          }}
+        >
           <input
             type="text"
             placeholder="Number, floor, availability"
+            onChange={(event) => setSearch(event.target.value)}
           />
           <Button type="submit">
             <FaSearch />
@@ -85,9 +71,13 @@ const BedroomsPage = () => {
         </form>
       </SearchSection>
       <BedroomsDiv>
-        {bedrooms.map((bedroom) => {
-          return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
-        })}
+        {filteredBedrooms.length > 0
+          ? filteredBedrooms.map((bedroom) => {
+              return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
+            })
+          : bedrooms.map((bedroom) => {
+              return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
+            })}
       </BedroomsDiv>
     </MainDiv>
   )

@@ -1,43 +1,31 @@
 import { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import { FaSearch, FaArrowLeft } from "react-icons/fa"
+
 import ClientCard from "../../components/clientCard"
 import { useClients } from "../../providers/clients"
 import { useLogin } from "../../providers/Login"
 import { Container, DivInitial, DivSearch, InputDiv, Ul } from "./style"
 
-
 const Clients = () => {
-  const {getAllClients, clients} = useClients()
-  const {token} = useLogin()
-  
-  // const [clientsList, setClientsList] = useState(arrayTeste)
-  // const [search, setSearch] = useState("")
+  const { getAllClients, clients, filter, filteredClients } = useClients()
+  const { token } = useLogin()
+  const history = useHistory()
 
-  // const filter = (search: string) => {
-  //   const clients = [...arrayTeste]
-  //   const filteredClients = clients.filter((client) => {
-  //     return (
-  //       String(client.name).toLocaleLowerCase() === search ||
-  //       String(client.cpf) === search ||
-  //       String(client.bedroom) === search
-  //     )
-  //   })
+  const [search, setSearch] = useState("")
 
-  //   if (filteredClients.length > 0) {
-  //     return setClientsList(filteredClients)
-  //   } else {
-  //     return setClientsList(arrayTeste)
-  //   }
-  // }
+  const goBack = () => {
+    return history.push("/")
+  }
 
   useEffect(() => {
     getAllClients(token)
-  },[])
+  }, [])
 
   return (
     <Container>
       <DivInitial>
-        <button>
+        <button onClick={goBack}>
           <FaArrowLeft />
         </button>
         <h1>Clients</h1>
@@ -48,17 +36,22 @@ const Clients = () => {
           <label>Search</label>
           <input
             type="text"
+            onChange={(event) => setSearch(event.target.value)}
           />
         </InputDiv>
-        <button>
+        <button onClick={() => filter(search)}>
           <FaSearch />
         </button>
       </DivSearch>
       <main>
         <Ul>
-          {clients.map((client) => (
-            <ClientCard key={client.id} client={client} />
-          ))}
+          {filteredClients.length > 0
+            ? filteredClients.map((client: any) => (
+                <ClientCard key={client.id} client={client} />
+              ))
+            : clients.map((client) => (
+                <ClientCard key={client.id} client={client} />
+              ))}
         </Ul>
       </main>
     </Container>
