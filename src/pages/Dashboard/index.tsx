@@ -14,8 +14,8 @@ import PopupRegisterContract from "../../components/PopupRegisterContract";
 import PopupRegisterBedroom from "../../components/PopupRegisterBedroom";
 import PopupRegisterService from "../../components/PopupRegisterService";
 import PopupRegisterEmployee from "../../components/PopupRegisterEmployee";
+
 const Dashboard = () => {
-  const [isAdmin, setIsAdmin] = useState(true);
   const [showModalClients, setShowModalClients] = useState<boolean>(false);
   const [showModalContract, setShowModalContract] = useState<boolean>(false);
   const [showModalBedroom, setShowModalBedroom] = useState<boolean>(false);
