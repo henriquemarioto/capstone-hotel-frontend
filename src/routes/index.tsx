@@ -9,7 +9,10 @@ import BedroomsPage from "../pages/bedrooms";
 import Landing from "../pages/Landing";
 import {Services} from "../pages/services";
 import Employee from "../pages/Employee";
+import Rooms from "../pages/Rooms";
+import Chat from "../pages/Chat";
 import Route from "./route";
+
 
 const Routes = () => {
 
@@ -50,6 +53,15 @@ const Routes = () => {
       <Route path="/dashboard" isPrivate>
         <Header />
         <Dashboard />
+      </Route>
+
+      <Route path="/rooms" isPrivate>
+        <Header />
+        <Rooms />
+      </Route>
+      <Route path="/chat/:room/:username" isPrivate>
+        <Header />
+        <Chat />
       </Route>
     </Switch>
   );
