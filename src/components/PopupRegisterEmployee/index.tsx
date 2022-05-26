@@ -5,6 +5,8 @@ import PopupRegisterModel from "../PopupRegisterModel";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { InputIcon } from "../InputIcon";
+import { useState } from "react";
 
 interface Props {
   handlePopup: () => void;
@@ -14,15 +16,17 @@ interface EmployeeData {
   name: string;
   cpf: string;
   password: string;
-  admin?: boolean 
+  admin?: boolean;
 }
 
 const PopupRegisterEmployee = ({ handlePopup }: Props) => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const employeeSchema = yup.object().shape({
     name: yup.string().required("Campo obrigatorio"),
     cpf: yup.string().required("Campo obrigatorio").max(11),
-    password: yup.string().required('Campo Obrigatorio'),
-    admin: yup.boolean()
+    password: yup.string().required("Campo Obrigatorio"),
+    admin: yup.boolean(),
   });
 
   const {
@@ -46,11 +50,18 @@ const PopupRegisterEmployee = ({ handlePopup }: Props) => {
     >
       <Input title="Name" {...register("name")} />
       <Input title="CPF" {...register("cpf")} />
-      <Input title="Cellphone" {...register("password")} />
+      <InputIcon
+        title="Password"
+        type={showPassword ? "text" : "password"}
+        icon
+        {...register("password")}
+        showPassword={showPassword}
+        setShowPassword={setShowPassword}
+      />
       <DivCheckBox>
-      <input type='checkbox' {...register('admin')}/>
-      <label>Is Admin ?</label>
-      </DivCheckBox> 
+        <input type="checkbox" {...register("admin")} />
+        <label>Is Admin ?</label>
+      </DivCheckBox>
       <Button type="submit">Register</Button>
     </PopupRegisterModel>
   );

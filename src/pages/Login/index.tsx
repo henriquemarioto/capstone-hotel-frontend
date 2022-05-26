@@ -1,5 +1,5 @@
-import { Card, Container, Icon, Inputs } from "./style";
-import Input from "../../components/Input";
+import {Container} from "./style";
+import {Input} from "../../components/Input";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 
@@ -7,6 +7,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLogin } from "../../providers/Login";
+import { useState } from "react";
+import { InputIcon } from "../../components/InputIcon";
 
 interface Data {
   cpf: string
@@ -15,6 +17,7 @@ interface Data {
 
 const Login = () => {
   const { login } = useLogin();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const formSchema = yup.object().shape({
     cpf: yup.string().required("Name is required").length(11),
@@ -38,17 +41,18 @@ const Login = () => {
       <Form title="Login" onSubmit={handleSubmit(onSubmitFunction)}>
         <Input
           title="CPF"
-          type="number"
-          register={register}
-          registerName="cpf"
+          type="text"
+          {...register('cpf')}
           errors={errors}
         />
 
-        <Input
+        <InputIcon
           title="Password"
-          type="password"
-          register={register}
-          registerName="password"
+          showPassword={showPassword}
+          type={showPassword ? 'text': "password"}
+          icon
+          setShowPassword={setShowPassword}
+          {...register('password')}
           errors={errors}
         />
 
