@@ -6,6 +6,7 @@ export const Button = styled.button`
   border-radius: 5px;
   width: 29px;
   transition: 0.5s;
+  margin-left: auto;
   cursor: pointer;
   svg {
     transition: 0.5s;

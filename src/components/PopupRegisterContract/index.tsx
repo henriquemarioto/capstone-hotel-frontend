@@ -6,6 +6,8 @@ import { ContainerDate, ContainerDateInput, End, Label, Start } from "./styles";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useHiredService } from "../../providers/HiredService";
+import { useLogin } from "../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
@@ -19,6 +21,9 @@ interface ContractData {
 }
 
 const PopupRegisterContract = ({ handlePopup }: Props) => {
+  const { createHiredService } = useHiredService();
+  const { token } = useLogin();
+
   const contractSchema = yup.object().shape({
     cpf: yup.string().required("Campo Obrigatorio").max(11),
     serviceId: yup.string().required("Campo Obrigatorio"),
@@ -35,11 +40,10 @@ const PopupRegisterContract = ({ handlePopup }: Props) => {
   });
 
   const handleClick = (data: ContractData) => {
-    data.serviceId = Number(data.serviceId)
-    console.log(data);
+    data.serviceId = Number(data.serviceId);
+    createHiredService(data, token);
   };
-  
-  console.log(errors)
+
   return (
     <PopupRegisterModel
       handlePopup={handlePopup}
@@ -47,12 +51,13 @@ const PopupRegisterContract = ({ handlePopup }: Props) => {
       handleClick={handleClick}
       title="Register a contract"
     >
-      <Input title="Name" disabled />
       <Input title="CPF" {...register("cpf")} />
 
-      <Select title="Service" {...register('serviceId')}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((service) => (
-          <option value={service}>{service}</option>
+      <Select title="Service" {...register("serviceId")}>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((service, i) => (
+          <option value={service} key={i}>
+            {service}
+          </option> 
         ))}
       </Select>
 

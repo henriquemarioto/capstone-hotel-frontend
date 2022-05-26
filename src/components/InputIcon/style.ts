@@ -16,6 +16,7 @@ export const InputDiv = styled.div`
   display: flex;
   border: 1px solid var(--beige-1);
   background-color: #fff;
+  width: 100%;
   border-radius: 8px;
   :focus-within {
     border: 1px solid var(--beige-1);

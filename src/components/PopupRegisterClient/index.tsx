@@ -57,8 +57,8 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
       <Input title="CPF" {...register("cpf")} />
       <Input title="Cellphone" {...register("cellphone")} />
       <Select title="Bedroom" {...register("bedroomId")}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((bedroom) => (
-          <option value={bedroom}>{bedroom}</option>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((bedroom, i) => (
+          <option value={bedroom} key={i}>{bedroom}</option>
         ))}
       </Select>
       <Button type="submit">Register</Button>

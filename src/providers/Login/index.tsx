@@ -17,11 +17,6 @@ interface Employee {
   updated_at: string
 }
 
-interface TokenUser {
-  employee: Employee
-  token: string
-}
-
 interface EmployeeLogin {
   cpf: String
   password: String
@@ -36,14 +31,24 @@ interface LoginContextData {
 const LoginContext = createContext<LoginContextData>({} as LoginContextData)
 
 export const LoginProvider = ({ children }: LoginProps) => {
-  const [token, setToken] = useState<TokenUser>(() => {
+  const [token, setToken] = useState<string>(() => {
     const data = localStorage.getItem("@HM:token")
 
     if (data) {
       return JSON.parse(data)
     }
 
-    return {} as TokenUser
+    return {} as string
+  })
+
+  const [user, setUser] = useState<Employee>(() => {
+    const data = localStorage.getItem("@HM:user")
+
+    if (data) {
+      return JSON.parse(data)
+    }
+
+    return {} as Employee
   })
 
   const history = useHistory()
@@ -51,7 +56,12 @@ export const LoginProvider = ({ children }: LoginProps) => {
   const login = async (employee: EmployeeLogin) => {
     await ApiHotel.post("sessions", employee)
       .then((response) => {
-        localStorage.setItem("@HM:token", JSON.stringify(response.data))
+        localStorage.setItem("@HM:token", JSON.stringify(response.data.token))
+        localStorage.setItem("@HM:user", JSON.stringify(response.data.employee))
+
+        setToken(response.data.token)
+        setUser(response.data.employee)
+
         toast.success("Login efetuado")
         history.push("/dashboard")
       })
@@ -62,9 +72,7 @@ export const LoginProvider = ({ children }: LoginProps) => {
   }
 
   return (
-    <LoginContext.Provider
-      value={{ login, token: token.token, user: token.employee }}
-    >
+    <LoginContext.Provider value={{ login, token, user }}>
       {children}
     </LoginContext.Provider>
   )

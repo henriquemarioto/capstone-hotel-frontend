@@ -10,15 +10,14 @@ export const Container = styled.main`
 
 export const InputContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: flex-end;
-  position: relative;
-  width: 300px;
+  width: 80%;
+  max-width: 500px;
 
   button {
-    position: absolute;
-    right: -8px;
-    top: 30px;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
   }
 `;
 
