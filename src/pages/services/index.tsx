@@ -1,24 +1,40 @@
-import Button from "../../components/Button";
-import Header from "../../components/Header";
-import Input from "../../components/Input";
-import ServiceCard from "../../components/ServiceCard";
+import Button from "../../components/Button"
+import Header from "../../components/Header"
+import Input from "../../components/Input"
+import ServiceCard from "../../components/ServiceCard"
 import {
   Container,
   InputContainer,
   HeadingContainer,
   CardsContainer,
-} from "./styles";
+} from "./styles"
 
-import {FiSearch} from "react-icons/fi";
-import {useService} from "../../providers/Service";
-import {useEffect} from "react";
+import { FiSearch } from "react-icons/fi"
+import { useService } from "../../providers/Service"
+import { useEffect, useState } from "react"
 
 export const Services = () => {
-  const {services, getAllServices} = useService();
+  const { services, getAllServices } = useService()
+
+  const [search, setSearch] = useState("")
+  const [servicesList, setServicesList] = useState(services)
 
   useEffect(() => {
-    getAllServices();
-  }, []);
+    getAllServices()
+  }, [])
+
+  const filter = (search: string) => {
+    const services = [...servicesList]
+    const filteredServices = services.filter(
+      (service) => String(service.name).toLocaleLowerCase() === search
+    )
+
+    if (filteredServices.length > 0) {
+      return setServicesList(filteredServices)
+    } else {
+      return setServicesList(services)
+    }
+  }
 
   return (
     <>
@@ -27,8 +43,12 @@ export const Services = () => {
         <HeadingContainer>
           <h1>Services</h1>
           <InputContainer>
-            <Input label={"Choose a service"} />
-            <Button>
+            {/* <Input label={"Choose a service"} /> */}
+            <input
+              type="text"
+              onChange={(event) => setSearch(event.target.value)}
+            />
+            <Button onClick={() => filter(search)}>
               <FiSearch />
             </Button>
           </InputContainer>
@@ -43,10 +63,10 @@ export const Services = () => {
                 price={service.price}
                 key={service.id}
               />
-            );
+            )
           })}
         </CardsContainer>
       </Container>
     </>
-  );
-};
+  )
+}
