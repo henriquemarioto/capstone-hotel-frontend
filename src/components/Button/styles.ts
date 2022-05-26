@@ -1,8 +1,5 @@
 import styled from "styled-components"
-<<<<<<< HEAD
-=======
 import {darken} from "polished"
->>>>>>> 3d18cb9225a34fb3cc25c8567186066c442cbd3b
 
 export const Container = styled.button`
   padding: 8px;
@@ -17,9 +14,6 @@ export const Container = styled.button`
 
   margin: 0;
   border: 0;
-<<<<<<< HEAD
-`
-=======
 
   cursor: pointer;
   transition: 0.5s;
@@ -28,4 +22,3 @@ export const Container = styled.button`
     background: ${darken("0.1", "#f1dabf")};
   }
 `;
->>>>>>> 3d18cb9225a34fb3cc25c8567186066c442cbd3b
