@@ -13,14 +13,6 @@ export const Container = styled.div`
   justify-content: space-evenly;
   align-items: flex-start;
   gap: 20px;
-
-  h1 {
-    font-weight: 600;
-  }
-
-  span {
-    font-weight: 500;
-  }
 `;
 
 export const DivContent = styled.div`
@@ -35,11 +27,22 @@ export const DivContent = styled.div`
     word-wrap: break-word;
     width: 120px;
   }
+
+  div{
+    span{
+      word-wrap: break-word;
+      width: 120px;
+    }
+  }
+`;
+
+export const Title = styled.h2`
+  display: inline;
+
+  font-weight: bold;
 `;
 
 export const DivButtons = styled.div`
-
-
   display: flex;
   flex-direction: column;
   gap: 10px;

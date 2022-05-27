@@ -27,7 +27,7 @@ const PopupUpdateServices = ({ handlePopup, service }: any) => {
   const clientSchema = yup.object().shape({
     name: yup.string(),
     price: yup.number(),
-    description: yup.string().length(11),
+    description: yup.string(),
     status: yup.boolean()
   });
 
@@ -61,10 +61,16 @@ const PopupUpdateServices = ({ handlePopup, service }: any) => {
       <Input
         title="Price"
         {...register("price")}
-        defaultValue={service.birthDate}
+        defaultValue={service.price}
       />
-      <Input type="number" title="Description" {...register("description")} defaultValue={service.cpf} />
-      {!service.status && <Input title="Status" {...register("status")} checkbox />}
+      <Input
+        title="Description"
+        {...register("description")}
+        defaultValue={service.description}
+      />
+      {!service.status && (
+        <Input title="Status" {...register("status")} checkbox />
+      )}
       <Button type="submit">Update</Button>
     </PopupRegisterModel>
   );
