@@ -33,7 +33,7 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
     birthDate: yup.string().required("Campo Obrigatorio"),
     cpf: yup.string().required("Campo obrigatorio").max(11),
     cellphone: yup.string().max(11),
-    bedroomId: yup.string().required("Bedroom is required"),
+    bedroomId: yup.string(),
   });
 
   const {
@@ -66,9 +66,6 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
       <Input title="CPF" {...register("cpf")} />
       <Input title="Cellphone" {...register("cellphone")} />
       <Select title="Bedroom" {...register("bedroomId")}>
-        <option value={-1}>
-          Selecione um quarto...
-        </option>
         {bedrooms.map((bedroom) => (
           <option value={bedroom.id} key={bedroom.id}>
             {bedroom.number}
