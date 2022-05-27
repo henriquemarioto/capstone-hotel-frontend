@@ -4,19 +4,18 @@ import Drawer from "@mui/material/Drawer"
 import { HeaderDiv } from "./style"
 import IconButton from "@mui/material/IconButton"
 import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import LogoutIcon from "@mui/icons-material/Logout"
 import MenuIcon from "@mui/icons-material/Menu"
 import Toolbar from "@mui/material/Toolbar"
 import { useHistory } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import logo from "../../img/logo.svg"
 import { useLogin } from "../../providers/Login"
 
 const drawerWidth = 240
 
-const Header = (props: Props) => {
+const Header = (props: any) => {
   const { user, logout } = useLogin()
 
   const history = useHistory()
