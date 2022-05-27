@@ -37,6 +37,10 @@ const ClientCard = ({ client }: any) => {
             {client.cellphone}
           </p>
           <p>
+            <span>Bedroom: </span>
+            {client.bedroom_number}
+          </p>
+          <p>
             <span>Status: </span>
             {String(client.status)}
           </p>
