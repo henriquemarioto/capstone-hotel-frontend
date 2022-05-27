@@ -128,7 +128,7 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    setHiredServices(data);
+    setFilteredHired(data);
   };
 
   const filter = (search: string) => {
