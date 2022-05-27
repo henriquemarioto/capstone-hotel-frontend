@@ -2,13 +2,16 @@ import { Main, Header, Container,  Footer,  Logo, Tittle, Button } from "./style
 import logo from "../../img/logo.svg";
 import Peoples from "../../img/peoples.svg"
 import peopleBoard from "../../img/peopleboard.svg"
+import { useHistory } from "react-router-dom";
 
 const Landing = () => {
+    const history = useHistory()
+
     return(
      <>
         <Header>
         <Logo src={logo} alt="logo"/>
-        <Button>Entrar</Button>
+        <Button onClick={() => history.push("/login")}>Entrar</Button>
         </Header>
         <Main>
             <Container>
