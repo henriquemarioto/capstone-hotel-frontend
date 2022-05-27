@@ -1,18 +1,36 @@
-import { ForwardRefRenderFunction, InputHTMLAttributes, forwardRef } from "react"
-import { InputDiv } from "./styles"
+import {
+  ForwardRefRenderFunction,
+  InputHTMLAttributes,
+  forwardRef,
+  useState,
+} from "react";
+import { DivCheckBox, InputDiv } from "./styles";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  title: string
+  title: string;
+  checkbox?: boolean;
   errors?: any;
 }
 
-const InputDefault: ForwardRefRenderFunction<HTMLInputElement, Props> = ({ title, ...rest },ref) => {
+const InputDefault: ForwardRefRenderFunction<HTMLInputElement, Props> = (
+  { title, checkbox, ...rest },
+  ref
+) => {
   return (
-    <InputDiv>
-      <label>{title}</label>
-      <input {...rest} ref={ref}/>
-    </InputDiv>
-  )
-}
+    <>
+      {checkbox ? (
+        <DivCheckBox>
+          <input type="checkbox" {...rest} ref={ref} />
+          <label>{title}</label>
+        </DivCheckBox>
+      ) : (
+        <InputDiv>
+          <label>{title}</label>
+          <input {...rest} ref={ref} />
+        </InputDiv>
+      )}
+    </>
+  );
+};
 
 export const Input = forwardRef(InputDefault);

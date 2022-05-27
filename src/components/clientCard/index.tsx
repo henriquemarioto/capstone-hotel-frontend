@@ -1,12 +1,26 @@
+import { useState } from "react";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
+import { useClients } from "../../providers/clients";
 import { useLogin } from "../../providers/Login";
+import PopupUpdateClient from "../Popups/PopupPatchClient";
 import { Li, Buttons, DivClient } from "./style";
 
 const ClientCard = ({ client }: any) => {
   const { user } = useLogin();
+  const { disableClient} = useClients()
+
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  const handlePopup = () => {
+    setShowPopup(!showPopup);
+  };
 
   return (
     <>
+      {showPopup && (
+        <PopupUpdateClient handlePopup={handlePopup} client={client} />
+      )}
+
       <Li>
         <DivClient>
           <h2>{client.name}</h2>
@@ -16,21 +30,28 @@ const ClientCard = ({ client }: any) => {
           </p>
           <p>
             <span>Birth date: </span>
-            {new Date(client.birthDate).toLocaleDateString('pt-BR')}
+            {new Date(client.birthDate).toLocaleDateString("pt-BR")}
           </p>
           <p>
             <span>Cellphone: </span>
             {client.cellphone}
           </p>
+          <p>
+            <span>Status: </span>
+            {String(client.status)}
+          </p>
         </DivClient>
         {user.admin && (
           <Buttons>
-            <button>
+            <button onClick={handlePopup}>
               <FaPen />
             </button>
-            <button>
-              <FaTrashAlt />
-            </button>
+
+            {client.status && (
+              <button>
+                <FaTrashAlt onClick={() => disableClient(client.id)} />
+              </button>
+            )}
           </Buttons>
         )}
       </Li>

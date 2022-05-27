@@ -1,14 +1,14 @@
-import Button from "../Button";
-import { Input } from "../Input";
+import Button from "../../Button";
+import { Input } from "../../Input";
 import { DivCheckBox } from "./style";
 import PopupRegisterModel from "../PopupRegisterModel";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { InputIcon } from "../InputIcon";
+import { InputIcon } from "../../InputIcon";
 import { useState } from "react";
-import { useEmployee } from "../../providers/Employee";
-import { useLogin } from "../../providers/Login";
+import { useEmployee } from "../../../providers/Employee";
+import { useLogin } from "../../../providers/Login"
 
 interface Props {
   handlePopup: () => void;

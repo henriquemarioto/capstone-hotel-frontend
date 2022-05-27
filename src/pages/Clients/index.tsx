@@ -9,11 +9,16 @@ import { useLogin } from "../../providers/Login"
 import { Ul } from "./style"
 
 const Clients = () => {
-  const { getAllClients, clients, filter, filteredClients } = useClients()
-  const { token } = useLogin()
+  const { getAllClients, clients, filter, filteredClients, filterByStatus } = useClients()
+  const [status, setStatus] = useState<boolean>(false);
+
+  const alterStatus = async () => {
+    await filterByStatus(status);
+    setStatus(!status);
+  };
 
   useEffect(() => {
-    getAllClients(token)
+    getAllClients()
   }, [])
 
   return (
@@ -22,6 +27,7 @@ const Clients = () => {
         title="Client"
         placeholder="Name, CPF, cellphone..."
         searchFunction={filter}
+        alterStatusFunction={alterStatus}
       >
         <Ul>
           {filteredClients.length > 0

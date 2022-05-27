@@ -18,7 +18,6 @@ interface InputClients {
   birthDate?: string
   cpf?: string
   cellphone?: string
-  bedroomId?: string | number
 }
 
 interface ClientsProps {
@@ -26,20 +25,17 @@ interface ClientsProps {
 }
 
 interface ClientsContextData {
-  clients: Clients[]
-  client?: Clients
-  createClient: (clientsInput: InputClients, token: string) => Promise<void>
-  getAllClients: (token: string) => Promise<void>
-  getOneClient: (id: string, token: string) => Promise<void>
-  updatedClient: (
-    id: string,
-    clientsInput: InputClients,
-    token: string
-  ) => Promise<void>
-  disableClient: (id: string, token: string) => Promise<void>
-  JoinBedroom: (id: string, bedroom: number, token: string) => Promise<void>
-  filter: (search: string) => void
-  filteredClients: Clients[]
+  clients: Clients[];
+  client?: Clients;
+  createClient: (clientsInput: InputClients) => Promise<void>;
+  getAllClients: () => Promise<void>;
+  getOneClient: (id: string) => Promise<void>;
+  updatedClient: (id: string, clientsInput: InputClients) => Promise<void>;
+  disableClient: (id: string) => Promise<void>;
+  JoinBedroom: (id: string, bedroom: number) => Promise<void>;
+  filter: (search: string) => void;
+  filteredClients: Clients[];
+  filterByStatus: (status: boolean) => Promise<void>;
 }
 
 const ClientsContext = createContext<ClientsContextData>(
@@ -50,8 +46,9 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
   const [clients, setClients] = useState<Clients[]>([])
   const [client, setClient] = useState<Clients>()
   const [filteredClients, setFilteredClients] = useState<Clients[]>([])
+  const {token} = useLogin()
 
-  const createClient = async (clientsInput: InputClients, token: string) => {
+  const createClient = async (clientsInput: InputClients, ) => {
     await apiHotel
       .post("clients", clientsInput, {
         headers: {
@@ -66,7 +63,7 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
       })
   }
 
-  const getAllClients = async (token: string) => {
+  const getAllClients = async () => {
     const { data } = await apiHotel.get("clients", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -75,7 +72,7 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
     setClients(data)
   }
 
-  const getOneClient = async (id: string, token: string) => {
+  const getOneClient = async (id: string, ) => {
     const { data } = await apiHotel.get(`clients/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -87,7 +84,7 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
   const updatedClient = async (
     id: string,
     clientsInput: InputClients,
-    token: string
+    
   ) => {
     await apiHotel
       .patch(`clients/${id}`, clientsInput, {
@@ -96,15 +93,15 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
         },
       })
       .then((res) => {
-        toast.success(res.data.message)
-        getAllClients(token)
+        toast.success("Client updated")
+        getAllClients()
       })
       .catch((err) => {
         toast.error(err.response?.data.message || err)
       })
   }
 
-  const disableClient = async (id: string, token: string) => {
+  const disableClient = async (id: string, ) => {
     await apiHotel
       .delete(`clients/${id}`, {
         headers: {
@@ -113,14 +110,14 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllClients(token)
+        getAllClients()
       })
       .catch((err) => {
         toast.error(err.response.data.message)
       })
   }
 
-  const JoinBedroom = async (id: string, bedroom: number, token: string) => {
+  const JoinBedroom = async (id: string, bedroom: number, ) => {
     await apiHotel
       .patch(`clients/joinbedroom/${id}`, bedroom, {
         headers: {
@@ -147,6 +144,15 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
     setFilteredClients(filteredClients)
   }
 
+  const filterByStatus = async (status: boolean) => {
+    const { data } = await apiHotel.get(`clients?status=${status}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setClients(data);
+  };
+
   return (
     <ClientsContext.Provider
       value={{
@@ -160,11 +166,12 @@ export const ClientsProvider = ({ children }: ClientsProps) => {
         updatedClient,
         filter,
         filteredClients,
+        filterByStatus,
       }}
     >
       {children}
     </ClientsContext.Provider>
-  )
+  );
 }
 
 export const useClients = () => useContext(ClientsContext)

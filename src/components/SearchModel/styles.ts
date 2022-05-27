@@ -36,6 +36,8 @@ export const TitleSection = styled.section`
 export const SearchSection = styled.section`
   height: 60px;
   display: flex;
+  align-items: flex-end;
+  gap: 5px;
 
   margin: 45px auto;
   max-width: 400px;
