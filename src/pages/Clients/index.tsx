@@ -7,6 +7,7 @@ import SearchModel from "../../components/SearchModel"
 import { useClients } from "../../providers/clients"
 import { useLogin } from "../../providers/Login"
 import { Ul } from "./style"
+import Loading from "../../components/Loading"
 
 const Clients = () => {
   const { getAllClients, clients, filter, filteredClients, filterByStatus } = useClients()
@@ -30,18 +31,21 @@ const Clients = () => {
         alterStatusFunction={alterStatus}
       >
         <Ul>
-          {filteredClients.length > 0
-            ? filteredClients.map((client: any) => (
-                <ClientCard key={client.id} client={client} />
-              ))
-            : clients.map((client) => (
-                <ClientCard key={client.id} client={client} />
-              ))}
+          {clients.length === 0 ? (
+            <Loading />
+          ) : filteredClients.length > 0 ? (
+            filteredClients.map((client: any) => (
+              <ClientCard key={client.id} client={client} />
+            ))
+          ) : (
+            clients.map((client) => (
+              <ClientCard key={client.id} client={client} />
+            ))
+          )}
         </Ul>
       </SearchModel>
     </Margin>
-  );
-
+  )
 }
 
 export default Clients

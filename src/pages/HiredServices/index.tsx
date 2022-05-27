@@ -5,6 +5,7 @@ import SearchModel from "../../components/SearchModel"
 import { useHiredService } from "../../providers/HiredService"
 import { useLogin } from "../../providers/Login"
 import { Ul } from "./style"
+import Loading from "../../components/Loading"
 
 const HiredService = () => {
   const { getAllHiredServices, hiredServices, filter, filteredHired, filterByStatus } =
@@ -31,23 +32,27 @@ const HiredService = () => {
         alterStatusFunction={alterStatus}
       >
         <Ul>
-          {filteredHired.length > 0
-            ? filteredHired.map((hiredService) => (
-                <HiredServiceCard
-                  key={hiredService.id}
-                  hiredService={hiredService}
-                />
-              ))
-            : hiredServices.map((hiredService) => (
-                <HiredServiceCard
-                  key={hiredService.id}
-                  hiredService={hiredService}
-                />
-              ))}
+          {hiredServices.length === 0 ? (
+            <Loading />
+          ) : filteredHired.length > 0 ? (
+            filteredHired.map((hiredService) => (
+              <HiredServiceCard
+                key={hiredService.id}
+                hiredService={hiredService}
+              />
+            ))
+          ) : (
+            hiredServices.map((hiredService) => (
+              <HiredServiceCard
+                key={hiredService.id}
+                hiredService={hiredService}
+              />
+            ))
+          )}
         </Ul>
       </SearchModel>
     </Margin>
-  );
+  )
 }
 
 export default HiredService
