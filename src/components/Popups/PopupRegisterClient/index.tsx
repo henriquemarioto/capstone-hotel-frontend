@@ -1,12 +1,12 @@
-import Button from "../Button";
-import { Input } from "../Input";
+import Button from "../../Button";
+import { Input } from "../../Input";
 import PopupRegisterModel from "../PopupRegisterModel";
-import { Select } from "../Select";
+import { Select } from "../../Select";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useClients } from "../../providers/clients";
-import { useLogin } from "../../providers/Login";
+import { useClients } from "../../../providers/clients";
+import { useLogin } from "../../../providers/Login";
 
 interface Props {
   handlePopup: () => void;

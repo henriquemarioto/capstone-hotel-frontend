@@ -1,12 +1,12 @@
-import Button from "../Button";
-import { Input } from "../Input";
+import Button from "../../Button";
+import { Input } from "../../Input";
 import PopupRegisterModel from "../PopupRegisterModel";
-import { Select } from "../Select";
+import { Select } from "../../Select";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useBedroom } from "../../providers/Bedroom";
-import { useLogin } from "../../providers/Login";
+import { useBedroom } from "../../../providers/Bedroom";
+import { useLogin } from "../../../providers/Login";
 
 interface Props {
   handlePopup: () => void;
@@ -39,7 +39,7 @@ const PopupRegisterBedroom = ({ handlePopup }: Props) => {
 
   const handleClick = async (data: BedroomData) => {
     data.capacity = Number(data.capacity);
-    await createBedroom(data, token)
+    await createBedroom(data)
   };
 
   return (

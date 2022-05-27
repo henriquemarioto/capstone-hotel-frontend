@@ -1,12 +1,12 @@
 import BedroomsCard from "../../components/BedroomsCard"
 import { BedroomsDiv } from "./styles"
 import { useHistory } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useBedroom } from "../../providers/Bedroom"
 import { useLogin } from "../../providers/Login"
 import Margin from "../../components/Margin"
 import SearchModel from "../../components/SearchModel"
-
+import PopupUpdateBedroom from "../../components/Popups/PopupPatchBedroom"
 import Loading from "../../components/Loading"
 
 interface Bedroom {
@@ -18,13 +18,17 @@ interface Bedroom {
 }
 
 const BedroomsPage = () => {
-  const { getAllBedrooms, bedrooms, filteredBedrooms, filter } = useBedroom()
-  const { token } = useLogin()
+  const { getAllBedrooms, bedrooms, filterByStatus, filteredBedrooms, filter } =
+    useBedroom()
+  const [status, setStatus] = useState<boolean>(false)
 
-  const history = useHistory()
+  const alterStatus = async () => {
+    await filterByStatus(status)
+    setStatus(!status)
+  }
 
   useEffect(() => {
-    getAllBedrooms(token)
+    getAllBedrooms()
   }, [])
 
   return (
@@ -33,6 +37,7 @@ const BedroomsPage = () => {
         title="Bedroom"
         placeholder="Number, floor, capacity"
         searchFunction={filter}
+        alterStatusFunction={alterStatus}
       >
         <BedroomsDiv>
           {bedrooms.length === 0 ? (
