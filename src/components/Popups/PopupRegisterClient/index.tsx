@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useClients } from "../../../providers/clients";
 import { useLogin } from "../../../providers/Login";
+import { useBedroom } from "../../../providers/Bedroom";
+import { useEffect } from "react";
 
 interface Props {
   handlePopup: () => void;
@@ -22,7 +24,9 @@ interface ClientData {
 
 const PopupRegisterClient = ({ handlePopup }: Props) => {
   const { createClient } = useClients();
-  const {token} = useLogin()
+  const { getAllBedrooms, bedrooms } = useBedroom();
+
+  console.log(bedrooms);
 
   const clientSchema = yup.object().shape({
     name: yup.string().required("Campo obrigatorio"),
@@ -42,8 +46,12 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
 
   const handleClick = async (data: ClientData) => {
     data.bedroomId = Number(data.bedroomId);
-    await createClient(data, token)
+    await createClient(data);
   };
+
+  useEffect(() => {
+    getAllBedrooms();
+  }, []);
 
   return (
     <PopupRegisterModel
@@ -57,8 +65,10 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
       <Input title="CPF" {...register("cpf")} />
       <Input title="Cellphone" {...register("cellphone")} />
       <Select title="Bedroom" {...register("bedroomId")}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((bedroom, i) => (
-          <option value={bedroom} key={i}>{bedroom}</option>
+        {bedrooms.map((bedroom) => (
+          <option value={bedroom.id} key={bedroom.id}>
+            {bedroom.number}
+          </option>
         ))}
       </Select>
       <Button type="submit">Register</Button>

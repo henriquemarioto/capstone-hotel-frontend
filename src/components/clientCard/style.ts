@@ -9,7 +9,6 @@ export const Li = styled.li`
   height: 120px;
   border: 2px solid var(--beige-1);
   border-radius: 8px;
-  margin-bottom: 10px;
   background-color: #fff;
 `
 
@@ -17,7 +16,6 @@ export const DivClient = styled.div`
   h2 {
     font-weight: 600;
     font-size: 15px;
-    margin-bottom: 5px;
   }
 
   p {
