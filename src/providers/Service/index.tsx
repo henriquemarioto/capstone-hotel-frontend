@@ -33,16 +33,16 @@ interface ServiceContextData {
   services: Service[]
   service?: Service
   filteredService: Service[]
-  createService: (data: CreateService, token: string) => Promise<void>
-  getAllServices: (token: string) => Promise<void>
-  getOneService: (id: string, token: string) => Promise<void>
+  createService: (data: CreateService, ) => Promise<void>
+  getAllServices: () => Promise<void>
+  getOneService: (id: string, ) => Promise<void>
   updatedService: (
     data: UpdatedProps,
     id: string,
-    token: string
+    
   ) => Promise<void>
-  disableService: (id: string, token: string) => Promise<void>
-  //filterByStatus: (status: boolean, token: string) => Promise<void>
+  disableService: (id: string, ) => Promise<void>
+  //filterByStatus: (status: boolean, ) => Promise<void>
   filter: (search: string) => void
 }
 
@@ -54,8 +54,9 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
   const [services, setServices] = useState<Service[]>([])
   const [service, setService] = useState<Service>()
   const [filteredService, setFilteredService] = useState<Service[]>([])
+  const {token} = useLogin()
 
-  const createService = async (data: CreateService, token: string) => {
+  const createService = async (data: CreateService, ) => {
     await apiHotel
       .post("services", data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -68,7 +69,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
       })
   }
 
-  const getAllServices = async (token: string) => {
+  const getAllServices = async () => {
     const { data } = await apiHotel.get("services", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -78,7 +79,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
     setServices(data)
   }
 
-  const getOneService = async (id: string, token: string) => {
+  const getOneService = async (id: string, ) => {
     const { data } = await apiHotel.get(`services/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,7 +91,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
   const updatedService = async (
     data: UpdatedProps,
     id: string,
-    token: string
+    
   ) => {
     await apiHotel
       .patch(`services/${id}`, data, {
@@ -100,14 +101,14 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllServices(token)
+        getAllServices()
       })
       .catch((err) => {
         toast.error(err.response.data.message)
       })
   }
 
-  const disableService = async (id: string, token: string) => {
+  const disableService = async (id: string, ) => {
     await apiHotel
       .delete(`services/${id}`, {
         headers: {
@@ -116,14 +117,14 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllServices(token)
+        getAllServices()
       })
       .catch((err) => {
         toast.error(err.response.data.message)
       })
   }
 
-  // const filterByStatus = async (status: boolean, token: string) => {
+  // const filterByStatus = async (status: boolean, ) => {
   //   const { data } = await apiHotel.get(`services?status=${status}`, {
   //     headers: {
   //       Authorizarion: `Bearer ${token}`,

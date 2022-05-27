@@ -19,7 +19,9 @@ const BedroomsCard = ({ bedroom }: any) => {
 
   return (
     <Container>
-      {showPopup && <PopupUpdateBedroom handlePopup={handlePopup} bedroom={bedroom} />}
+      {showPopup && (
+        <PopupUpdateBedroom handlePopup={handlePopup} bedroom={bedroom} />
+      )}
       <StyledUl>
         <li>
           Number: <span>{bedroom.number}</span>
@@ -42,9 +44,11 @@ const BedroomsCard = ({ bedroom }: any) => {
             <button onClick={handlePopup}>
               <FaPen />
             </button>
-            <button onClick={() => disableBedroom(bedroom.id)}>
-              <FaTrashAlt />
-            </button>
+            {bedroom.status && (
+              <button onClick={() => disableBedroom(bedroom.id)}>
+                <FaTrashAlt />
+              </button>
+            )}
           </>
         )}
       </Buttons>

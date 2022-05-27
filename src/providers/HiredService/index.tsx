@@ -129,7 +129,6 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
       },
     });
     setHiredServices(data);
-    console.log(data)
   };
 
   const filter = (search: string) => {
