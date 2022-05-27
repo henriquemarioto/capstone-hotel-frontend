@@ -62,6 +62,33 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+
+    /* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  width: 7px;
+  width: 7px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #D7E1E3;
+}
+*::-webkit-scrollbar-track:hover {
+  background-color: #B8C0C2;
+}
+*::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #9D9D9D;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #575757;
+}
+*::-webkit-scrollbar-thumb:active {
+  background-color: #565656;
+}
+
     #root{
         width: 100%;
     }

@@ -1,4 +1,4 @@
-import { Main, Container, DivSession } from "./style";
+import { Main, Container, DivSession, ButtonChat } from "./style";
 import { useState } from "react";
 import {
   FaBed,
@@ -6,6 +6,7 @@ import {
   FaReceipt,
   FaUserFriends,
   FaUserTie,
+  FaComments
 } from "react-icons/fa";
 import image from "../../img/background.png";
 import Margin from "../../components/Margin";
@@ -14,8 +15,10 @@ import PopupRegisterContract from "../../components/Popups/PopupRegisterContract
 import PopupRegisterBedroom from "../../components/Popups/PopupRegisterBedroom";
 import PopupRegisterService from "../../components/Popups/PopupRegisterService";
 import PopupRegisterEmployee from "../../components/Popups/PopupRegisterEmployee";
+import { useHistory } from "react-router-dom";
 
 const Dashboard = () => {
+  const history = useHistory<unknown>()
   const [showModalClients, setShowModalClients] = useState<boolean>(false);
   const [showModalContract, setShowModalContract] = useState<boolean>(false);
   const [showModalBedroom, setShowModalBedroom] = useState<boolean>(false);
@@ -82,6 +85,8 @@ const Dashboard = () => {
       {showModalBedroom && <PopupRegisterBedroom handlePopup={handleBedroom} />}
       {showModalService && <PopupRegisterService handlePopup={handleService} />}
       {showModalEmployee && <PopupRegisterEmployee handlePopup={handleEmployee}/>}
+
+      <ButtonChat onClick={() => history.push('/rooms')}><FaComments /></ButtonChat>
     </Margin>
   );
 };

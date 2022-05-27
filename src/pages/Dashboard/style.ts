@@ -43,3 +43,19 @@ export const DivSession = styled.div`
   }
 `
 
+export const ButtonChat = styled.button`
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: red;
+  bottom: 15px;
+  right: 15px;
+  border: none;
+  background-color: var(--beige-1);
+
+  svg {
+    width: 100%;
+    height: 50%;
+  }
+`

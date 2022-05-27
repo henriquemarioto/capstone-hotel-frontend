@@ -1,0 +1,1 @@
+export const apiChat = 'https://chat-hotel-socket.herokuapp.com/'
