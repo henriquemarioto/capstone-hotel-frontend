@@ -65,7 +65,7 @@ export const BedroomProvider = ({ children }: BedroomProps) => {
         toast.success("Bedroom created");
       })
       .catch((err) => {
-        toast.error(err.response.data.message || "Error creating room");
+        toast.error(err.message || "Error creating room");
       });
   };
 
@@ -100,7 +100,7 @@ export const BedroomProvider = ({ children }: BedroomProps) => {
         getAllBedrooms();
       })
       .catch((err) => {
-        toast.error(err.response.body.message || "Error updating room");
+        toast.error(err.message || "Error updating room");
       });
   };
 
@@ -116,7 +116,7 @@ export const BedroomProvider = ({ children }: BedroomProps) => {
         getAllBedrooms();
       })
       .catch((err) => {
-        toast.error(err.response.data.message || "Error when disabling room");
+        toast.error(err.message || "Error when disabling room");
       });
   };
 

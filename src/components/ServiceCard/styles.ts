@@ -51,6 +51,7 @@ export const DivButtons = styled.div`
     margin: 0;
     padding: 0;
     border: 0;
+    background-color: transparent;
 
     width: 30px;
     height: 30px;
