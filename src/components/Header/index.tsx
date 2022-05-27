@@ -93,7 +93,7 @@ const Header = (props: Props) => {
   return (
     <HeaderDiv>
       <div className="container">
-        <div className="col-left">
+        <div className="col-left" onClick={() => history.push("/dashboard")}>
           <img src={logo} />
           <span>|</span>
           <h2>{user.name}</h2>
@@ -105,6 +105,7 @@ const Header = (props: Props) => {
             <li onClick={() => history.push("/hiredservices")}>Contracts</li>
             <li onClick={() => history.push("/services")}>Services</li>
             <li onClick={() => history.push("/employees")}>Employees</li>
+            <li onClick={logout}>Logout</li>
           </ul>
 
           <IconButton
@@ -145,7 +146,7 @@ const Header = (props: Props) => {
         </nav>
       </div>
     </HeaderDiv>
-  )
+  );
 }
 
 export default Header

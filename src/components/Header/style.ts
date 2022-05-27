@@ -19,6 +19,8 @@ export const HeaderDiv = styled.header`
     font-size: 16px;
     font-weight: 500;
 
+    cursor: pointer;
+
     display: flex;
     align-items: center;
     gap: 5px;
