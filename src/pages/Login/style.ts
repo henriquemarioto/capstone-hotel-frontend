@@ -8,6 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
+  background-color: var(--vine);
   background-image: url("./src/img/Hotel_Wood.png");
   background-size: 100%;
   background-repeat: no-repeat;
