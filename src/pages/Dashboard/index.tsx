@@ -6,7 +6,7 @@ import {
   FaReceipt,
   FaUserFriends,
   FaUserTie,
-  FaComments
+  FaComments,
 } from "react-icons/fa";
 import image from "../../img/background.png";
 import Margin from "../../components/Margin";
@@ -16,14 +16,18 @@ import PopupRegisterBedroom from "../../components/Popups/PopupRegisterBedroom";
 import PopupRegisterService from "../../components/Popups/PopupRegisterService";
 import PopupRegisterEmployee from "../../components/Popups/PopupRegisterEmployee";
 import { useHistory } from "react-router-dom";
+import { Username } from "../Chat/style";
+import { useLogin } from "../../providers/Login";
 
 const Dashboard = () => {
-  const history = useHistory<unknown>()
+  const history = useHistory<unknown>();
   const [showModalClients, setShowModalClients] = useState<boolean>(false);
   const [showModalContract, setShowModalContract] = useState<boolean>(false);
   const [showModalBedroom, setShowModalBedroom] = useState<boolean>(false);
   const [showModalService, setShowModalService] = useState<boolean>(false);
   const [showModalEmployee, setShowModalEmployee] = useState<boolean>(false);
+
+  const { user } = useLogin();
 
   const handleClients = () => {
     setShowModalClients(!showModalClients);
@@ -58,24 +62,28 @@ const Dashboard = () => {
             </p>
             <span>New Contract</span>
           </DivSession>
-          <DivSession onClick={handleBedroom}>
-            <p>
-              <FaBed />
-            </p>
-            <span>New Bedroom</span>
-          </DivSession>
-          <DivSession onClick={handleService}>
-            <p>
-              <FaReceipt />
-            </p>
-            <span>New Service</span>
-          </DivSession>
-          <DivSession onClick={handleEmployee}>
-            <p>
-              <FaUserFriends />
-            </p>
-            <span>New Employee</span>
-          </DivSession>
+          {user.admin && (
+            <>
+              <DivSession onClick={handleBedroom}>
+                <p>
+                  <FaBed />
+                </p>
+                <span>New Bedroom</span>
+              </DivSession>
+              <DivSession onClick={handleService}>
+                <p>
+                  <FaReceipt />
+                </p>
+                <span>New Service</span>
+              </DivSession>
+              <DivSession onClick={handleEmployee}>
+                <p>
+                  <FaUserFriends />
+                </p>
+                <span>New Employee</span>
+              </DivSession>
+            </>
+          )}
         </Container>
       </Main>
       {showModalClients && <PopupRegisterClient handlePopup={handleClients} />}
@@ -84,9 +92,13 @@ const Dashboard = () => {
       )}
       {showModalBedroom && <PopupRegisterBedroom handlePopup={handleBedroom} />}
       {showModalService && <PopupRegisterService handlePopup={handleService} />}
-      {showModalEmployee && <PopupRegisterEmployee handlePopup={handleEmployee}/>}
+      {showModalEmployee && (
+        <PopupRegisterEmployee handlePopup={handleEmployee} />
+      )}
 
-      <ButtonChat onClick={() => history.push('/rooms')}><FaComments /></ButtonChat>
+      <ButtonChat onClick={() => history.push("/rooms")}>
+        <FaComments />
+      </ButtonChat>
     </Margin>
   );
 };

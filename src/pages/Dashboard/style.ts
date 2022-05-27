@@ -4,6 +4,7 @@ export const Main = styled.main`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
   padding: 15px;
 
   img {
@@ -20,13 +21,14 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 30px;
   width: 100%;
-  height: 300px;
   max-width: 250px;
+  padding: 30px 15px;
   background-color: var(--beige-1);
   justify-content: space-evenly;
   border-radius: 8px;
-  margin: 15px auto;
+  margin: auto;
   `
 
 export const DivSession = styled.div`
