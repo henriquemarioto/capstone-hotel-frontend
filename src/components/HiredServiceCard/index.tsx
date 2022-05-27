@@ -27,6 +27,10 @@ const HiredServiceCard = ({ hiredService }: any) => {
         <span>End Date: </span>{" "}
         {new Date(hiredService.end_date).toLocaleDateString("pt-bt")}
       </p>
+      <p>
+        <span>Price: </span>{" "}
+        {hiredService.total_price.toString()}
+      </p>
       <div>
         <span>Paid: </span>
         <Paid paid={hiredService.paid}> {hiredService.paid.toString()} </Paid>
