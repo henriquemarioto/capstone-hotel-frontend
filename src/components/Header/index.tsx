@@ -66,12 +66,15 @@ const Header = (props: any) => {
           Services
         </ListItemButton>
         <Divider sx={{ backgroundColor: "white" }} />
-        <ListItemButton
-          sx={{ marginTop: "5px", color: "white" }}
-          onClick={() => goToPage("/employees")}
-        >
-          Employees
-        </ListItemButton>
+        {user.admin && (
+          <ListItemButton
+            sx={{ marginTop: "5px", color: "white" }}
+            onClick={() => goToPage("/employees")}
+          >
+            Employees
+          </ListItemButton>
+
+        )}
 
         <Divider sx={{ backgroundColor: "white" }} />
         <ListItemButton
@@ -84,7 +87,7 @@ const Header = (props: any) => {
       </List>
       <Divider sx={{ backgroundColor: "white" }} />
     </div>
-  )
+  );
 
   const container =
     window !== undefined ? () => window().document.body : undefined
@@ -103,7 +106,7 @@ const Header = (props: any) => {
             <li onClick={() => history.push("/bedrooms")}>Bedrooms</li>
             <li onClick={() => history.push("/hiredservices")}>Contracts</li>
             <li onClick={() => history.push("/services")}>Services</li>
-            <li onClick={() => history.push("/employees")}>Employees</li>
+            {user.admin && <li onClick={() => history.push("/employees")}>Employees</li>}
             <li onClick={logout}>Logout</li>
           </ul>
 
