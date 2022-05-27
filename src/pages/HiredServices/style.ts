@@ -9,7 +9,7 @@ export const Ul = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 
   /* @media screen and (min-width: 1024px){
     overflow-y: hidden;

@@ -46,9 +46,12 @@ const ClientCard = ({ client }: any) => {
             <button onClick={handlePopup}>
               <FaPen />
             </button>
-            <button>
-              <FaTrashAlt onClick={() => disableClient(client.id)} />
-            </button>
+
+            {client.status && (
+              <button>
+                <FaTrashAlt onClick={() => disableClient(client.id)} />
+              </button>
+            )}
           </Buttons>
         )}
       </Li>

@@ -46,12 +46,12 @@ interface CreateHiredService {
 interface HiredServiceContextData {
   hiredServices: HiredService[]
   hiredService?: HiredService
-  createHiredService: (data: CreateHiredService, token: string) => void
-  getAllHiredServices: (token: string) => Promise<void>
-  getOneHiredService: (id: string, token: string) => Promise<void>
-  updatedHiredService: (id: string, token: string) => Promise<void>
-  disableHiredService: (id: string, token: string) => Promise<void>
-  //filterByStatus: (status: boolean, token: string) => Promise<void>
+  createHiredService: (data: CreateHiredService, ) => void
+  getAllHiredServices: () => Promise<void>
+  getOneHiredService: (id: string, ) => Promise<void>
+  updatedHiredService: (id: string, ) => Promise<void>
+  disableHiredService: (id: string, ) => Promise<void>
+  filterByStatus: (status: boolean, ) => Promise<void>
   filter: (search: string) => void
   filteredHired: HiredService[]
 }
@@ -65,7 +65,9 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
   const [hiredService, setHiredService] = useState<HiredService>()
   const [filteredHired, setFilteredHired] = useState<HiredService[]>([])
 
-  const createHiredService = (data: CreateHiredService, token: string) => {
+  const {token} = useLogin()
+
+  const createHiredService = (data: CreateHiredService, ) => {
     apiHotel
       .post("hiredservices", data, {
         headers: {
@@ -78,56 +80,57 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
       .catch((err) => toast.error(err.response.data.message))
   }
 
-  const getAllHiredServices = async (token: string) => {
+  const getAllHiredServices = async () => {
     const { data } = await apiHotel.get("hiredservices", {
       headers: { Authorization: `Bearer ${token}` },
     })
     setHiredServices(data)
   }
 
-  const getOneHiredService = async (id: string, token: string) => {
+  const getOneHiredService = async (id: string, ) => {
     const { data } = await apiHotel.get(`hiredservices/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     setHiredService(data)
   }
 
-  const updatedHiredService = async (id: string, token: string) => {
+  const updatedHiredService = async (id: string ) => {
     await apiHotel
-      .patch(`hiredservices/pay/${id}`, {
+      .patch(`hiredservices/pay/${id}`, null, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllHiredServices(token)
+        getAllHiredServices()
       })
       .catch((err) => {
         toast.error(err.response.data.message)
       })
   }
 
-  const disableHiredService = async (id: string, token: string) => {
+  const disableHiredService = async (id: string, ) => {
     await apiHotel
       .delete(`hiredservices/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllHiredServices(token)
+        getAllHiredServices()
       })
       .catch((err) => {
         toast.error(err.response.data.message)
       })
   }
 
-  // const filterByStatus = async (status: boolean, token: string) => {
-  //   const { data } = await apiHotel.get(`hiredservices?status=${status}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //   setFilteredHired(data)
-  // }
+  const filterByStatus = async (status: boolean) => {
+    const { data } = await apiHotel.get(`hiredservices?status=${status}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setHiredServices(data);
+    console.log(data)
+  };
 
   const filter = (search: string) => {
     const filteredContracts = hiredServices.filter((contract) => {
@@ -153,7 +156,7 @@ export const HiredServiceProvider = ({ children }: HiredServiceProps) => {
         getOneHiredService,
         updatedHiredService,
         disableHiredService,
-        // filterByStatus,
+        filterByStatus,
         filter,
         filteredHired,
       }}

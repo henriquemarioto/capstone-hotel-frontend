@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import HiredServiceCard from "../../components/HiredServiceCard"
 import Margin from "../../components/Margin"
 import SearchModel from "../../components/SearchModel"
@@ -8,12 +8,19 @@ import { Ul } from "./style"
 import Loading from "../../components/Loading"
 
 const HiredService = () => {
-  const { getAllHiredServices, hiredServices, filter, filteredHired } =
+  const { getAllHiredServices, hiredServices, filter, filteredHired, filterByStatus } =
     useHiredService()
   const { token } = useLogin()
 
+  const [status, setStatus] = useState<boolean>(false);
+
+  const alterStatus = async () => {
+    await filterByStatus(status);
+    setStatus(!status);
+  };
+
   useEffect(() => {
-    getAllHiredServices(token)
+    getAllHiredServices()
   }, [])
 
   return (
@@ -22,6 +29,7 @@ const HiredService = () => {
         title="Contracts"
         placeholder="Client name, service name, bedroom number..."
         searchFunction={filter}
+        alterStatusFunction={alterStatus}
       >
         <Ul>
           {hiredServices.length === 0 ? (
