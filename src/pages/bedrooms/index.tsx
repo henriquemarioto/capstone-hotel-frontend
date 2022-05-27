@@ -1,18 +1,20 @@
-import BedroomsCard from "../../components/BedroomsCard";
-import { BedroomsDiv } from "./styles";
-import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
-import { useBedroom } from "../../providers/Bedroom";
-import { useLogin } from "../../providers/Login";
-import Margin from "../../components/Margin";
-import SearchModel from "../../components/SearchModel";
+import BedroomsCard from "../../components/BedroomsCard"
+import { BedroomsDiv } from "./styles"
+import { useHistory } from "react-router-dom"
+import { useEffect } from "react"
+import { useBedroom } from "../../providers/Bedroom"
+import { useLogin } from "../../providers/Login"
+import Margin from "../../components/Margin"
+import SearchModel from "../../components/SearchModel"
+
+import Loading from "../../components/Loading"
 
 interface Bedroom {
-  availability: boolean;
-  capacity: number;
-  clientsList: object[];
-  floor: string;
-  number: string;
+  availability: boolean
+  capacity: number
+  clientsList: object[]
+  floor: string
+  number: string
 }
 
 const BedroomsPage = () => {
@@ -22,8 +24,8 @@ const BedroomsPage = () => {
   const history = useHistory()
 
   useEffect(() => {
-    getAllBedrooms(token);
-  }, []);
+    getAllBedrooms(token)
+  }, [])
 
   return (
     <Margin>
@@ -33,17 +35,21 @@ const BedroomsPage = () => {
         searchFunction={filter}
       >
         <BedroomsDiv>
-          {filteredBedrooms.length > 0
-            ? filteredBedrooms.map((bedroom) => {
-                return <BedroomsCard key={bedroom.id} bedroom={bedroom} />;
-              })
-            : bedrooms.map((bedroom) => {
-                return <BedroomsCard key={bedroom.id} bedroom={bedroom} />;
-              })}
+          {bedrooms.length === 0 ? (
+            <Loading />
+          ) : filteredBedrooms.length > 0 ? (
+            filteredBedrooms.map((bedroom) => {
+              return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
+            })
+          ) : (
+            bedrooms.map((bedroom) => {
+              return <BedroomsCard key={bedroom.id} bedroom={bedroom} />
+            })
+          )}
         </BedroomsDiv>
       </SearchModel>
     </Margin>
-  );
-};
+  )
+}
 
-export default BedroomsPage;
+export default BedroomsPage

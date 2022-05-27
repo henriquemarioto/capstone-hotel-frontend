@@ -5,6 +5,7 @@ import SearchModel from "../../components/SearchModel"
 import { useHiredService } from "../../providers/HiredService"
 import { useLogin } from "../../providers/Login"
 import { Ul } from "./style"
+import Loading from "../../components/Loading"
 
 const HiredService = () => {
   const { getAllHiredServices, hiredServices, filter, filteredHired } =
@@ -17,25 +18,33 @@ const HiredService = () => {
 
   return (
     <Margin>
-      <SearchModel title="Contracts" placeholder="Client name, service name, bedroom number..." searchFunction={filter}>
+      <SearchModel
+        title="Contracts"
+        placeholder="Client name, service name, bedroom number..."
+        searchFunction={filter}
+      >
         <Ul>
-          {filteredHired.length > 0
-            ? filteredHired.map((hiredService) => (
-                <HiredServiceCard
-                  key={hiredService.id}
-                  hiredService={hiredService}
-                />
-              ))
-            : hiredServices.map((hiredService) => (
-                <HiredServiceCard
-                  key={hiredService.id}
-                  hiredService={hiredService}
-                />
-              ))}
+          {hiredServices.length === 0 ? (
+            <Loading />
+          ) : filteredHired.length > 0 ? (
+            filteredHired.map((hiredService) => (
+              <HiredServiceCard
+                key={hiredService.id}
+                hiredService={hiredService}
+              />
+            ))
+          ) : (
+            hiredServices.map((hiredService) => (
+              <HiredServiceCard
+                key={hiredService.id}
+                hiredService={hiredService}
+              />
+            ))
+          )}
         </Ul>
       </SearchModel>
     </Margin>
-  );
+  )
 }
 
 export default HiredService
