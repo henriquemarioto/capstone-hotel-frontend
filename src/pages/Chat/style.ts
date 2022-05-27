@@ -32,39 +32,43 @@ export const SectionMessages = styled.section`
 `;
 
 export const MessageOwner = styled.div`
-  width: 50%;
+  width: 250px;
+  max-width: 50%;
   border-radius: 8px;
   display: flex;
   padding: 5px;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+
   background-color: green;
   margin-right: auto;
   margin-left: 10px;
   margin-bottom: 5px;
-  
+  word-wrap: break-word;
 `;
 export const MessageReceived = styled.div`
-  width: 50%;
+  width: 250px;
+  max-width: 50%;
   border-radius: 8px;
-  display: flex;
   padding: 5px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+
   background-color: grey;
   margin-left: auto;
   margin-right: 10px;
   margin-bottom: 5px;
+  word-wrap: break-word;
 `;
 
 export const Username = styled.p`
-    font-size: 18px;
-    color: var(--beige-1);
-    font-weight: 600;
-    margin-bottom: 5px;
-`
+  font-size: 18px;
+  color: var(--beige-1);
+  font-weight: 600;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+`;
 export const Message = styled.p`
     font-size: 15px;
     margin-bottom: 5px;
