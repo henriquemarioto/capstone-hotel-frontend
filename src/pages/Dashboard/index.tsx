@@ -9,11 +9,11 @@ import {
 } from "react-icons/fa";
 import image from "../../img/background.png";
 import Margin from "../../components/Margin";
-import PopupRegisterClient from "../../components/PopupRegisterClient";
-import PopupRegisterContract from "../../components/PopupRegisterContract";
-import PopupRegisterBedroom from "../../components/PopupRegisterBedroom";
-import PopupRegisterService from "../../components/PopupRegisterService";
-import PopupRegisterEmployee from "../../components/PopupRegisterEmployee";
+import PopupRegisterClient from "../../components/Popups/PopupRegisterClient";
+import PopupRegisterContract from "../../components/Popups/PopupRegisterContract";
+import PopupRegisterBedroom from "../../components/Popups/PopupRegisterBedroom";
+import PopupRegisterService from "../../components/Popups/PopupRegisterService";
+import PopupRegisterEmployee from "../../components/Popups/PopupRegisterEmployee";
 
 const Dashboard = () => {
   const [showModalClients, setShowModalClients] = useState<boolean>(false);
