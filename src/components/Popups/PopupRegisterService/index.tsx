@@ -19,9 +19,8 @@ interface ServiceData {
 }
 
 const PopupRegisterService = ({ handlePopup }: Props) => {
-
-  const {createService} = useService()
-  const {token} = useLogin()
+  const { createService } = useService();
+  const { token } = useLogin();
 
   const serviceSchema = yup.object().shape({
     name: yup.string().required("Campo Obrigatorio"),
@@ -39,7 +38,8 @@ const PopupRegisterService = ({ handlePopup }: Props) => {
 
   const handleClick = async (data: ServiceData) => {
     data.price = Number(data.price);
-    await createService(data, token)
+    await createService(data);
+    handlePopup();
   };
 
   return (

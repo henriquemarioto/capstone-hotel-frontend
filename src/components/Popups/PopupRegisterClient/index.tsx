@@ -47,6 +47,7 @@ const PopupRegisterClient = ({ handlePopup }: Props) => {
   const handleClick = async (data: ClientData) => {
     data.bedroomId = Number(data.bedroomId);
     await createClient(data);
+    handlePopup();
   };
 
   useEffect(() => {

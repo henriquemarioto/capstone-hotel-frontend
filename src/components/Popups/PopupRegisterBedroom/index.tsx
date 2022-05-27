@@ -40,6 +40,7 @@ const PopupRegisterBedroom = ({ handlePopup }: Props) => {
   const handleClick = async (data: BedroomData) => {
     data.capacity = Number(data.capacity);
     await createBedroom(data)
+    handlePopup()
   };
 
   return (

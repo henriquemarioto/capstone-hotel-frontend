@@ -44,6 +44,7 @@ const PopupRegisterEmployee = ({ handlePopup }: Props) => {
 
   const handleClick = async (data: EmployeeData) => {
    await createEmployee(data, token)
+    handlePopup();
   };
 
   return (

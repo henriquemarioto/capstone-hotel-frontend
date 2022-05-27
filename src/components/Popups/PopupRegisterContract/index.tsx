@@ -44,6 +44,7 @@ const PopupRegisterContract = ({ handlePopup }: Props) => {
   const handleClick = (data: ContractData) => {
     data.serviceId = Number(data.serviceId);
     createHiredService(data);
+    handlePopup();
   };
 
   useEffect(() => {
