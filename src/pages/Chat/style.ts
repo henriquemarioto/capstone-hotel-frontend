@@ -68,6 +68,7 @@ export const Username = styled.p`
 export const Message = styled.p`
     font-size: 15px;
     margin-bottom: 5px;
+    word-wrap: break-word;
 `
 export const Hour = styled.span`
     font-size: 12px;

@@ -1,98 +1,90 @@
-import { createContext, ReactNode, useContext, useState } from "react"
-import apiHotel from "../../services/apiHotel"
-import { toast } from "react-hot-toast"
-import { useLogin } from "../Login"
+import { createContext, ReactNode, useContext, useState } from "react";
+import apiHotel from "../../services/apiHotel";
+import { toast } from "react-hot-toast";
+import { useLogin } from "../Login";
 
 interface ServiceProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface CreateService {
-  name: string
-  price: string | number
-  description: string
+  name: string;
+  price: string | number;
+  description: string;
 }
 
 interface Service {
-  id: string
-  name: string
-  price: number
-  description: string
-  status: boolean
-  created_at: Date
-  updated_at: Date
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  status: boolean;
+  created_at: Date;
+  updated_at: Date;
 }
 
 interface UpdatedProps {
-  name?: string
-  price?: number
-  description?: string
+  name?: string;
+  price?: number;
+  description?: string;
 }
 
 interface ServiceContextData {
-  services: Service[]
-  service?: Service
-  filteredService: Service[]
-  createService: (data: CreateService, ) => Promise<void>
-  getAllServices: () => Promise<void>
-  getOneService: (id: string, ) => Promise<void>
-  updatedService: (
-    data: UpdatedProps,
-    id: string,
-    
-  ) => Promise<void>
-  disableService: (id: string, ) => Promise<void>
-  //filterByStatus: (status: boolean, ) => Promise<void>
-  filter: (search: string) => void
+  services: Service[];
+  service?: Service;
+  filteredService: Service[];
+  createService: (data: CreateService) => Promise<void>;
+  getAllServices: () => Promise<void>;
+  getOneService: (id: string) => Promise<void>;
+  updatedService: (data: UpdatedProps, id: string) => Promise<void>;
+  disableService: (id: string) => Promise<void>;
+  filterByStatus: (status: boolean) => Promise<void>;
+  filter: (search: string) => void;
 }
 
 const ServiceContext = createContext<ServiceContextData>(
   {} as ServiceContextData
-)
+);
 
 export const ServiceProvider = ({ children }: ServiceProps) => {
-  const [services, setServices] = useState<Service[]>([])
-  const [service, setService] = useState<Service>()
-  const [filteredService, setFilteredService] = useState<Service[]>([])
-  const {token} = useLogin()
+  const [services, setServices] = useState<Service[]>([]);
+  const [service, setService] = useState<Service>();
+  const [filteredService, setFilteredService] = useState<Service[]>([]);
+  const { token } = useLogin();
 
-  const createService = async (data: CreateService, ) => {
+  const createService = async (data: CreateService) => {
     await apiHotel
       .post("services", data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((_) => {
-        toast.success("Service Created")
+        toast.success("Service Created");
       })
       .catch((err) => {
-        toast.error(err.response.data.message)
-      })
-  }
+        toast.error(err.response.data.message);
+      });
+  };
 
   const getAllServices = async () => {
     const { data } = await apiHotel.get("services", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
 
-    setServices(data)
-  }
+    setServices(data);
+  };
 
-  const getOneService = async (id: string, ) => {
+  const getOneService = async (id: string) => {
     const { data } = await apiHotel.get(`services/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    setService(data)
-  }
+    });
+    setService(data);
+  };
 
-  const updatedService = async (
-    data: UpdatedProps,
-    id: string,
-    
-  ) => {
+  const updatedService = async (data: UpdatedProps, id: string) => {
     await apiHotel
       .patch(`services/${id}`, data, {
         headers: {
@@ -100,15 +92,15 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         },
       })
       .then((res) => {
-        toast.success(res.data.message)
-        getAllServices()
+        toast.success(res.data.message);
+        getAllServices();
       })
       .catch((err) => {
-        toast.error(err.response.data.message)
-      })
-  }
+        toast.error(err.response.data.message);
+      });
+  };
 
-  const disableService = async (id: string, ) => {
+  const disableService = async (id: string) => {
     await apiHotel
       .delete(`services/${id}`, {
         headers: {
@@ -116,22 +108,22 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         },
       })
       .then((res) => {
-        toast.success(res.data.message)
-        getAllServices()
+        toast.success(res.data.message);
+        getAllServices();
       })
       .catch((err) => {
-        toast.error(err.response.data.message)
-      })
-  }
+        toast.error(err.response.data.message);
+      });
+  };
 
-  // const filterByStatus = async (status: boolean, ) => {
-  //   const { data } = await apiHotel.get(`services?status=${status}`, {
-  //     headers: {
-  //       Authorizarion: `Bearer ${token}`,
-  //     },
-  //   })
-  //   setFilteredService(data)
-  // }
+  const filterByStatus = async (status: boolean) => {
+    const { data } = await apiHotel.get(`services?status=${status}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setFilteredService(data);
+  };
 
   const filter = (search: string) => {
     const filteredServices = services.filter(
@@ -140,10 +132,10 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         service.description
           .toLocaleLowerCase()
           .includes(search.toLocaleLowerCase())
-    )
+    );
 
-    setFilteredService(filteredServices)
-  }
+    setFilteredService(filteredServices);
+  };
 
   return (
     <ServiceContext.Provider
@@ -153,7 +145,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
         getOneService,
         updatedService,
         disableService,
-        // filterByStatus,
+        filterByStatus,
         services,
         service,
         filteredService,
@@ -162,7 +154,7 @@ export const ServiceProvider = ({ children }: ServiceProps) => {
     >
       {children}
     </ServiceContext.Provider>
-  )
-}
+  );
+};
 
-export const useService = () => useContext(ServiceContext)
+export const useService = () => useContext(ServiceContext);
