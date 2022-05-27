@@ -9,6 +9,7 @@ interface Messages {
   username: string
   room: string
   message: string
+  createdAt: Date
 }
 
 interface MessagesContextData {
@@ -28,7 +29,6 @@ export const MessagesProvider = ({children}: Props) => {
   const [messagesList, setMessagesList] = useState<Messages[]>([]);
   const history = useHistory<unknown>()
 
-
   const joinRoom = (username: string, room: string) => {
 
     if (username) {
@@ -46,7 +46,8 @@ export const MessagesProvider = ({children}: Props) => {
       const data = {
         username,
         room,
-        message
+        message,
+        createdAt: new Date()
       } 
       
       socket.emit("send_message", data)
@@ -56,6 +57,7 @@ export const MessagesProvider = ({children}: Props) => {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
+      console.log(data)
       setMessagesList((list) => [...list, data]);
     });
   }, [socket]);

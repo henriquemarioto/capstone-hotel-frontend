@@ -1,5 +1,5 @@
 import {Switch} from "react-router-dom";
-
+import { Route as Router } from "react-router-dom";
 import Login from "../pages/Login";
 import Clients from "../pages/Clients";
 import HiredService from "../pages/HiredServices";
@@ -12,9 +12,12 @@ import Employee from "../pages/Employee";
 import Rooms from "../pages/Rooms";
 import Chat from "../pages/Chat";
 import Route from "./route";
+import { useLogin } from "../providers/Login";
 
 
 const Routes = () => {
+
+  const {user} = useLogin()
 
   return (
     <Switch>
@@ -55,14 +58,14 @@ const Routes = () => {
         <Dashboard />
       </Route>
 
-      <Route path="/rooms" isPrivate>
-        <Header />
+      <Router path="/rooms" >
+        {user.id && <Header />}
         <Rooms />
-      </Route>
-      <Route path="/chat/:room/:username" isPrivate>
-        <Header />
+      </Router>
+      <Router path="/chat/:room/:username">
+      {user.id && <Header />} 
         <Chat />
-      </Route>
+      </Router>
     </Switch>
   );
 };

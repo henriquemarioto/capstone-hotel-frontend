@@ -1,28 +1,30 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import Margin from "../../components/Margin";
 import { Select } from "../../components/Select";
 import { useBedroom } from "../../providers/Bedroom";
 import { useLogin } from "../../providers/Login";
 import { useMessages } from "../../providers/Messages";
+import { Container } from "./style";
 
 const Rooms = () => {
-  const history = useHistory<unknown>();
+
   const [room, setRoom] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const { bedrooms, getAllBedrooms } = useBedroom();
-  const { token } = useLogin();
+
 
   useEffect(() => {
-    getAllBedrooms(token);
+    getAllBedrooms();
   }, []);
 
   const { joinRoom } = useMessages();
 
   return (
     <Margin>
-      <div className="joinChatContainer">
+      <Container>
         <h3>Join A Chat</h3>
         <Select
           title="Rooms"
@@ -30,6 +32,7 @@ const Rooms = () => {
             setRoom(event.currentTarget.value);
           }}
         >
+          <option value="-1">Selecione o numero do quarto</option>
           {bedrooms.map((bedroom) => (
             <option key={bedroom.number} value={bedroom.number}>
               {bedroom.number}
@@ -44,15 +47,15 @@ const Rooms = () => {
             setUsername(event.target.value);
           }}
         />
-        <button
+        <Button
           onClick={() => {
             joinRoom(username, room);
             
           }}
         >
           Join A Room
-        </button>
-      </div>
+        </Button>
+      </Container>
     </Margin>
   );
 };

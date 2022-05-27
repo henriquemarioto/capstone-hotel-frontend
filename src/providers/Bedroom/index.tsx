@@ -32,7 +32,7 @@ interface BedroomProps {
 interface BedroomContextData {
   bedrooms: Bedroom[]
   bedroom?: Bedroom
-  getAllBedrooms: (token: string) => Promise<void>
+  getAllBedrooms: () => Promise<void>
   getOneBedroom: (id: string, token: string) => Promise<void>
   updateBedroom: (data: UpdateProps, id: string, token: string) => Promise<void>
   disableBedroom: (id: string, token: string) => Promise<void>
@@ -65,12 +65,8 @@ export const BedroomProvider = ({ children }: BedroomProps) => {
       })
   }
 
-  const getAllBedrooms = async (token: string) => {
-    const { data } = await apiHotel.get("bedrooms", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+  const getAllBedrooms = async () => {
+    const { data } = await apiHotel.get("bedrooms")
     setBedrooms(data)
   }
 
@@ -96,7 +92,7 @@ export const BedroomProvider = ({ children }: BedroomProps) => {
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllBedrooms(token)
+        getAllBedrooms()
       })
       .catch((err) => {
         toast.error(err.response.body.message)
@@ -112,7 +108,7 @@ export const BedroomProvider = ({ children }: BedroomProps) => {
       })
       .then((res) => {
         toast.success(res.data.message)
-        getAllBedrooms(token)
+        getAllBedrooms()
       })
       .catch((err) => {
         toast.error(err.response.body.message)
